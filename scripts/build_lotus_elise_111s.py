@@ -117,7 +117,7 @@ def build_materials() -> dict:
 
     # --- Pintura azul metálica multicamada --------------------------------
     mat, nt, bsdf = lc.new_material("MAT_Blue_Metallic")
-    base_blue = lc.rgba("#101FA8")
+    base_blue = lc.rgba("#0C1A96")
     deep_blue = lc.rgba("#050A3C")
 
     layer = nt.nodes.new("ShaderNodeLayerWeight")
@@ -204,16 +204,16 @@ def build_materials() -> dict:
 
     # --- Plástico preto texturizado --------------------------------------
     mat, nt, bsdf = lc.new_material("MAT_Black_Trim")
-    bsdf.inputs["Base Color"].default_value = lc.rgba("#121214")
-    bsdf.inputs["Roughness"].default_value = 0.55
-    lc.noise_normal(nt, bsdf, scale=55.0, strength=0.25)
+    bsdf.inputs["Base Color"].default_value = lc.rgba("#0E0E10")
+    bsdf.inputs["Roughness"].default_value = 0.72
+    lc.noise_normal(nt, bsdf, scale=55.0, strength=0.10)
     mats["black"] = mat
 
     # --- Grade / mesh metálico -------------------------------------------
     mat, nt, bsdf = lc.new_material("MAT_Grille_Mesh")
-    bsdf.inputs["Base Color"].default_value = lc.rgba("#2A2C2E")
-    bsdf.inputs["Metallic"].default_value = 0.75
-    bsdf.inputs["Roughness"].default_value = 0.45
+    bsdf.inputs["Base Color"].default_value = lc.rgba("#17191B")
+    bsdf.inputs["Metallic"].default_value = 0.35
+    bsdf.inputs["Roughness"].default_value = 0.62
     mats["mesh"] = mat
 
     # --- Cromado ----------------------------------------------------------
@@ -844,8 +844,8 @@ def build_vents(mats):
 def build_aero(mats):
     splitter = lc.box(
         "GEO_Front_Splitter",
-        size=(0.300, 1.240, 0.030),
-        location=(1.700, 0.0, 0.128),
+        size=(0.240, 1.020, 0.026),
+        location=(1.712, 0.0, 0.124),
         rotation=(math.radians(-4.0), 0.0, 0.0),
         material=mats["black"],
         tag_info=dict(cat="GEO", part="front_splitter", swap="black_trim"),
@@ -1060,10 +1060,10 @@ def build_world() -> None:
 
 def build_lights(mats) -> None:
     specs = [
-        ("LGT_Key_Softbox", (2.9, 2.5, 3.4), (3.4, 2.2), 1400.0, 1.0),
-        ("LGT_Fill_Card", (-1.2, -3.6, 2.0), (3.0, 1.4), 500.0, 1.0),
-        ("LGT_Rim_Strip", (-3.6, 1.6, 3.0), (2.6, 1.1), 900.0, 1.0),
-        ("LGT_Card_Long", (0.4, 4.2, 1.1), (5.2, 1.0), 700.0, 1.0),
+        ("LGT_Key_Softbox", (2.9, 2.5, 3.4), (3.4, 2.2), 1150.0, 1.0),
+        ("LGT_Fill_Card", (-1.2, -3.6, 2.0), (3.0, 1.4), 420.0, 1.0),
+        ("LGT_Rim_Strip", (-3.6, 1.6, 3.0), (2.6, 1.1), 780.0, 1.0),
+        ("LGT_Card_Long", (0.4, 4.2, 1.1), (5.2, 1.0), 600.0, 1.0),
     ]
     for name, loc, size, energy, _ in specs:
         data = bpy.data.lights.new(name=name, type="AREA")
@@ -1122,6 +1122,7 @@ def setup_render() -> None:
             break
         except Exception:
             continue
+    scene.view_settings.exposure = -0.18
 
     eevee = scene.eevee
     for attr, value in (
