@@ -11,6 +11,7 @@ Data: 2026-09-13 · Escopo SDD: **Grande** (recurso novo, múltiplos componentes
 | Build idempotente | `scripts/build_lotus_elise_111s.py` |
 | Helpers de modelagem | `scripts/lotus_common.py` |
 | Renders de verificação | `scripts/render_views.py` → `docs/renders/*.png` |
+| Galeria de apresentação | `scripts/render_gallery.py` → `images/modelo3d-*.png` |
 | Relatório de malha | `docs/renders/mesh_report.txt` |
 | Especificação / design / tarefas | `.specs/features/lotus-elise-111s-model/` |
 | Continuidade | `README.md`, `AGENTS.md`, `STATUS.md`, `HANDOFF.md`, `LICENSE` |
@@ -19,17 +20,18 @@ Data: 2026-09-13 · Escopo SDD: **Grande** (recurso novo, múltiplos componentes
 
 ```bash
 blender --background car-lotus-elise-111s.blend --python scripts/build_lotus_elise_111s.py   # ~0,6 s
-blender --background car-lotus-elise-111s.blend --python scripts/render_views.py              # ~46 s
+blender --background car-lotus-elise-111s.blend --python scripts/render_gallery.py            # ~39 s
+blender --background car-lotus-elise-111s.blend --python scripts/render_views.py              # ~52 s
 ```
 
 Ou, na sessão MCP: `exec(open("scripts/build_lotus_elise_111s.py").read())`.
 
 ### Resultado do build
 
-- 130 objetos de malha · 13 materiais · 4 luzes · 7 câmeras
-- Faces na malha base: **32.600** → quads 29.240 · tris 3.360 · **n-gons 0**
+- 130 objetos de malha · 13 materiais · 4 luzes · 9 câmeras
+- Faces na malha base: **32.632** → quads 29.272 · tris 3.360 · **n-gons 0**
 - Arestas non-manifold: **0** · Arestas de borda: 1.776 (apenas glifos dos emblemas)
-- Envelope: **X 3,732 m · Y 1,718 m · Z 1,117 m**, solo em Z = 0,000, centrado em Y
+- Envelope: **X 3,736 m · Y 1,718 m · Z 1,117 m**, solo em Z = 0,000, centrado em Y
 
 ### Tempos de render (EEVEE, 64 amostras, 1500×1000)
 
@@ -41,7 +43,7 @@ close de roda 6,4 s · clay lateral 3,6 s · clay 3/4 4,8 s · **total 45,4 s**
 | ID | Critério (resumo) | Status | Evidência / observação |
 |---|---|---|---|
 | CA-001 | Build reconstrói o modelo sem erro | **PASS** | execução via MCP; 130 objetos `GEO_*` |
-| CA-002 | Envelope dentro de ±2 cm | **PASS** | X +0,6 cm; Y e Z exatos (`mesh_report.txt`) |
+| CA-002 | Envelope dentro de ±2 cm | **PASS** | X +1,0 cm; Y e Z exatos (`mesh_report.txt`) |
 | CA-003 | 0 n-gons e normais coerentes nos corpos | **PASS** | 0 n-gons global; 0 non-manifold |
 | CA-004 | Silhueta lateral coerente com `lateral.jpeg` | **PARCIAL** | proporções e arcos corretos; corpo mais arredondado que a referência, falta a linha de caráter |
 | CA-005 | Frente com 2 faróis ovais + grade + auxiliares | **PASS** | `01_frontal.png` × `frontal.jpeg` |
@@ -88,7 +90,7 @@ close de roda 6,4 s · clay lateral 3,6 s · clay 3/4 4,8 s · **total 45,4 s**
 | SPEC_DEVIATION-02 | Rig de estúdio do §5 substituído por rig neutro de 4 luzes de área | necessário apenas para viabilizar a verificação visual |
 | SPEC_DEVIATION-03 | Grelha frontal e inserções ópticas são objetos assentados sobre a superfície, não recortes perfurados | a tampa de loft não possui vértices internos para escavar; a alternativa (boolean) viola FR-013 via geração de n-gons |
 | SPEC_DEVIATION-04 | Triângulos presentes em cantos de chanfro e glifos de emblema | FR-013 admite triângulos em superfícies planas; nenhum triângulo em superfície curva principal |
-| SPEC_DEVIATION-05 | Envelope X 3,732 m (alvo 3,726 m) | +0,6 cm, dentro da tolerância de ±2 cm do CA-002 |
+| SPEC_DEVIATION-05 | Envelope X 3,736 m (alvo 3,726 m) | +1,0 cm, dentro da tolerância de ±2 cm do CA-002 |
 | SPEC_DEVIATION-06 | Validação Zebra/Isophotes por inspeção visual dos reflexos, sem ferramenta dedicada | decisão do usuário de verificação apenas visual |
 
 ## Riscos residuais

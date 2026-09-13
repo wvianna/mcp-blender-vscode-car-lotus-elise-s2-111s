@@ -23,13 +23,16 @@
 | Rig neutro de verificação e 7 câmeras | `LGT_*`, `CAM_*` |
 | Relatório de malha automatizado | `docs/renders/mesh_report.txt` |
 | 9 renders de verificação | `docs/renders/*.png` |
+| Galeria de apresentação (superior, traseira, lateral, isométrica, efeito de luz) | `images/modelo3d-*.png` via `scripts/render_gallery.py` |
+| Rig dramático do hero shot (rim lights + faróis acesos + bloom no compositor) | `render_gallery.py` (não persiste no `.blend`) |
 
 ### Números do último build
 
-- Objetos de malha: 130 · Materiais: 13 · Luzes: 4 · Câmeras: 7
-- Faces (malha base): 32.600 → quads 29.240 · tris 3.360 · **n-gons 0**
+- Objetos de malha: 130 · Materiais: 13 · Luzes: 4 · Câmeras: 9
+- Faces (malha base): 32.632 → quads 29.272 · tris 3.360 · **n-gons 0**
 - Arestas non-manifold: **0**
-- Envelope: X 3,732 m · Y 1,718 m · Z 1,117 m · solo em Z = 0,0000
+- Envelope: X 3,736 m · Y 1,718 m · Z 1,117 m · solo em Z = 0,0000
+- Galeria: 5 imagens em `images/modelo3d-*.png` (37 s) · verificação: 9 renders (52 s)
 
 ## Em andamento
 
@@ -42,16 +45,16 @@
    arcos. O loft com Sub-D suaviza transições abruptas.
 2. **Triângulos em chanfros.** Os 3.360 triângulos vêm de cantos de `bevel` em caixas e dos glifos de texto dos
    emblemas — nunca de superfícies curvas principais. Ver `mesh_report.txt`.
-3. **Cauda arredondada.** O recorte traseiro é uma tampa plana de loft; com Sub-D ela se comporta como um domo, ao
-   contrário do corte mais seco da referência.
+3. **Cauda e bico.** Receberam anéis de retenção (`-1.852/-1.858` e `1.856/1.863`) que deixam a face mais plana e
+   estável sob Sub-D; ainda assim o corte é menos seco que o da referência.
 4. **Arestas de borda (1.776).** Exclusivamente das malhas de texto dos emblemas (glifos com contorno aberto).
 5. **Interior simplificado** (fora de escopo por decisão do usuário).
 6. **Rig de estúdio completo (§5 da descrição) não implementado** — apenas rig neutro de verificação.
 
 ## Próximo passo recomendado
 
-1. Introduzir *proximity loops* (estações extras) nos contornos de arco e nas bordas das entradas de ar para
-   preservar arestas vivas após a subdivisão (design.md, ADR-002).
+1. Introduzir *proximity loops* nos contornos de arco e nas bordas das entradas de ar para preservar arestas
+   vivas após a subdivisão (design.md, ADR-002) — os anéis de retenção do bico/cauda já validaram a técnica.
 2. Avaliar `Crease` por aresta ou `Bevel` nos lips de para-lama em vez de aumentar a densidade de estações.
 3. Substituir os emblemas de texto por glifos de contorno fechado (extrude) para eliminar arestas de borda.
 4. Implementar o rig de iluminação de estúdio do §5 com HDRI neutro, se o cliente quiser os renders de apresentação.

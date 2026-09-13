@@ -178,7 +178,7 @@ def build_materials() -> dict:
 
     # --- Vidro / policarbonato -------------------------------------------
     mat, nt, bsdf = lc.new_material("MAT_Glass_Polycarbonate")
-    bsdf.inputs["Base Color"].default_value = lc.rgba("#8FA6B4")
+    bsdf.inputs["Base Color"].default_value = lc.rgba("#33424E")
     bsdf.inputs["Roughness"].default_value = 0.02
     bsdf.inputs["IOR"].default_value = 1.58
     bsdf.inputs["Transmission Weight"].default_value = 1.0
@@ -271,6 +271,13 @@ def build_materials() -> dict:
     bsdf.inputs["Roughness"].default_value = 0.05
     mats["reflector"] = mat
 
+    # EEVEE Next: habilita refração raytraced nos materiais translúcidos
+    for chave in ("glass", "headlamp_lens", "lens_red", "lens_amber"):
+        mat_alvo = mats[chave]
+        for attr in ("use_raytrace_refraction", "use_screen_refraction"):
+            if hasattr(mat_alvo, attr):
+                setattr(mat_alvo, attr, True)
+
     return mats
 
 
@@ -283,6 +290,7 @@ def build_materials() -> dict:
 # (x, w, wt, zs, zte, zt)
 BODY_STATIONS = [
     (1.863, 0.625, 0.500, 0.470, 0.560, 0.592),
+    (1.856, 0.632, 0.506, 0.472, 0.562, 0.594),
     (1.848, 0.712, 0.580, 0.490, 0.578, 0.610),
     (1.806, 0.775, 0.630, 0.512, 0.600, 0.632),
     (1.740, 0.792, 0.646, 0.530, 0.618, 0.650),
@@ -324,9 +332,10 @@ BODY_STATIONS = [
     (-1.558, 0.841, 0.636, 0.710, 0.846, 0.882),
     (-1.640, 0.836, 0.632, 0.700, 0.836, 0.870),
     (-1.720, 0.822, 0.618, 0.686, 0.818, 0.848),
-    (-1.790, 0.802, 0.600, 0.660, 0.790, 0.814),
-    (-1.838, 0.775, 0.570, 0.634, 0.752, 0.778),
-    (-1.863, 0.735, 0.520, 0.606, 0.706, 0.732),
+    (-1.780, 0.802, 0.600, 0.660, 0.790, 0.814),
+    (-1.820, 0.775, 0.570, 0.634, 0.752, 0.778),
+    (-1.852, 0.735, 0.520, 0.606, 0.706, 0.732),
+    (-1.858, 0.735, 0.520, 0.606, 0.706, 0.732),
 ]
 
 
@@ -740,13 +749,13 @@ def build_front_grille(mats):
 
 def build_rear_lights(mats):
     for side in (+1, -1):
-        for i, (yy, r) in enumerate(((0.285, 0.062), (0.560, 0.062))):
+        for i, (yy, r) in enumerate(((0.300, 0.058), (0.580, 0.058))):
             ring = lc.cylinder(
                 f"GEO_TailLamp_Ring_{'L' if side > 0 else 'R'}_{i + 1}",
                 radius=r + 0.012,
-                depth=0.028,
+                depth=0.032,
                 segments=28,
-                location=(-1.852, side * yy, 0.665),
+                location=(-1.856, side * yy, 0.646),
                 rotation=(0.0, math.radians(90.0), 0.0),
                 material=mats["chrome"],
                 tag_info=dict(cat="GEO", part="taillamp_ring", swap="chrome"),
@@ -757,9 +766,9 @@ def build_rear_lights(mats):
             lens = lc.cylinder(
                 f"GEO_TailLamp_Lens_{'L' if side > 0 else 'R'}_{i + 1}",
                 radius=r,
-                depth=0.030,
+                depth=0.034,
                 segments=28,
-                location=(-1.860, side * yy, 0.665),
+                location=(-1.864, side * yy, 0.646),
                 rotation=(0.0, math.radians(90.0), 0.0),
                 material=mats["lens_red"],
                 tag_info=dict(cat="GEO", part="taillamp_lens", swap="lens_red"),
@@ -926,7 +935,7 @@ def build_badges(mats):
         "LOTUS",
         size=0.075,
         extrude=0.006,
-        location=(-1.858, 0.0, 0.735),
+        location=(-1.862, 0.0, 0.742),
         rotation=(math.radians(90.0), 0.0, math.radians(-90.0)),
         material=mats["badge"],
         tag_info=dict(cat="GEO", part="badge_lotus", swap="badge_chrome"),
@@ -937,9 +946,9 @@ def build_badges(mats):
     elise = lc.text_mesh(
         "GEO_Badge_111S",
         "111S",
-        size=0.048,
+        size=0.042,
         extrude=0.005,
-        location=(-1.858, -0.330, 0.672),
+        location=(-1.858, -0.440, 0.662),
         rotation=(math.radians(90.0), 0.0, math.radians(-90.0)),
         material=mats["badge"],
         tag_info=dict(cat="GEO", part="badge_111s", swap="badge_chrome"),
@@ -1063,7 +1072,7 @@ def build_lights(mats) -> None:
         ("LGT_Key_Softbox", (2.9, 2.5, 3.4), (3.4, 2.2), 1150.0, 1.0),
         ("LGT_Fill_Card", (-1.2, -3.6, 2.0), (3.0, 1.4), 420.0, 1.0),
         ("LGT_Rim_Strip", (-3.6, 1.6, 3.0), (2.6, 1.1), 780.0, 1.0),
-        ("LGT_Card_Long", (0.4, 4.2, 1.1), (5.2, 1.0), 600.0, 1.0),
+        ("LGT_Card_Long", (0.4, 4.2, 1.1), (2.4, 0.6), 520.0, 1.0),
     ]
     for name, loc, size, energy, _ in specs:
         data = bpy.data.lights.new(name=name, type="AREA")

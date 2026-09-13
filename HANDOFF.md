@@ -9,12 +9,16 @@ Lotus Elise 111S Series 1 em azul metálico profundo, com verificação visual c
 
 ## Estado atual
 
-- `car-lotus-elise-111s.blend` — cena completa salva (130 malhas, 13 materiais, 4 luzes, 7 câmeras).
+- `car-lotus-elise-111s.blend` — cena completa salva (130 malhas, 13 materiais, 4 luzes, 9 câmeras).
+- Galeria publicada em `images/modelo3d-*.png` e embutida no `README.md` junto às referências do cliente.
 - `scripts/build_lotus_elise_111s.py` — build idempotente (limpa a cena e reconstrói em ~0,6 s).
 - `scripts/lotus_common.py` — helpers (loft, revolução, primitivas, materiais, relatório).
 - `scripts/render_views.py` — 9 renders de verificação em `docs/renders/`.
 - `scripts/mesh_report.py` — relatório de malha avulso (o build também emite o mesmo relatório em
   `docs/renders/mesh_report.txt`).
+- `scripts/render_gallery.py` — galeria de apresentação em `images/modelo3d-{superior,traseira,lateral,isometrica,efeitoluz}.png`;
+  o hero shot monta um rig dramático temporário (rim lights + emissão nos faróis + bloom no compositor) e restaura
+  o rig neutro ao final. **Não salva o `.blend`**, de propósito.
 
 ## Alterações realizadas
 

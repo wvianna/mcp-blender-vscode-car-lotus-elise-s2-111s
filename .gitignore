@@ -1,5 +1,5 @@
 # --- Blender ---
-# Arquivos de backup criados pelo Blender
+# Backups automáticos. O .blend do modelo (car-lotus-elise-111s.blend) É versionado.
 *.blend1
 *.blend2
 
@@ -21,47 +21,21 @@ env/
 .DS_Store
 Thumbs.db
 
-# --- Render temporário / sequências de imagem ---
+# --- Temporários de render ---
+# ATENÇÃO: os renders são entregáveis e ficam versionados no workspace:
+#   - images/modelo3d-*.png          (galeria de apresentação / README)
+#   - docs/renders/*.png             (evidência da verificação visual)
+#   - images/*.jpeg                  (referências do cliente, ground truth)
+*.png.tmp
+*.jpg.tmp
 render/
 frames/
-*.png.tmp
 
-# --- Godot 4 ---
-# Cache do editor e artefatos importados
-.godot/
-# Builds exportados
-export/
-build/
-# Logs
+# Reafirma que as evidências visuais não devem ser ignoradas
+!images/*.png
+!images/*.jpeg
+!docs/renders/*.png
+
+# --- Logs e execução local ---
 *.log
-
-# --- Execução local (start.sh / stop.sh) ---
 .run/
-
-
-# Auxiliares da monografia LaTeX (o PDF final não é ignorado)
-monografia/*.aux
-monografia/*.bbl
-monografia/*.blg
-monografia/*.lof
-monografia/*.lot
-monografia/*.loq
-monografia/*.out
-monografia/*.toc
-monografia/*.fls
-monografia/*.fdb_latexmk
-monografia/*.synctex.gz
-monografia/_minted*/s
-
-# Auxiliares do artigo
-artigo/*.aux
-artigo/*.bbl
-artigo/*.blg
-artigo/*.lof
-artigo/*.lot
-artigo/*.out
-artigo/*.toc
-artigo/*.fls
-artigo/*.fdb_latexmk
-artigo/*.synctex.gz
-artigo/_minted*/s

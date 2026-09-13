@@ -7,7 +7,7 @@ Objetos de malha: 130
 | GEO_Badge_111S | 536 | 386 | 134 | 252 | 0 | 0 | 536 |
 | GEO_Badge_Front | 266 | 288 | 240 | 48 | 0 | 0 | 0 |
 | GEO_Badge_LOTUS | 1240 | 914 | 310 | 604 | 0 | 0 | 1240 |
-| GEO_Body_Hull | 720 | 718 | 718 | 0 | 0 | 0 | 0 |
+| GEO_Body_Hull | 752 | 750 | 750 | 0 | 0 | 0 | 0 |
 | GEO_Cabin_Hull | 150 | 148 | 148 | 0 | 0 | 0 | 0 |
 | GEO_Cockpit_Liner | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
 | GEO_Dashboard | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
@@ -137,13 +137,13 @@ Objetos de malha: 130
 
 ## Totais (malha base, sem subdivisão)
 
-- Faces: 32600 (quads 29240, tris 3360, n-gons 0)
+- Faces: 32632 (quads 29272, tris 3360, n-gons 0)
 - Arestas non-manifold: 0
 - Arestas de borda: 1776
 
 ## Envelope
 
-- Comprimento (X): 3.732 m (alvo 3.726)
+- Comprimento (X): 3.736 m (alvo 3.726)
 - Largura (Y): 1.718 m (alvo 1.718)
 - Altura (Z): 1.117 m (alvo 1.117)
 - Solo (Z mín): 0.0000 m
