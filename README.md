@@ -100,6 +100,16 @@ Executar o build dentro da sessão do Blender aberta:
 exec(open("scripts/build_lotus_elise_111s.py").read())
 ```
 
+### 6. Compilar a monografia
+
+```bash
+cd monografia && ./build.sh     # pdflatex → bibtex → pdflatex ×2
+```
+
+Requer `pdflatex` e `bibtex` (TeX Live). O PDF sai em `monografia/main.pdf`; o script imprime
+erros, referências indefinidas, contagem de overfull e número de páginas. Os diagramas são
+regenerados com `mmdc -p diagrams/pptr.json -i diagrams/x.mmd -o diagrams/x.png`.
+
 ## Estrutura de diretórios
 
 ```text
@@ -115,6 +125,14 @@ exec(open("scripts/build_lotus_elise_111s.py").read())
 ├── images/                    # referências do cliente + galeria do modelo
 │   ├── *.jpeg                 # referências (ground truth)
 │   └── modelo3d-*.png         # imagens geradas no Blender (versionadas)
+├── monografia/                # monografia em LaTeX (abnt/memoir) + PDF
+│   ├── main.tex               # arquivo principal
+│   ├── chapters/ appendices/  # capítulos e apêndices
+│   ├── diagrams/              # diagramas Mermaid (.mmd) e PNG
+│   ├── figures/               # referências, renders e galeria usados no texto
+│   ├── references.bib         # 49 referências verificáveis
+│   ├── build.sh               # pdflatex → bibtex → pdflatex ×2
+│   └── main.pdf               # monografia compilada (94 páginas)
 └── scripts/                   # build, galeria, verificação e relatório
 ```
 
@@ -157,6 +175,11 @@ flowchart LR
 | `AGENTS.md` | regras permanentes para agentes |
 | `STATUS.md` | estado atual |
 | `HANDOFF.md` | transferência entre sessões |
+| `monografia/main.pdf` | monografia compilada (94 páginas) |
+| `monografia/MONOGRAFIA_STATUS.md` | estado da monografia e métricas do PDF |
+| `monografia/MONOGRAFIA_EVIDENCIAS.md` | matriz afirmação → evidência → seção |
+| `monografia/MONOGRAFIA_RASTREABILIDADE.md` | objetivo → método → evidência → status |
+| `monografia/MONOGRAFIA_PENDENCIAS.md` | pendências e informações ausentes |
 
 ## Licença
 

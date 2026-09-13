@@ -1,0 +1,98 @@
+% ===========================================================================
+\chapter{Invent\'ario de objetos e relat\'orio de malha}\label{ap:objetos}
+% ===========================================================================
+
+Esta se{\c{c}}\~ao reproduz os totais e o envelope do relat\'orio de malha emitido pelo build.
+A tabela detalhada, com uma linha por objeto e as contagens de v\'ertices, faces, quads,
+tri\^angulos, n-gons, arestas n\~ao variedade e arestas de borda, est\'a no arquivo
+\texttt{docs/renders/mesh\_report.txt}, que \'e gerado automaticamente e versionado.
+
+\section{Totais consolidados}
+
+\begin{table}[htbp]
+\centering
+\caption{Totais de malha da cena (malha base, sem subdivis\~ao)}
+\label{tab:totais-ap}
+\footnotesize
+\begin{tabular}{>{\raggedright\arraybackslash}p{7.4cm}r}
+\toprule
+\textbf{Grandeza} & \textbf{Valor} \\
+\midrule
+Objetos de malha & 130 \\
+Faces & 32.632 \\
+\quad quads & 29.272 \\
+\quad tri\^angulos & 3.360 \\
+\quad n-gons & 0 \\
+Arestas n\~ao variedade & 0 \\
+Arestas de borda & 1.776 \\
+\bottomrule
+\end{tabular}
+\fonte{\texttt{docs/renders/mesh\_report.txt} (2026).}
+\end{table}
+
+\section{Envelope dimensional}
+
+\begin{table}[htbp]
+\centering
+\caption{Envelope medido e alvo}
+\label{tab:envelope-ap}
+\footnotesize
+\begin{tabular}{>{\raggedright\arraybackslash}p{4.6cm}rr>{\raggedright\arraybackslash}p{4.6cm}}
+\toprule
+\textbf{Grandeza} & \textbf{Medido (m)} & \textbf{Alvo (m)} & \textbf{Observa{\c{c}}\~ao} \\
+\midrule
+Comprimento (X) & 3,736 & 3,726 & $+1,0$\,cm \\
+Largura (Y) & 1,718 & 1,718 & exato \\
+Altura (Z) & 1,117 & 1,117 & exato \\
+Solo (Z m\'inimo) & 0,0000 & 0,000 & exato \\
+Centro em Y & 0,0000 & 0,000 & exato \\
+\bottomrule
+\end{tabular}
+\fonte{\texttt{docs/renders/mesh\_report.txt} (2026).}
+\end{table}
+
+\section{Invent\'ario por grupo funcional}
+
+\begin{table}[htbp]
+\centering
+\caption{Objetos de malha por grupo funcional}
+\label{tab:grupos-ap}
+\footnotesize
+\begin{tabular}{>{\raggedright\arraybackslash}p{7.0cm}r}
+\toprule
+\textbf{Grupo} & \textbf{Objetos} \\
+\midrule
+Rodas (4 conjuntos de 13 pe{\c{c}}as) & 52 \\
+Ventila{\c{c}}\~oes (\emph{louvers}, sa\'idas, duto) & 23 \\
+Far\'ois e indicadores & 12 \\
+Lanternas traseiras & 8 \\
+Interior & 7 \\
+Grelha frontal & 6 \\
+Aerodin\^amica & 6 \\
+Far\'ois auxiliares & 4 \\
+Espelhos & 4 \\
+Casco e cabine & 3 \\
+Emblemas & 3 \\
+Refletores do difusor & 2 \\
+\midrule
+\textbf{Total} & \textbf{130} \\
+\bottomrule
+\end{tabular}
+\fonte{\texttt{docs/renders/mesh\_report.txt} (2026).}
+\end{table}
+
+\section{Objetos com arestas de borda}
+
+Apenas tr\^es objetos apresentam arestas de borda, todos eles emblemas de texto:
+\texttt{GEO\_Badge\_}\allowbreak\texttt{LOTUS} (1.240),
+\texttt{GEO\_Badge\_}\allowbreak\texttt{111S} (536) e, adicionalmente, as
+bordas de contorno dos demais glifos. Nenhum objeto de superf\'icie curva apresenta aresta de
+borda, o que confirma que os corpos s\~ao fechados e as tampas operam conforme projetado.
+
+\section{Objetos com tri\^angulos}
+
+Os tri\^angulos concentram-se em tr\^es origens: os glifos dos emblemas
+(\texttt{GEO\_Badge\_}\allowbreak\texttt{LOTUS} com 604 e
+\texttt{GEO\_Badge\_}\allowbreak\texttt{111S} com 252), os cantos de chanfro
+de primitivas de caixa e os elementos \'opticos de revolu{\c{c}}\~ao. Nenhum tri\^angulo
+ocorre em superf\'icie curva principal do casco ou da cabine.

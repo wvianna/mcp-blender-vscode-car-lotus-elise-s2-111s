@@ -1,0 +1,173 @@
+% ===========================================================================
+%  Monografia -- Modelagem 3D Procedimental do Lotus Elise 111S em Blender
+%               Automatizada por Model Context Protocol (MCP)
+%
+%  Classe: memoir (ABNT configurada manualmente)
+%  Compilacao: pdflatex -> bibtex -> pdflatex -> pdflatex  (ver build.sh)
+% ===========================================================================
+\documentclass[12pt,a4paper,oneside]{memoir}
+
+% ------------------------- Codificacao e fontes ----------------------------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[brazilian]{babel}
+\shorthandoff{"}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{indentfirst}
+
+% ------------------------- Layout (margens ABNT) ---------------------------
+\setlrmarginsandblock{3cm}{2cm}{*}
+\setulmarginsandblock{3cm}{2cm}{*}
+\setheadfoot{1.2\onelineskip}{1.4\onelineskip}
+\checkandfixthelayout
+\OnehalfSpacing
+\setlength{\parindent}{1.25cm}
+\setlength{\parskip}{0pt}
+
+% ------------------------- Pacotes ----------------------------------------
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{caption}
+
+% ------------------------- Estilo de capitulo ------------------------------
+\makechapterstyle{abnt}{%
+  \renewcommand{\chapnamefont}{\normalfont\bfseries\large}
+  \renewcommand{\chapnumfont}{\normalfont\bfseries\large}
+  \renewcommand{\chaptitlefont}{\normalfont\bfseries\large}
+  \renewcommand{\printchaptername}{}
+  \renewcommand{\chapternamenum}{}
+  \renewcommand{\printchapternum}{\thechapter\hspace{1.2em}}
+  \renewcommand{\afterchapternum}{}
+  \renewcommand{\printchaptertitle}[1]{\chaptitlefont\MakeUppercase{##1}}
+  \renewcommand{\afterchaptertitle}{\par\nobreak\vskip 14pt}
+}
+\chapterstyle{abnt}
+\setsecnumdepth{subsection}
+\settocdepth{subsection}
+\maxtocdepth{subsection}
+
+% ------------------------- Legendas ---------------------------------------
+\renewcommand{\contentsname}{SUM\'ARIO}
+\renewcommand{\listfigurename}{LISTA DE FIGURAS}
+\renewcommand{\listtablename}{LISTA DE TABELAS}
+\renewcommand{\bibname}{REFER\^ENCIAS}
+\renewcommand{\figurename}{Figura}
+\renewcommand{\tablename}{Tabela}
+\captionnamefont{\bfseries}
+\captiontitlefont{\normalfont}
+
+\newfloat{quadro}{htbp}{loq}
+\floatname{quadro}{Quadro}
+\makeatletter
+\@addtoreset{quadro}{chapter}
+\renewcommand{\thequadro}{\thechapter.\arabic{quadro}}
+\makeatother
+
+% ------------------------- Listagens de codigo -----------------------------
+\definecolor{codebg}{RGB}{247,247,247}
+\definecolor{codecomment}{RGB}{92,104,92}
+\definecolor{codestring}{RGB}{158,64,40}
+\definecolor{coderule}{RGB}{200,200,200}
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\bfseries,
+  commentstyle=\itshape\color{codecomment},
+  stringstyle=\color{codestring},
+  backgroundcolor=\color{codebg},
+  frame=single,
+  framesep=5pt,
+  rulecolor=\color{coderule},
+  breaklines=true,
+  breakatwhitespace=false,
+  columns=fullflexible,
+  keepspaces=true,
+  showstringspaces=false,
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  numbersep=7pt,
+  xleftmargin=1.6em,
+  extendedchars=false,
+  inputencoding=utf8,
+  aboveskip=8pt,
+  belowskip=8pt
+}
+\renewcommand{\lstlistingname}{C\'odigo}
+
+% ------------------------- Comando de fonte -------------------------------
+\newcommand{\fonte}[1]{\par\vspace{3pt}{\footnotesize\itshape Fonte: #1\par}}
+
+% ------------------------- Hiperlinks -------------------------------------
+\usepackage[unicode,hidelinks,bookmarksnumbered]{hyperref}
+\hypersetup{
+  pdftitle={Modelagem 3D Procedimental do Lotus Elise 111S em Blender Automatizada por Model Context Protocol},
+  pdfauthor={William da Silva Vianna},
+  pdfsubject={Monografia de graduacao em Engenharia},
+  pdfkeywords={Model Context Protocol; Blender; modelagem procedimental; subdivisao; PBR}
+}
+\urlstyle{same}
+
+% ------------------------- Abreviaturas -----------------------------------
+\newlist{abrev}{description}{1}
+\setlist[abrev]{labelindent=0pt,leftmargin=2.6cm,style=sameline,font=\bfseries}
+\newlist{simb}{description}{1}
+\setlist[simb]{labelindent=0pt,leftmargin=2.6cm,style=sameline}
+
+% ===========================================================================
+\begin{document}
+\frenchspacing
+
+\include{pretextual}
+
+\frontmatter
+\pagestyle{plain}
+
+% ------------------------- Front matter: resumo/abstract -------------------
+\include{chapters/0-pre-textuais}
+
+% ------------------------- Listas -----------------------------------------
+\cleardoublepage
+\listoffigures
+\cleardoublepage
+\listoftables
+\cleardoublepage
+\listof{quadro}{LISTA DE QUADROS}
+\cleardoublepage
+\input{chapters/0-listas-pretextuais}
+\cleardoublepage
+\tableofcontents*
+
+% ===========================================================================
+\mainmatter
+\pagestyle{plain}
+
+\include{chapters/1-introducao}
+\include{chapters/2-fundamentacao}
+\include{chapters/3-trabalhos-relacionados}
+\include{chapters/4-materiais-metodos}
+\include{chapters/5-desenvolvimento}
+\include{chapters/6-resultados}
+\include{chapters/7-discussao}
+\include{chapters/8-conclusao}
+
+% ------------------------- Pos-textuais ------------------------------------
+\cleardoublepage
+\bibliographystyle{unsrt}
+\bibliography{references}
+
+\appendix
+\include{appendices/A-estacoes-loft}
+\include{appendices/B-materiais}
+\include{appendices/C-objetos}
+\include{appendices/D-scripts}
+
+\end{document}

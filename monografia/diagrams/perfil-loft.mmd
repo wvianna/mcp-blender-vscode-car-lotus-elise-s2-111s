@@ -1,0 +1,16 @@
+flowchart TD
+    subgraph PERFIL["Perfil transversal de meio-lado"]
+        P0["ponto 0<br/>centro do fundo"] --> P1["ponto 1<br/>fundo"]
+        P1 --> P2["ponto 2<br/>transicao inferior"]
+        P2 --> P3["ponto 3<br/>ombro inferior"]
+        P3 --> P4["ponto 4<br/>largura maxima"]
+        P4 --> P5["ponto 5<br/>ombro e cintura"]
+        P5 --> P6["ponto 6<br/>aresta superior"]
+        P6 --> P7["ponto 7<br/>topo lateral"]
+        P7 --> P8["ponto 8<br/>topo medial"]
+        P8 --> P9["ponto 9<br/>centro do topo"]
+    end
+    PERFIL --> ESP["Espelhamento em Y"]
+    ESP --> ANEL["Anel fechado de 18 segmentos"]
+    ANEL --> LOFT["Loft ao longo de X<br/>45 estacoes"]
+    LOFT --> MALHA["Grade 100 por cento quadrupla"]

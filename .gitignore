@@ -39,3 +39,26 @@ frames/
 # --- Logs e execução local ---
 *.log
 .run/
+
+# -----------------------------------------------------------------------------
+# LaTeX (monografia/) — artefatos de compilação
+# Mantém versionados: .tex, .bib, o PDF final (monografia/main.pdf), figuras,
+# diagramas-fonte (.mmd) e o script de build.
+# -----------------------------------------------------------------------------
+monografia/*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.loq
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.bcf
+*.run.xml
+*-blx.bib
+latex.out/
+.texpadtmp/

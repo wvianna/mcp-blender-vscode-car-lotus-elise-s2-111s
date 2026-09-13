@@ -19,13 +19,17 @@ Lotus Elise 111S Series 1 em azul metálico profundo, com verificação visual c
 - `scripts/render_gallery.py` — galeria de apresentação em `images/modelo3d-{superior,traseira,lateral,isometrica,efeitoluz}.png`;
   o hero shot monta um rig dramático temporário (rim lights + emissão nos faróis + bloom no compositor) e restaura
   o rig neutro ao final. **Não salva o `.blend`**, de propósito.
+- `monografia/` — monografia em LaTeX (`main.tex` + `chapters/` + `appendices/` + `diagrams/` + `references.bib`),
+  compilada por `monografia/build.sh` (pdflatex → bibtex → pdflatex ×2) em `monografia/main.pdf` (94 páginas).
+  Arquivos de controle: `MONOGRAFIA_STATUS.md`, `MONOGRAFIA_PLANO.md`, `MONOGRAFIA_EVIDENCIAS.md`,
+  `MONOGRAFIA_RASTREABILIDADE.md`, `MONOGRAFIA_PENDENCIAS.md`.
 
 ## Alterações realizadas
 
 1. `.specs/` criado com constituição, `spec.md` (21 FR, 4 NFR, 9 CA), `design.md` (4 ADRs) e `tasks.md`.
 2. `AGENTS.md`, `README.md`, `LICENSE` (Apache 2.0) e este handoff.
 3. Pipeline de modelagem procedimental:
-   - corpo por loft de 45 seções transversais (16 pontos cada) com arcos de roda obtidos por modulação do fundo
+   - corpo por loft de 47 seções transversais (16 pontos cada) com arcos de roda obtidos por modulação do fundo
      (`arch_bottom`) — sem boolean;
    - tampas de loft e de cilindros em quads via *folded fan* (`_folded_fan_cap`), eliminando n-gons;
    - cabine como segundo loft, com material de vidro atribuído por faixa de faces (sem placas flutuantes);

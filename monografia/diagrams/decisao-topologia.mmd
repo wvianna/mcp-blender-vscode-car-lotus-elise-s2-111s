@@ -1,0 +1,9 @@
+flowchart TD
+    F["Face gerada no bmesh"] --> N{"Numero de<br/>vertices n"}
+    N -->|"n = 3"| T["Triangulo<br/>admitido apenas em<br/>superficie plana oculta"]
+    N -->|"n = 4"| Q["Quad<br/>alvo da malha"]
+    N -->|"n maior que 4"| NG["N-gon<br/>PROIBIDO pelo requisito FR-013"]
+    Q --> S["Subdivision Surface<br/>render levels = 3 nos corpos"]
+    Q --> V["Validacao do relatorio<br/>de malha"]
+    T --> V
+    NG --> R["Rejeitado pelo build"]

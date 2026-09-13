@@ -1,0 +1,154 @@
+# Relatório de malha — Lotus Elise 111S
+
+Objetos de malha: 130
+
+| Objeto | Vértices | Faces | Quads | Tris | N-gons | Non-manifold | Borda |
+|---|---|---|---|---|---|---|---|
+| GEO_Badge_111S | 536 | 386 | 134 | 252 | 0 | 0 | 536 |
+| GEO_Badge_Front | 266 | 288 | 240 | 48 | 0 | 0 | 0 |
+| GEO_Badge_LOTUS | 1240 | 914 | 310 | 604 | 0 | 0 | 1240 |
+| GEO_Body_Hull | 752 | 750 | 750 | 0 | 0 | 0 | 0 |
+| GEO_Cabin_Hull | 150 | 148 | 148 | 0 | 0 | 0 | 0 |
+| GEO_Cockpit_Liner | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Dashboard | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Diffuser_Fin_L | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Diffuser_Fin_R | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Diffuser_Reflector_L | 576 | 598 | 550 | 48 | 0 | 0 | 0 |
+| GEO_Diffuser_Reflector_R | 576 | 598 | 550 | 48 | 0 | 0 | 0 |
+| GEO_DrivingLamp_L_1 | 672 | 698 | 642 | 56 | 0 | 0 | 0 |
+| GEO_DrivingLamp_L_2 | 672 | 698 | 642 | 56 | 0 | 0 | 0 |
+| GEO_DrivingLamp_R_1 | 672 | 698 | 642 | 56 | 0 | 0 | 0 |
+| GEO_DrivingLamp_R_2 | 672 | 698 | 642 | 56 | 0 | 0 | 0 |
+| GEO_EngineCover_Louver_L_1 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_EngineCover_Louver_L_2 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_EngineCover_Louver_L_3 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_EngineCover_Louver_L_4 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_EngineCover_Louver_L_5 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_EngineCover_Louver_L_6 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_EngineCover_Louver_R_1 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_EngineCover_Louver_R_2 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_EngineCover_Louver_R_3 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_EngineCover_Louver_R_4 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_EngineCover_Louver_R_5 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_EngineCover_Louver_R_6 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_EngineCover_Recess | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Exhaust_Tip_L | 672 | 698 | 642 | 56 | 0 | 0 | 0 |
+| GEO_Exhaust_Tip_R | 672 | 698 | 642 | 56 | 0 | 0 | 0 |
+| GEO_Front_Splitter | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Grille_Bar_1 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Grille_Bar_2 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Grille_Bar_3 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Grille_Bar_4 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Grille_Bar_5 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Grille_Recess | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Headlamp_Bulb_L_1 | 576 | 598 | 550 | 48 | 0 | 0 | 0 |
+| GEO_Headlamp_Bulb_L_2 | 576 | 598 | 550 | 48 | 0 | 0 | 0 |
+| GEO_Headlamp_Bulb_R_1 | 576 | 598 | 550 | 48 | 0 | 0 | 0 |
+| GEO_Headlamp_Bulb_R_2 | 576 | 598 | 550 | 48 | 0 | 0 | 0 |
+| GEO_Headlamp_Housing_L | 266 | 288 | 240 | 48 | 0 | 0 | 0 |
+| GEO_Headlamp_Housing_R | 266 | 288 | 240 | 48 | 0 | 0 | 0 |
+| GEO_Headlamp_Lens_L | 266 | 288 | 240 | 48 | 0 | 0 | 0 |
+| GEO_Headlamp_Lens_R | 266 | 288 | 240 | 48 | 0 | 0 | 0 |
+| GEO_Headlamp_Reflector_L | 266 | 288 | 240 | 48 | 0 | 0 | 0 |
+| GEO_Headlamp_Reflector_R | 266 | 288 | 240 | 48 | 0 | 0 | 0 |
+| GEO_Hood_Vent | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Indicator_Lens_L | 266 | 288 | 240 | 48 | 0 | 0 | 0 |
+| GEO_Indicator_Lens_R | 266 | 288 | 240 | 48 | 0 | 0 | 0 |
+| GEO_Mirror_Shell_L | 266 | 288 | 240 | 48 | 0 | 0 | 0 |
+| GEO_Mirror_Shell_R | 266 | 288 | 240 | 48 | 0 | 0 | 0 |
+| GEO_Mirror_Stalk_L | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Mirror_Stalk_R | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Rear_Diffuser | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Rear_Vent_Slat_1 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Rear_Vent_Slat_2 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Rear_Vent_Slat_3 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Rear_Vent_Slat_4 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Rear_Vent_Slat_5 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Rear_Vent_Slat_6 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Rear_Vent_Slat_7 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Rear_Vent_Slat_8 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Rear_Vent_Slat_9 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_RollBar | 896 | 896 | 896 | 0 | 0 | 0 | 0 |
+| GEO_Seat_Backrest_L | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Seat_Backrest_R | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Seat_Cushion_L | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Seat_Cushion_R | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Steering_Wheel | 640 | 640 | 640 | 0 | 0 | 0 | 0 |
+| GEO_TailLamp_Lens_L_1 | 672 | 698 | 642 | 56 | 0 | 0 | 0 |
+| GEO_TailLamp_Lens_L_2 | 672 | 698 | 642 | 56 | 0 | 0 | 0 |
+| GEO_TailLamp_Lens_R_1 | 672 | 698 | 642 | 56 | 0 | 0 | 0 |
+| GEO_TailLamp_Lens_R_2 | 672 | 698 | 642 | 56 | 0 | 0 | 0 |
+| GEO_TailLamp_Ring_L_1 | 672 | 698 | 642 | 56 | 0 | 0 | 0 |
+| GEO_TailLamp_Ring_L_2 | 672 | 698 | 642 | 56 | 0 | 0 | 0 |
+| GEO_TailLamp_Ring_R_1 | 672 | 698 | 642 | 56 | 0 | 0 | 0 |
+| GEO_TailLamp_Ring_R_2 | 672 | 698 | 642 | 56 | 0 | 0 | 0 |
+| GEO_Wheel_FL_BrakeCaliper | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Wheel_FL_BrakeDisc | 64 | 62 | 62 | 0 | 0 | 0 | 0 |
+| GEO_Wheel_FL_CenterCap | 480 | 498 | 458 | 40 | 0 | 0 | 0 |
+| GEO_Wheel_FL_Hub | 576 | 598 | 550 | 48 | 0 | 0 | 0 |
+| GEO_Wheel_FL_Rim_Barrel | 176 | 176 | 176 | 0 | 0 | 0 | 0 |
+| GEO_Wheel_FL_Rim_Dish | 176 | 176 | 176 | 0 | 0 | 0 | 0 |
+| GEO_Wheel_FL_Spoke_1 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Wheel_FL_Spoke_2 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Wheel_FL_Spoke_3 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Wheel_FL_Spoke_4 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Wheel_FL_Spoke_5 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Wheel_FL_Spoke_6 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Wheel_FL_Tire | 720 | 720 | 720 | 0 | 0 | 0 | 0 |
+| GEO_Wheel_FR_BrakeCaliper | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Wheel_FR_BrakeDisc | 64 | 62 | 62 | 0 | 0 | 0 | 0 |
+| GEO_Wheel_FR_CenterCap | 480 | 498 | 458 | 40 | 0 | 0 | 0 |
+| GEO_Wheel_FR_Hub | 576 | 598 | 550 | 48 | 0 | 0 | 0 |
+| GEO_Wheel_FR_Rim_Barrel | 176 | 176 | 176 | 0 | 0 | 0 | 0 |
+| GEO_Wheel_FR_Rim_Dish | 176 | 176 | 176 | 0 | 0 | 0 | 0 |
+| GEO_Wheel_FR_Spoke_1 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Wheel_FR_Spoke_2 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Wheel_FR_Spoke_3 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Wheel_FR_Spoke_4 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Wheel_FR_Spoke_5 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Wheel_FR_Spoke_6 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Wheel_FR_Tire | 720 | 720 | 720 | 0 | 0 | 0 | 0 |
+| GEO_Wheel_RL_BrakeCaliper | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Wheel_RL_BrakeDisc | 64 | 62 | 62 | 0 | 0 | 0 | 0 |
+| GEO_Wheel_RL_CenterCap | 480 | 498 | 458 | 40 | 0 | 0 | 0 |
+| GEO_Wheel_RL_Hub | 576 | 598 | 550 | 48 | 0 | 0 | 0 |
+| GEO_Wheel_RL_Rim_Barrel | 176 | 176 | 176 | 0 | 0 | 0 | 0 |
+| GEO_Wheel_RL_Rim_Dish | 176 | 176 | 176 | 0 | 0 | 0 | 0 |
+| GEO_Wheel_RL_Spoke_1 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Wheel_RL_Spoke_2 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Wheel_RL_Spoke_3 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Wheel_RL_Spoke_4 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Wheel_RL_Spoke_5 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Wheel_RL_Spoke_6 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Wheel_RL_Tire | 720 | 720 | 720 | 0 | 0 | 0 | 0 |
+| GEO_Wheel_RR_BrakeCaliper | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Wheel_RR_BrakeDisc | 64 | 62 | 62 | 0 | 0 | 0 | 0 |
+| GEO_Wheel_RR_CenterCap | 480 | 498 | 458 | 40 | 0 | 0 | 0 |
+| GEO_Wheel_RR_Hub | 576 | 598 | 550 | 48 | 0 | 0 | 0 |
+| GEO_Wheel_RR_Rim_Barrel | 176 | 176 | 176 | 0 | 0 | 0 | 0 |
+| GEO_Wheel_RR_Rim_Dish | 176 | 176 | 176 | 0 | 0 | 0 | 0 |
+| GEO_Wheel_RR_Spoke_1 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Wheel_RR_Spoke_2 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Wheel_RR_Spoke_3 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Wheel_RR_Spoke_4 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Wheel_RR_Spoke_5 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Wheel_RR_Spoke_6 | 48 | 50 | 42 | 8 | 0 | 0 | 0 |
+| GEO_Wheel_RR_Tire | 720 | 720 | 720 | 0 | 0 | 0 | 0 |
+
+## Totais (malha base, sem subdivisão)
+
+- Faces: 32632 (quads 29272, tris 3360, n-gons 0)
+- Arestas non-manifold: 0
+- Arestas de borda: 1776
+
+## Envelope
+
+- Comprimento (X): 3.736 m (alvo 3.726)
+- Largura (Y): 1.718 m (alvo 1.718)
+- Altura (Z): 1.117 m (alvo 1.117)
+- Solo (Z mín): 0.0000 m
+- Centro Y: 0.0000 m
+
+## N-gons por objeto
+
+- nenhum

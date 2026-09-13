@@ -1,0 +1,148 @@
+% ===========================================================================
+\chapter{Trabalhos relacionados}\label{ch:relacionados}
+% ===========================================================================
+
+O presente trabalho situa-se na interse\c{c}\~ao de quatro linhas de pesquisa: modelagem
+procedimental de formas, projetos de engenharia reversa, reconstru\c{c}\~ao tridimensional a
+partir de imagens e agentes de intelig\^encia artificial que operam ferramentas externas. Este
+cap\'itulo percorre cada linha, identifica o que ela oferece e explicita a lacuna que o
+trabalho pretende ocupar.
+
+\section{Modelagem procedimental e gram\'aticas de forma}
+
+A ideia de gerar forma por regras antecede a computa\c{c}\~ao gr\'afica interativa. As
+gram\'aticas de forma de Stiny e Gips \cite{stiny1972} formalizaram a gera\c{c}\~ao de arranjos
+geom\'etricos por reescrita, e os sistemas-L de Lindenmayer, popularizados por Prusinkiewicz e
+Lindenmayer \cite{prusinkiewicz1990}, demonstraram que estruturas org\^anicas complexas podem ser
+descritas por um conjunto pequeno de produ\c{c}\~oes.
+
+Na computa\c{c}\~ao gr\'afica, a modelagem procedimental consolidou-se com trab\'alhos como o de
+Parish e M\"uller \cite{parish2001} para cidades e o de M\"uller \emph{et al.}
+\cite{muller2006} para edif\'icios, nos quais a forma emerge de um conjunto hier\'arquico de
+regras aplicadas recursivamente. McCormack \emph{et al.} \cite{mccormack2004} sistematizaram o
+paradigma para o design generativo em geral.
+
+A transposi\c{c}\~ao dessa linhagem para o desenho de produto esbarra em uma caracter\'istica
+central da est\'etica automotiva: as superf\'icies s\~ao dominadas por curvatura cont\'inua e
+por rela\c{c}\~oes de propor\c{c}\~ao perceptuais, dif\'iceis de capturar em regras simb\'olicas.
+Trabalhos de modelagem por esbo\c{c}o, como o \emph{Teddy} de Igarashi \emph{et al.}
+\cite{igarashi1999}, mostram que a interface natural para esse tipo de forma \'e a manipula\c{c}\~ao
+direta de curvas. O presente trabalho n\~ao prop\~oe uma gram\'atica nova; prop\~oe que a forma
+seja \emph{parametrizada por esta\c{c}\~oes}, isto \'e, descrita por uma tabela de perfis
+transversais interpolados --- uma discretiza\c{c}\~ao que preserva o controle art\'istico e
+admite gera\c{c}\~ao por c\'odigo.
+
+\section{Engenharia reversa de modelos geom\'etricos}
+
+A engenharia reversa de modelos geom\'etricos ocupa-se de converter medi\c{c}\~oes do mundo
+f\'isico em uma representa\c{c}\~ao digital. V\'arady \emph{et al.} \cite{varady1997} oferecem a
+introdu\c{c}\~ao cl\'assica ao problema e destacam suas etapas: aquisi\c{c}\~ao, segmenta\c{c}\~ao
+em regi\~oes compat\'iveis com primitivas, ajuste de superf\'icies e imposi\c{c}\~ao de
+continuidade nas costuras. Otto e Wood \cite{otto2001} situam a pr\'atica no contexto mais
+amplo do desenvolvimento de produto, e Shah e M\"antyl\"a \cite{shah1995} discutem a
+integra\c{c}\~ao entre modelagem param\'etrica e manufatura.
+
+Esses trabalhos partem, tipicamente, de dados densos --- nuvens de pontos de esc\^aner a laser ou
+medi\c{c}\~ao por coordenadas --- e de um objetivo de produ\c{c}\~ao: a superf\'icie reconstru\'ida
+deve ser execut\'avel em CAM. A situa\c{c}\~ao deste trabalho \'e diferente em dois pontos. N\~ao
+h\'a dados densos; h\'a seis fotografias em perspectiva. E n\~ao h\'a objetivo de manufatura; o
+objetivo \'e renderiza\c{c}\~ao fotogr\'afica e reprodutibilidade do processo. Isso desloca o
+problema da fidelidade microm\'etrica para a fidelidade de \emph{morfologia e proporção}, o que
+muda as t\'ecnicas adequadas.
+
+\section{Reconstru\c{c}\~ao tridimensional a partir de imagens}
+
+A reconstru\c{c}\~ao a partir de m\'ultiplas vistas \'e um campo maduro. A geometria
+projetiva que a fundamenta est\'a consolidada por Hartley e Zisserman \cite{hartley2004}. A
+reconstru\c{c}\~ao autom\'atica de cenas e estruturas foi popularizada por sistemas como o
+\emph{Photo Tourism} \cite{snavely2006} e pelas implementa\c{c}\~oes modernas de
+\emph{Structure-from-Motion} \cite{schonberger2016}. Mais recentemente, campos de
+radi\^ancia neurais \cite{mildenhall2020} e a rasteriza\c{c}\~ao gaussiana
+\cite{kerbl2023} deslocaram a fronteira para representa\c{c}\~oes impl\'icitas e
+pontuais, com resultados fotogr\'aficos not\'aveis.
+
+H\'a, contudo, uma diferen\c{c}a decisiva de objetivo. Esses m\'etodos produzem
+\emph{reconstru\c{c}\~oes}: representa\c{c}\~oes que se parecem com o objeto sob os pontos de
+vista observados. O presente trabalho precisa de um \emph{modelo}: uma malha edit\'avel, com
+topologia controlada, normais coerentes e faces organizadas para subdivis\~ao. Uma
+reconstru\c{c}\~ao por fotogrametria gera malha irregular, densa e sem fluxo de arestas ---
+inadequada, por constru\c{c}\~ao, ao requisito de malha quadr\^angular dominante sem n-gons.
+As fotografias, aqui, n\~ao alimentam um algoritmo de reconstru\c{c}\~ao autom\'atica; alimentam
+a \emph{decis\~ao humana} sobre par\^ametros, e servem de refer\^encia de aceita\c{c}\~ao.
+
+\section{Agentes de intelig\^encia artificial que operam ferramentas}
+
+A capacidade de um modelo de linguagem invocar ferramentas externas foi demonstrada por v\'arias
+linhas convergentes: o uso de APIs aprendido a partir de documenta\c{c}\~ao
+\cite{schick2023, patil2023}, a integra\c{c}\~ao massiva de ferramentas \cite{qin2023} e o
+encadeamento entre racioc\'inio e a\c{c}\~ao \cite{yao2023}. A media\c{c}\~ao por
+recupera\c{c}\~ao de contexto \cite{lewis2020} e a coordena\c{c}\~ao entre m\'ultiplos agentes
+\cite{wu2023} completam o quadro.
+
+Entretanto, cada uma dessas contribui\c{c}\~oes resolvia o problema no n\'ivel da
+\emph{aplica\c{c}\~ao}. Faltava uma camada de protocolo que permitisse a um servidor expor
+capacidades de forma descobr\'ivel e independente do modelo consumidor. O \emph{Model Context
+Protocol} \cite{mcpspec2024} \'e a resposta mais difundida a essa lacuna, e sua ado\c{c}\~ao em
+ferramentas de desenvolvimento tem sido r\'apida. O servidor utilizado neste trabalho,
+\texttt{blender-mcp} \cite{blendermcp2025}, exp\~oe o Blender por esse protocolo, com
+transporte de entrada/sa\'ida padr\~ao.
+
+A literatura sobre o uso de MCP em pipelines de conte\'udo tridimensional ainda \'e
+predominantemente t\'ecnica e baseada em relat\'os de pr\'atica, e n\~ao em estudos
+sistem\'aticos de qualidade de resultado. O presente trabalho contribui nessa dire{\c{c}}\~ao ao
+registrar n\~ao apenas o uso do protocolo, mas o efeito desse uso sobre a
+\emph{reprodutibilidade e a auditabilidade} do artefato geom\'etrico produzido.
+
+\section{Verifica\c{c}\~ao e valida\c{c}\~ao em artefatos digitais}
+
+Em engenharia de software, a verifica\c{c}\~ao responde ``o produto foi constru\'ido
+corretamente?'' e a valida\c{c}\~ao responde ``foi constru\'ido o produto correto?''. Transportar
+essa distin{\c{c}}\~ao para conte\'udo tridimensional exige cuidado, porque a
+``corre{\c{c}}\~ao'' de uma superf\'icie automotiva n\~ao \'e uma propriedade bin\'aria.
+
+A pr\'atica da ind\'ustria automotiva resolve isso por inspe{\c{c}}\~ao: mapas de zebra e
+isofotas tornam vis\'ivel a continuidade dos reflexos, e a avalia{\c{c}}\~ao \'e feita por
+especialistas treinados \cite{halstead1993}. A contribui{\c{c}}\~ao metodol\'ogica deste
+trabalho \'e dupla e deliberadamente assim\'etrica: aceitar a inspe{\c{c}}\~ao visual como
+evid\^encia de qualidade de superf\'icie, mas \emph{n\~ao} aceit\'a-la como evid\^encia de
+integridade estrutural. Integridade --- n-gons, n\~ao variedade, orienta{\c{c}}\~ao de normais e
+envelope --- \'e verificada por medi{\c{c}}\~ao num\'erica automatizada a cada
+\emph{build}. \'E uma posi{\c{c}}\~ao pragm\'atica: cada grandeza \'e verificada pelo m\'etodo
+adequado \`a sua natureza.
+
+\section{Posicionamento do trabalho}
+
+O Quadro~\ref{qua:posicionamento} contrasta o presente trabalho com as linhas revisadas. A
+contribui{\c{c}}\~ao reivindicada n\~ao \'e um novo algoritmo de subdivis\~ao, nem um novo m\'etodo
+de reconstru{\c{c}}\~ao, nem um novo protocolo. \'E a integra{\c{c}}\~ao \emph{verificada} de
+tr\^es componentes existentes --- especifica{\c{c}}\~ao formal, geometria procedimental com
+restri{\c{c}}\~oes topol\'ogicas impostas por constru{\c{c}}\~ao, e media{\c{c}}\~ao por agente
+via protocolo de contexto --- em um artefato \'unico cuja qualidade \'e demonstrada por
+evid\^encia reproduz\'ivel.
+
+\begin{quadro}[htbp]
+\centering
+\caption{Posicionamento em rela{\c{c}}\~ao \`as linhas de pesquisa revisadas}
+\label{qua:posicionamento}
+\footnotesize
+\begin{tabular}{>{\raggedright\arraybackslash}p{3.5cm}>{\raggedright\arraybackslash}p{4.6cm}>{\raggedright\arraybackslash}p{5.7cm}}
+\toprule
+\textbf{Linha} & \textbf{O que oferece} & \textbf{O que n\~ao cobre} \\
+\midrule
+Modelagem procedimental & Gera{\c{c}}\~ao determin\'istica de forma por regras & Morfologia automotiva de curvatura cont\'inua com controle fino de perfil \\
+Engenharia reversa geom\'etrica & M\'etodo de reconstru{\c{c}}\~ao a partir de medi{\c{c}}\~oes & Entrada fotogr\'afica esparsa; objetivo de render, n\~ao de CAM \\
+Reconstru{\c{c}}\~ao por imagens & Fidelidade fotogr\'afica sob vistas observadas & Malha edit\'avel com topologia controlada \\
+Agentes com ferramentas & Automa{\c{c}}\~ao e composi{\c{c}}\~ao de a{\c{c}}\~oes & Verifica{\c{c}}\~ao de qualidade do artefato produzido \\
+\bottomrule
+\end{tabular}
+\fonte{elaborado pelo autor (2026).}
+\end{quadro}
+
+Duas aus\^encias de literatura merecem registro expl\'icito, para que n\~ao sejam confundidas com
+omiss\~ao. A primeira \'e a de estudos comparativos controlados sobre a qualidade de modelos 3D
+produzidos por agentes via MCP: a pr\'atica existe, mas a an\'alise sistem\'atica ainda \'e
+escassa. A segunda \'e a de literatura t\'ecnica p\'ublica e verific\'avel sobre a geometria
+espec\'ifica do Lotus Elise 111S em n\'ivel de detalhe suficiente para modelagem
+(esta{\c{c}}\~oes de superf\'icie, raios de curvatura, toler\^ancias). Este trabalho contorna a
+segunda aus\^encia tratando as fotografias como \emph{ground truth} e registrando as
+estimativas como tal, conforme discutido na Se{\c{c}}\~ao~\ref{sec:ameacas}.

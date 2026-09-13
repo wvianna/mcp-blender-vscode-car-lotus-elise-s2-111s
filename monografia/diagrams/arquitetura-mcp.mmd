@@ -1,0 +1,16 @@
+flowchart LR
+    subgraph IDE["VS Code"]
+        LLM["Agente LLM<br/>GitHub Copilot"]
+    end
+    subgraph SRV["Servidor MCP blender-mcp"]
+        TOOLS["Ferramentas expostas<br/>execute_blender_code<br/>get_scene_info<br/>get_viewport_screenshot"]
+    end
+    subgraph BL["Blender 5.2.1 LTS"]
+        BPY["API Python<br/>bpy / bmesh"]
+        SCENE["Cena<br/>malhas, materiais,<br/>luzes e cameras"]
+    end
+    LLM -->|"JSON-RPC 2.0<br/>stdio"| TOOLS
+    TOOLS -->|"codigo Python"| BPY
+    BPY --> SCENE
+    SCENE -->|"resultado"| TOOLS
+    TOOLS -->|"Result / Error"| LLM

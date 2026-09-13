@@ -1,0 +1,13 @@
+flowchart TD
+    R["Referencia visual<br/>images/*.jpeg"] --> O1["Objetivo 1<br/>geometria do casco"]
+    R --> O2["Objetivo 2<br/>identidade do 111S"]
+    R --> O3["Objetivo 3<br/>pintura multicamada"]
+    O1 --> M1["build_body<br/>loft de 45 estacoes"]
+    O2 --> M2["build_wheels, build_headlamps,<br/>build_rear_lights, build_vents,<br/>build_badges"]
+    O3 --> M3["build_materials<br/>Principled BSDF multicamada"]
+    M1 --> EV1["mesh_report.txt<br/>750 quads no casco"]
+    M2 --> EV2["07_wheel_closeup.png<br/>04_traseira.png"]
+    M3 --> EV3["05_three_quarter.png"]
+    EV1 --> RES["Envelope e topologia<br/>conformes"]
+    EV2 --> RES
+    EV3 --> RES

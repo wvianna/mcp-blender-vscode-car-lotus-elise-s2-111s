@@ -1,0 +1,15 @@
+flowchart TD
+    A["images/*.jpeg<br/>ground truth visual"] --> B["Analise morfologica<br/>documento descricao.txt"]
+    B --> C["spec.md<br/>FR, NFR e CA"]
+    C --> D["design.md<br/>ADRs e dimensoes"]
+    D --> E["scripts/build_lotus_elise_111s.py"]
+    E --> F["car-lotus-elise-111s.blend"]
+    E --> G["mesh_report.txt<br/>n-gons, non-manifold, envelope"]
+    F --> H["render_views.py"]
+    F --> I["render_gallery.py"]
+    H --> J["docs/renders/*.png<br/>9 vistas"]
+    I --> K["images/modelo3d-*.png<br/>5 vistas"]
+    J --> L{"Comparacao visual<br/>render x referencia"}
+    K --> L
+    L -->|"desvio significativo"| E
+    L -->|"aderente"| M["STATUS.md e SUMMARY.md<br/>registro de aceite"]

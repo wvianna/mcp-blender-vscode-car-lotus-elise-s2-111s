@@ -1,0 +1,41 @@
+% ===========================================================================
+\chapter{Invent\'ario de materiais}\label{ap:materiais}
+% ===========================================================================
+
+A Tabela~\ref{tab:materiais-ap} consolida os treze materiais da cena e os par\^ametros
+declarados no c\'odigo. Cores s\~ao apresentadas no valor sRGB de origem, antes da
+convers\~ao para linear.
+
+\begin{table}[htbp]
+\centering
+\caption{Materiais da cena e par\^ametros principais}
+\label{tab:materiais-ap}
+\footnotesize
+\begin{tabular}{>{\raggedright\arraybackslash}p{3.5cm}>{\raggedright\arraybackslash}p{1.7cm}>{\raggedright\arraybackslash}p{3.0cm}>{\raggedright\arraybackslash}p{4.4cm}}
+\toprule
+\textbf{Material} & \textbf{Cor sRGB} & \textbf{Rugosidade} & \textbf{Particularidades} \\
+\midrule
+\texttt{MAT\_Blue\_Metallic} & \#0C1A96 & base baixa & verniz: peso 0,6, rugosidade 0,02, IOR 1,55; flocos por ru\'ido; profundidade por peso de camada \\
+\texttt{MAT\_Glass\_}\allowbreak\texttt{Polycarbonate} & claro & 0,02 & transmiss\~ao 1,0; IOR 1,58; refra{\c{c}}\~ao por raio \\
+\texttt{MAT\_Headlamp\_Lens} & claro & 0,03 & transmiss\~ao 1,0; IOR 1,52 \\
+\texttt{MAT\_Lens\_Red} & vermelho & 0,05 & transmiss\~ao 1,0 \\
+\texttt{MAT\_Lens\_Amber} & \^ambar & 0,05 & transmiss\~ao 1,0 \\
+\texttt{MAT\_Rubber\_Tire} & preto & 0,85 & ru\'ido em relevo \\
+\texttt{MAT\_Aluminum\_}\allowbreak\texttt{Brushed} & alum\'inio & 0,32 & met\'alico 1,0; anisotropia 0,7; ru\'ido \\
+\texttt{MAT\_Chrome\_Trim} & cromado & 0,08 & met\'alico 1,0 \\
+\texttt{MAT\_Badge\_Chrome} & cromado & 0,06 & met\'alico 1,0 \\
+\texttt{MAT\_Reflector\_}\allowbreak\texttt{Chrome} & cromado & 0,10 & met\'alico 1,0 \\
+\texttt{MAT\_Black\_Trim} & preto & 0,55 & ru\'ido leve \\
+\texttt{MAT\_Grille\_Mesh} & \#17191B & 0,65 & preto escuro \\
+\texttt{MAT\_Interior\_Fabric} & preto & 0,90 & ru\'ido \\
+\bottomrule
+\end{tabular}
+\fonte{elaborado pelo autor a partir de \texttt{build\_materials} (2026). Valores de rugosidade
+arredondados conforme declarados no c\'odigo.}
+\end{table}
+
+Observa{\c{c}}\~ao de integridade: o material de material neutro usado nas vistas de
+verifica{\c{c}}\~ao (\texttt{MAT\_Clay\_Check}) n\~ao pertence ao modelo. Ele \'e criado
+temporariamente pelo script de verifica{\c{c}}\~ao como sobreposi{\c{c}}\~ao de
+material da camada de visualiza{\c{c}}\~ao, e \'e removido ao final, de modo que n\~ao aparece
+no invent\'ario do modelo entregue.

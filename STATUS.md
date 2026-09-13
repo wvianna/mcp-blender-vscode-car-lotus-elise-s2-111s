@@ -10,7 +10,7 @@
 | Artefatos SDD (`spec.md`, `design.md`, `tasks.md`, constituição) | `.specs/` |
 | Documentação de continuidade (`README.md`, `AGENTS.md`, `LICENSE`) | raiz do projeto |
 | Biblioteca de helpers de modelagem (`scripts/lotus_common.py`) | 0 n-gons nas tampas; loft com tampas em quads |
-| Corpo por loft de 45 seções, com arcos de roda modulados (sem boolean) | `GEO_Body_Hull`: 718 quads, 0 n-gons, 0 arestas de borda |
+| Corpo por loft de 47 seções, com arcos de roda modulados (sem boolean) | `GEO_Body_Hull`: 750 quads, 0 n-gons, 0 arestas de borda |
 | Cabine com vidro atribuído por faixa de faces | `GEO_Cabin_Hull`: 148 quads, 0 n-gons |
 | Interior simplificado (assentos, painel, volante, santo-antônio) | 7 objetos `GEO_*` |
 | 4 rodas de 6 raios com pneu 185/55R15 e 205/50R16 | 4 × 11 objetos; close `docs/renders/07_wheel_closeup.png` |
@@ -25,6 +25,7 @@
 | 9 renders de verificação | `docs/renders/*.png` |
 | Galeria de apresentação (superior, traseira, lateral, isométrica, efeito de luz) | `images/modelo3d-*.png` via `scripts/render_gallery.py` |
 | Rig dramático do hero shot (rim lights + faróis acesos + bloom no compositor) | `render_gallery.py` (não persiste no `.blend`) |
+| Monografia em LaTeX (94 páginas) com verificação visual e rastreabilidade por critério | `monografia/main.pdf`, `monografia/MONOGRAFIA_*.md`, `monografia/build.sh` |
 
 ### Números do último build
 

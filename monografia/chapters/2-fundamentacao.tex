@@ -1,0 +1,493 @@
+% ===========================================================================
+\chapter{Fundamenta\c{c}\~ao te\'orica}\label{ch:fundamentacao}
+% ===========================================================================
+
+Este cap\'itulo re\'une os conceitos necess\'arios para que as decis\~oes t\'ecnicas do
+Cap\'itulo~\ref{ch:desenvolvimento} possam ser avaliadas de forma cr\'itica. A exposi\c{c}\~ao
+parte da representa\c{c}\~ao matem\'atica das superf\'icies, passa pelo problema da
+continuidade e da topologia, chega aos modelos de sombreamento e ao gerenciamento de cor e,
+por fim, trata da automa\c{c}\~ao por script e da media\c{c}\~ao por protocolos de contexto para
+agentes de intelig\^encia artificial.
+
+\section{Representa\c{c}\~ao de superf\'icies}
+
+\subsection{Malhas poligonais}
+
+A representa\c{c}\~ao mais difundida de uma superf\'icie em computa\c{c}\~ao gr\'afica \'e a malha
+poligonal: um conjunto de v\'ertices, arestas e faces que aproxima a superf\'icie por
+justaposi\c{c}\~ao de pol\'igonos planos \cite{bbotsch2010}. A malha \'e, por defini\c{c}\~ao, uma
+estrutura discreta; sua qualidade depende de como a discretiza\c{c}\~ao distribui a curvatura da
+superf\'icie ideal. Dois aspectos determinam essa qualidade: a \emph{val\^encia} dos v\'ertices
+(n\'umero de arestas incidentes) e a \emph{regularidade} das faces (n\'umero de lados).
+
+Malhas poligonais t\^em vantagens decisivas para tempo real: s\~ao diretamente consumidas pela
+\emph{GPU}, admitem n\'iveis de detalhe vari\'aveis e permitem edi\c{c}\~ao localizada. Sua
+desvantagem \'e a aus\^encia de uma representa\c{c}\~ao anal\'itica da curvatura: n\~ao existe uma
+normal cont\'inua em uma aresta viva, e a superf\'icie s\'o \'e suave na medida em que o
+sombreamento e a densidade de faces o permitam.
+
+\subsection{Representa\c{c}\~oes param\'etricas: B\'ezier e NURBS}
+
+As representa\c{c}\~oes param\'etricas descrevem a superf\'icie como imagem de uma fun\c{c}\~ao
+$\mathbf{S}(u,v)$ de dois par\^ametros. As curvas de B\'ezier e as B-\emph{splines} racionais
+n\~ao uniformes (NURBS) s\~ao as mais usadas em projeto assistido por computador \cite{piegl1997,
+farin2002}. Uma NURBS de grau $p$ \'e definida por pontos de controle $\mathbf{P}_i$ e pesos
+$w_i$:
+
+\begin{equation}
+\mathbf{S}(u) = \frac{\sum_{i=0}^{n} w_i\, \mathbf{P}_i\, N_{i,p}(u)}{\sum_{i=0}^{n} w_i\, N_{i,p}(u)},
+\label{eq:nurbs}
+\end{equation}
+
+\noindent em que $N_{i,p}$ s\~ao as fun\c{c}\~oes de base B-\emph{spline}. A continuidade da
+superf\'icie \'e determinada pela multiplicidade dos n\'os do vetor de n\'os: com n\'os
+distintos, uma NURBS de grau $p$ \'e $C^{p-1}$.
+
+A principal vantagem das NURBS \'e a continuidade anal\'itica control\'avel e a exatid\~ao na
+representa\c{c}\~ao de c\^onicas \cite{mortenson1997}. Sua principal desvantagem, no contexto
+deste trabalho, \'e a dificuldade de representar \emph{topologia arbitr\'aria}: a estrutura de
+retalhos (\emph{patches}) exige o controle manual de costuras entre superf\'icies, e a
+manipula\c{c}\~ao program\'atica dessas costuras \'e significativamente mais complexa que a de uma
+malha indexada.
+
+\subsection{Crit\'erios de escolha}
+
+O Quadro~\ref{qua:representacoes} sintetiza a compara\c{c}\~ao. Para um modelo destinado a
+renderiza\c{c}\~ao fotogr\'afica de um objeto cuja forma n\~ao precisa ser enviada a produ\c{c}\~ao
+por CAM, a malha subdividida oferece o melhor equil\'ibrio: preserva a manipula\c{c}\~ao
+topol\'ogica livre e produz, ap\'os subdivis\~ao, uma superf\'icie com continuidade suficiente
+para reflexos automotivos.
+
+\begin{quadro}[htbp]
+\centering
+\caption{Compara\c{c}\~ao entre representa\c{c}\~oes de superf\'icie}
+\label{qua:representacoes}
+\footnotesize
+\begin{tabular}{>{\raggedright\arraybackslash}p{2.9cm}>{\raggedright\arraybackslash}p{3.6cm}>{\raggedright\arraybackslash}p{3.6cm}>{\raggedright\arraybackslash}p{3.6cm}}
+\toprule
+\textbf{Crit\'erio} & \textbf{Malha poligonal} & \textbf{NURBS} & \textbf{Malha subdividida} \\
+\midrule
+Continuidade & Apenas discreta & Anal\'itica e control\'avel & Suave exceto em v\'ertices extraordin\'arios \\
+Topologia livre & Sim & Restrita a retalhos & Sim \\
+Custo de render & Baixo & M\'edio & M\'edio a alto \\
+Edi\c{c}\~ao por script & Simples & Complexa & Simples \\
+Uso em CAM & Indireto & Direto & Indireto \\
+Representa\c{c}\~ao de recortes & Livre & Limitada & Livre \\
+\bottomrule
+\end{tabular}
+\fonte{elaborado pelo autor a partir de \cite{bbotsch2010, piegl1997, stam1998}.}
+\end{quadro}
+
+\section{Subdivis\~ao de superf\'icies}
+
+\subsection{O esquema de Catmull-Clark}
+
+O esquema de Catmull-Clark \cite{catmull1978} generaliza as B-\emph{splines} c\'ubicas para
+malhas de topologia arbitr\'aria. Cada itera\c{c}\~ao de subdivis\~ao executa tr\^es passos:
+insere-se um ponto de face (o centr\'oide), insere-se um ponto de aresta e reposiciona-se cada
+v\'ertice original por uma m\'edia ponderada de seus vizinhos. Para um v\'ertice de val\^encia
+$n$, o novo v\'ertice $\mathbf{v}'$ \'e dado por
+
+\begin{equation}
+\mathbf{v}' = \frac{\mathbf{Q} + 2\mathbf{R} + (n-3)\mathbf{S}}{n},
+\label{eq:catmull-clark}
+\end{equation}
+
+\noindent em que $\mathbf{Q}$ \'e a m\'edia dos centr\'oides das faces incidentes, $\mathbf{R}$
+\'e a m\'edia dos pontos m\'edios das arestas incidentes e $\mathbf{S}$ \'e o pr\'oprio
+v\'ertice. Ap\'os uma itera\c{c}\~ao, todas as faces passam a ser qu\'adruplas; itera\c{c}\~oes
+seguintes preservam essa propriedade.
+
+A consequ\^encia pr\'atica \'e dupla. Primeiro, v\'ertices de val\^encia quatro --- a
+\emph{malha regular} --- geram uma superf\'icie $C^2$ no limite. Segundo, v\'ertices de
+val\^encia diferente de quatro, ditos \emph{extraordin\'arios}, geram uma superf\'icie apenas
+$C^1$ na vizinhan\c{c}a imediata, mesmo que o restante seja $C^2$ \cite{stam1998}. Essa
+descontinuidade localizada \'e a origem mais comum de artefatos vis\'iveis em reflexos.
+
+\subsection{Esquemas triangulares e variantes}
+
+O esquema de Loop \cite{loop1987} \'e o an\'alogo triangular, com regras de posicionamento
+distintas e superf\'icie limite $C^2$ longe de v\'ertices extraordin\'arios. Existem ainda
+esquemas interpolantes, como o de Butterfly modificado, que preservam os v\'ertices originais.
+A escolha por Catmull-Clark neste trabalho se justifica por tr\^es motivos: \'e o esquema padr\~ao
+do modificador de subdivis\~ao do Blender \cite{blender5manual}; produz faces qu\'adruplas, que
+\'e a topologia alvo do requisito de malha; e sua avalia\c{c}\~ao exata foi formalizada por Stam
+\cite{stam1998}, o que permite raciocinar sobre o resultado sem depender de inspe\c{c}\~ao
+emp\'irica a cada n\'ivel.
+
+\subsection{Continuidade e sua leitura visual}
+
+A classifica\c{c}\~ao cl\'assica da continuidade \'e resumida no Quadro~\ref{qua:continuidade}.
+A distin\c{c}\~ao entre $G^1$ e $G^2$ \'e o ponto central da exig\^encia de qualidade
+automotiva: dois retalhos tangentes mas com curvaturas diferentes produzem, sob uma fonte
+luminosa extensa, uma quebra vis\'ivel na reflex\~ao --- a chamada \emph{isofota} descont\'inua.
+\'E por isso que a especifica\c{c}\~ao do cliente pro\'ibe explicitamente a continuidade apenas
+$G^1$ \cite{halstead1993}.
+
+\begin{quadro}[htbp]
+\centering
+\caption{Classes de continuidade geom\'etrica entre superf\'icies}
+\label{qua:continuidade}
+\footnotesize
+\begin{tabular}{>{\raggedright\arraybackslash}p{1.9cm}>{\raggedright\arraybackslash}p{5.0cm}>{\raggedright\arraybackslash}p{6.8cm}}
+\toprule
+\textbf{Classe} & \textbf{Propriedade} & \textbf{Efeito visual} \\
+\midrule
+$G^0$ & Posi\c{c}\~ao coincidente; tangentes independentes & Aresta viva; reflexo quebrado \\
+$G^1$ & Tangentes coincidentes; curvaturas independentes & Reflexo cont\'inuo, mas com varia\c{c}\~ao abrupta de largura \\
+$G^2$ & Curvaturas coincidentes al\'em das tangentes & Reflexo cont\'inuo e suave; padr\~ao automotivo \\
+$C^n$ & Continuidade param\'etrica de ordem $n$ & Implica $G^n$; mais restritiva que o necess\'ario \\
+\bottomrule
+\end{tabular}
+\fonte{elaborado pelo autor a partir de \cite{halstead1993, farin2002}.}
+\end{quadro}
+
+\subsection{\emph{Loops} de suporte e de proximidade}
+
+Em modelagem por subdivis\~ao, a ferramenta para preservar arestas vivas \'e o \emph{loop} de
+suporte: um par de cadeias de arestas inseridas paralelamente \`a aresta que se deseja manter
+r\'igida. Quanto mais pr\'oximas entre si, mais a superf\'icie limite se aproxima de uma aresta
+dura. O mesmo mecanismo, aplicado ao redor de recortes, evita o estreitamento excessivo
+(\emph{pinching}) das faces vizinhas \`a abertura.
+
+Formalmente, o efeito pode ser entendido como uma restri\c{c}\~ao do operador de subdivis\~ao:
+ao concentrar a informa\c{c}\~ao geom\'etrica em uma faixa estreita, o limite deixa de suavizar
+aquela regi\~ao. A t\'ecnica \'e equivalente, em esp\'irito, ao uso de peso de aresta
+(\emph{crease}), mas \'e prefer\'ivel por manter a malha uniformemente quadr\^angular e o
+comportamento previs\'ivel sob diferentes n\'iveis de subdivis\~ao \cite{bbotsch2010}.
+
+\section{Integridade topol\'ogica}
+
+\subsection{Quads, tri\^angulos e n-gons}
+
+Uma face com mais de quatro v\'ertices --- um n-gon --- n\~ao admite uma parametriza\c{c}\~ao
+bilinear natural e, sob subdivis\~ao, tende a produzir resultados dependentes da triangula\c{c}\~ao
+interna impl\'icita. Tri\^angulos, por outro lado, s\~ao inevit\'aveis em determinadas
+termina\c{c}\~oes e v\'ertices extraordin\'arios, mas concentram curvatura e criam
+singularidades vis\'iveis quando situados em regi\~oes de curvatura relevante.
+
+Por isso, o requisito de malha quadr\^angular dominante n\~ao \'e est\'etico: \'e a condi\c{c}\~ao
+para que o limite de subdivis\~ao seja previs\'ivel. O Quadro~\ref{qua:topologia} resume as
+regras adotadas. A imposi\c{c}\~ao dessas regras no \emph{n\'ivel do algoritmo} --- e n\~ao como
+etapa de limpeza posterior --- \'e uma decis\~ao de arquitetura discutida no
+Cap\'itulo~\ref{ch:desenvolvimento}.
+
+\begin{quadro}[htbp]
+\centering
+\caption{Regras topol\'ogicas adotadas e sua justificativa}
+\label{qua:topologia}
+\footnotesize
+\begin{tabular}{>{\raggedright\arraybackslash}p{3.2cm}>{\raggedright\arraybackslash}p{10.4cm}}
+\toprule
+\textbf{Regra} & \textbf{Justificativa} \\
+\midrule
+Zero n-gons & N-gons t\^em parametriza\c{c}\~ao interna amb\'igua e degeneram sob subdivis\~ao \\
+Tri\^angulos s\'o em superf\'icie plana oculta & Reduzem a continuidade e criam singularidades no limite \\
+Sem opera\c{c}\~oes booleanas no casco & Booleanas produzem n-gons e tri\^angulos em arestas vis\'iveis \\
+Val\^encia quatro predominante & V\'ertices extraordin\'arios geram limite apenas $C^1$ \\
+Normais consistentes e externas & Normais invertidas criam artefatos de sombreamento e de refra\c{c}\~ao \\
+Fluxo de arestas alinhado \`a forma & A dire\c{c}\~ao das cadeias condiciona onde a curvatura \'e concentrada \\
+\bottomrule
+\end{tabular}
+\fonte{elaborado pelo autor a partir de \cite{bbotsch2010, stam1998}.}
+\end{quadro}
+
+\subsection{Validade: variedade, orienta\c{c}\~ao e normais}
+
+Al\'em da contagem de faces, uma malha precisa ser uma variedade: cada aresta deve ter no
+m\'aximo duas faces incidentes. Arestas com tr\^es ou mais faces (\emph{n\~ao variedade}) tornam
+amb\'iguo o conceito de interior e exterior, o que quebra algoritmos de refra\c{c}\~ao e de
+sombreamento volum\'etrico. A orienta\c{c}\~ao das faces deve ser consistente, e as normais,
+apontar para fora.
+
+Essas tr\^es propriedades --- aus\^encia de n-gons, aus\^encia de arestas n\~ao variedade e
+consist\^encia de normais --- formam a base do relat\'orio de malha emitido a cada
+\emph{build} deste trabalho (Se\c{c}\~ao~\ref{sec:relatorio-malha}), o que converte uma
+propriedade subjetiva em uma asser\c{c}\~ao verific\'avel por qualquer terceiro.
+
+\section{Modelos de sombreamento}
+
+\subsection{A equa\c{c}\~ao de render}
+
+A luz transportada em uma cena \'e descrita pela equa\c{c}\~ao de render de Kajiya
+\cite{kajiya1986}:
+
+\begin{equation}
+L_o(\mathbf{x},\omega_o) = L_e(\mathbf{x},\omega_o) + \int_{\Omega} f_r(\mathbf{x},\omega_i,\omega_o)\,
+L_i(\mathbf{x},\omega_i)\,(\omega_i \cdot \mathbf{n})\, \mathrm{d}\omega_i ,
+\label{eq:render}
+\end{equation}
+
+\noindent em que $L_o$ \'e a radi\^ancia de sa\'ida na dire\c{c}\~ao $\omega_o$, $L_e$ \'e a
+radi\^ancia emitida, $f_r$ \'e a fun\c{c}\~ao de distribui\c{c}\~ao de reflet\^ancia
+bidirecional (BRDF), $L_i$ \'e a radi\^ancia incidente e $\Omega$ \'e o hemisf\'erio em torno da
+normal $\mathbf{n}$. Toda a discuss\~ao subsequente \'e uma forma de aproximar a integral de
+\eqref{eq:render} ou de parametrizar $f_r$ \cite{pharr2016}.
+
+\subsection{Modelos emp\'iricos}
+
+O modelo de Phong \cite{phong1975} aproxima a reflex\~ao especular por uma pot\^encia do cosseno
+do \^angulo entre a dire\c{c}\~ao de reflex\~ao e a dire\c{c}\~ao de observa\c{c}\~ao. Blinn
+\cite{blinn1977} substituiu a dire\c{c}\~ao de reflex\~ao pelo vetor m\'edio $\mathbf{h}$ entre
+a dire\c{c}\~ao de luz e a de visada, o que reduz o custo e melhora o comportamento em
+\^angulos rasantes. Apesar de n\~ao conservarem energia, ambos os modelos s\~ao \'uteis como
+refer\^encia did\'atica e como caso limite de modelos mais elaborados.
+
+\subsection{Microfacetas}
+
+A teoria de microfacetas modela a superf\'icie como um conjunto estat\'istico de espelhos
+min\'usculos orientados por uma distribui\c{c}\~ao de inclina\c{c}\~oes \cite{cook1982}. A BRDF
+resultante \'e
+
+\begin{equation}
+f_r(\omega_i,\omega_o) = \frac{k_d}{\pi} + \frac{k_s\, D(\mathbf{h})\, F(\omega_o,\mathbf{h})\, G(\omega_i,\omega_o,\mathbf{h})}{4\,(\omega_i\cdot\mathbf{n})(\omega_o\cdot\mathbf{n})},
+\label{eq:cook-torrance}
+\end{equation}
+
+\noindent em que $D$ \'e a distribui\c{c}\~ao de normais das microfacetas, $F$ \'e o termo de
+Fresnel e $G$ \'e o termo de sombreamento m\'utuo (\emph{shadowing-masking}).
+
+A distribui\c{c}\~ao Trowbridge-Reitz, popularizada como GGX, \'e hoje predominante em
+renderiza\c{c}\~ao em tempo real \cite{walter2007, karis2013}:
+
+\begin{equation}
+D_{\mathrm{GGX}}(\mathbf{h}) = \frac{\alpha^2}{\pi\left[(\alpha^2-1)(\mathbf{n}\cdot\mathbf{h})^2 + 1\right]^2},
+\label{eq:ggx}
+\end{equation}
+
+\noindent com $\alpha$ ligado \`a rugosidade perceptual $r$ por $\alpha = r^2$, escolha que
+torna a resposta visual aproximadamente linear na rugosidade \cite{karis2013}. A cauda longa de
+\eqref{eq:ggx} \'e o que confere aos metais polidos sua apar\^encia caracter\'istica.
+
+O termo de sombreamento \'e frequentemente aproximado pela forma de Smith,
+$G = G_1(\omega_i)\,G_1(\omega_o)$, com $G_1$ correspondente \`a mesma distribui\c{c}\~ao $D$.
+A avalia\c{c}\~ao de $G$ em uma BRDF de microfacetas \'e o que garante que a energia n\~ao seja
+criada em \^angulos rasantes --- precisamente os \^angulos que dominam a leitura de um
+para-lama de autom\'ovel.
+
+\subsection{Fresnel e a aproxima\c{c}\~ao de Schlick}
+
+A reflet\^ancia de uma interface depende do \^angulo de incid\^encia. A aproxima\c{c}\~ao de
+Schlick \cite{schlick1994} \'e a forma padr\~ao:
+
+\begin{equation}
+F(\theta) = f_0 + (1 - f_0)\left(1 - \cos\theta\right)^5 ,
+\label{eq:schlick}
+\end{equation}
+
+\noindent em que $f_0 = ((n_1-n_2)/(n_1+n_2))^2$ \'e a reflet\^ancia em incid\^encia normal.
+Para uma superf\'icie diel\'etrica, $f_0 \approx 0,04$; para metais, $f_0$ assume a cor do metal.
+\'E a varia\c{c}\~ao de $F$ com o \^angulo que faz com que uma pintura automotiva escure\c{c}a no
+centro da superf\'icie e clareie nas bordas --- efeito explorado deliberadamente no material
+deste trabalho.
+
+\subsection{Anisotropia}
+
+Materiais escovados ou laminados apresentam reflex\~ao dependente da dire\c{c}\~ao tangencial.
+A extens\~ao anisotr\'opica cl\'assica \'e a de Ashikhmin e Shirley \cite{ashikhmin2000},
+baseada em dois expoentes distintos nas dire\c{c}\~oes tangencial e binormal, e a medi\c{c}\~ao
+sistem\'atica de superf\'icies reais foi estabelecida por Ward \cite{ward1992}. No presente
+trabalho, a anisotropia \'e usada pontualmente no alum\'inio escovado do bocal de combust\'ivel
+e das sa\'idas de escape.
+
+\section{Renderiza\c{c}\~ao fisicamente baseada}
+
+\subsection{Princ\'ipios}
+
+A renderiza\c{c}\~ao fisicamente baseada (PBR) imp\~oe tr\^es disciplina: conserva\c{c}\~ao de
+energia, coer\^encia entre os canais de reflex\~ao e difus\~ao, e parametriza\c{c}\~ao a partir de
+grandezas mensur\'aveis \cite{burley2012}. A conserva\c{c}\~ao de energia exige
+
+\begin{equation}
+k_d = (1 - k_s)\,(1 - m),
+\label{eq:energia}
+\end{equation}
+
+\noindent em que $k_s$ \'e a fra\c{c}\~ao especular e $m$ \'e o par\^ametro de metalicidade. Sem
+\eqref{eq:energia}, uma superf\'icie met\'alica ainda refletiria luz difusa, produzindo o
+aspecto pl\'astico t\'ipico de modelos mal parametrizados.
+
+\subsection{A formula\c{c}\~ao de Disney e sua ado\c{c}\~ao industrial}
+
+Burley \cite{burley2012} prop\^os uma parametriza\c{c}\~ao intuitiva para artistas, com
+par\^ametros como \emph{base color}, \emph{metallic}, \emph{roughness}, \emph{specular},
+\emph{anisotropy} e \emph{clearcoat}. A difus\~ao de Disney,
+
+\begin{equation}
+f_d = \frac{\rho}{\pi}\Bigl(1 + (F_{D90}-1)(1-\cos\theta_i)^5\Bigr)\Bigl(1 + (F_{D90}-1)(1-\cos\theta_o)^5\Bigr),
+\label{eq:disney-diffuse}
+\end{equation}
+
+\noindent reintroduz uma depend\^encia angular que evita o aspecto excessivamente plano da
+difus\~ao lambertiana pura. Karis \cite{karis2013} adaptou esse modelo ao ambiente de tempo
+real, e \'e dessa linhagem que deriva o \emph{Principled BSDF} do Blender
+\cite{blender5manual}, n\'o utilizado em todos os materiais deste trabalho.
+
+\subsection{Transmiss\~ao e refra\c{c}\~ao rugosa}
+
+Para vidros e lentes, o modelo de microfacetas \'e estendido \`a transmiss\~ao por Walter
+\emph{et al.} \cite{walter2007}, que derivam tanto a distribui\c{c}\~ao quanto o termo de
+sombreamento para o hemisf\'erio oposto. A consequ\^encia pr\'atica \'e que um vidro com
+rugosidade n\~ao nula espalha a imagem transmitida --- comportamento essencial para diferenciar
+o policarbonato dos far\'ois do vidro do para-brisa, ainda que ambos tenham o mesmo \'indice de
+refra\c{c}\~ao nominal.
+
+\section{A pintura automotiva como problema de sombreamento}
+
+\subsection{Estrutura em camadas}
+
+Uma pintura automotiva real \'e um sistema de camadas: um \emph{primer} de ader\^encia, uma
+camada de cor (\emph{base coat}) que cont\'em os pigmentos e, frequentemente, flocos
+met\'alicos ou perolados, e uma camada de verniz (\emph{clear coat}) transparente. A luz que
+chega ao observador atravessou o verniz, foi espalhada pelos pigmentos e voltou a atravessar o
+verniz. Representar esse caminho corretamente exige mais que uma cor difusa: exige uma camada
+especular diel\'etrica sobre um substrato colorido \cite{karis2013, burley2012}.
+
+\subsection{Flocos met\'alicos}
+
+Os flocos s\~ao placas microsc\'opicas de alum\'inio orientadas preferencialmente paralelas \`a
+superf\'icie. Cada floco funciona como um espelho min\'usculo, o que produz o brilho granular
+caracter\'istico dos metais. Modelar cada floco \'e invi\'avel; a pr\'atica \'e perturbar a
+normal ou a rugosidade por um ru\'ido de alta frequ\^encia cuja amplitude \'e pequena o
+suficiente para ser invis\'ivel a dist\^ancia e percept\'ivel em \emph{close-ups}
+\cite{karis2013}. A escolha da escala do ru\'ido \'e, portanto, uma decis\~ao de projeto
+fotogr\'afico, e n\~ao um mero detalhe t\'ecnico.
+
+\subsection{Verniz}
+
+O verniz \'e representado como uma camada diel\'etrica adicional com seu pr\'oprio \'indice de
+refra\c{c}\~ao e rugosidade. A presen\c{c}a simult\^anea das duas camadas especulares --- verniz
+e substrato --- produz o efeito de profundidade que distingue uma pintura automotiva de um
+pl\'astico colorido. Valores t\'ipicos de \'indice de refra\c{c}\~ao do verniz situam-se entre
+$1,5$ e $1,6$, e a rugosidade baixa ($\approx 0,02$) \'e o que permite reflexos n\'itidos o
+bastante para revelar descontinuidades de curvatura \cite{karis2013}.
+
+\section{Gerenciamento de cor e mapeamento de tons}
+
+O transporte de luz produz radi\^ancias em uma faixa din\^amica muito superior \`a que um
+monitor pode exibir. O mapeamento de tons comprime essa faixa em valores exib\'iveis, e o
+operador escolhido altera substancialmente a percep\c{c}\~ao de cor e contraste
+\cite{reinhard2002, fairchild2013}. O Blender adota, em vers\~oes recentes, o \emph{transform}
+denominado AgX, que preserva melhor a satura\c{c}\~ao em altas luzes que o antigo operador
+Filmic \cite{blender5manual}.
+
+Uma consequ\^encia pr\'atica \'e metodol\'ogica: como o operador altera a cor final, a
+comparação de tom entre render e refer\^encia fotogr\'afica n\~ao pode ser feita sem considerar o
+mapeamento de tons. A refer\^encia fotogr\'afica foi, ela pr\'opria, mapeada pelo
+processamento da c\^amera; o render foi mapeado pelo AgX. Parte do desvio de tom registrado no
+Cap\'itulo~\ref{ch:resultados} \'e imput\'avel a essa diferen\c{c}a de cadeias, e n\~ao ao
+material.
+
+\section{Motores de render em tempo real com tra\c{c}ado de raios}
+
+A EEVEE, motor padr\~ao do Blender, evoluiu de uma solu\c{c}\~ao puramente \emph{rasterizada}
+para uma arquitetura com tra\c{c}ado de raios por \emph{GPU}, que combina as duas abordagens: a
+geometria \'e rasterizada, e o transporte de luz secund\'ario \'e estimado por raios lan\c{c}ados
+a partir de uma estrutura de acelera\c{c}\~ao \cite{blender5manual}. Para o presente trabalho,
+essa combina\c{c}\~ao \'e vantajosa porque o crit\'erio de julgamento --- a continuidade dos
+reflexos --- depende justamente do transporte secund\'ario, enquanto a velocidade necess\'aria
+para iterar sobre dezenas de renders s\'o \'e alcan\c{c}ada em tempo real.
+
+Um \'ultimo elemento t\'ecnico merece registro: o \emph{bloom}, antes um par\^ametro do motor, foi
+migrado para o compositor de imagens, onde \'e implementado por um n\'o de \emph{glare}
+\cite{blender5manual}. Essa migra\c{c}\~ao, ocorrida nas vers\~oes recentes do Blender, altera a
+maneira como efeitos volum\'etricos de luz s\~ao obtidos por script --- um exemplo concreto de
+como a automa\c{c}\~ao depende de conhecer a vers\~ao exata da API.
+
+\section{Geometria procedimental}
+
+Geometria procedimental \'e a gera\c{c}\~ao de forma por regras, e n\~ao por manipula\c{c}\~ao
+direta de v\'ertices. As vantagens s\~ao conhecidas: determinismo, parametriza\c{c}\~ao,
+possibilidade de variar fam\'ilias de formas e integra\c{c}\~ao natural com automa\c{c}\~ao
+\cite{mortenson1997}. As limita\c{c}\~oes tamb\'em: a expressividade fica restrita \`as regras
+implementadas, e o projeto de um gerador \'e t\~ao ou mais trabalhoso que a modelagem manual,
+sendo compensador apenas quando a reprodutibilidade importa.
+
+No contexto deste trabalho, a asser\c{c}\~ao que fundamenta a escolha \'e direta: se a
+geometria \'e gerada por c\'odigo, ent\~ao a geometria \'e o c\'odigo, e ambos podem ser
+versionados, revisados e reexecutados. A consequ\^encia \'e que o controle de qualidade de malha
+pode ser imposto por constru\c{c}\~ao, e n\~ao verificado \emph{a posteriori}: as tampas de
+\emph{loft}, por exemplo, s\~ao geradas por um algoritmo que s\'o produz quads
+(Se\c{c}\~ao~\ref{sec:tampas}), o que torna a aus\^encia de n-gons uma propriedade do m\'etodo.
+
+\section{Protocolos de contexto para agentes}
+
+\subsection{Do modelo de linguagem ao uso de ferramentas}
+
+Modelos de linguagem de grande porte s\~ao, em ess\^encia, fun\c{c}\~oes de probabilidade sobre
+sequ\^encias \cite{vaswani2017, brown2020}. Para que atuem sobre o mundo, \'e preciso
+acopl\'a-los a ferramentas. As estrat\'egias iniciais consistiam em treinar ou instruir o modelo
+a emitir chamadas de API em texto \cite{schick2023, patil2023}, com a execu\c{c}\~ao
+intercalada \`a delibera\c{c}\~ao \cite{yao2023, wei2022}. A recupera\c{c}\~ao de contexto
+externo seguiu caminho an\'alogo \cite{lewis2020}.
+
+Essas abordagens, por\'em, eram espec\'ificas de cada fornecedor: cada integra\c{c}\~ao exigia
+um adaptador pr\'oprio, e o conjunto de ferramentas dispon\'iveis era definido no momento do
+\emph{prompt}. Faltava um protocolo que separasse a descoberta da execu\c{c}\~ao.
+
+\subsection{JSON-RPC e o Model Context Protocol}
+
+O \emph{Model Context Protocol} \cite{mcpspec2024} prop\~oe exatamente essa separa\c{c}\~ao.
+Trata-se de um protocolo aberto, sobre JSON-RPC~2.0 \cite{jsonrpc2020}, que define tr\^es
+pap\'eis: o \emph{host}, que \'e a aplica\c{c}\~ao que cont\'em o agente; o \emph{cliente}, que
+mant\'em a conex\~ao com um servidor; e o \emph{servidor}, que exp\~oe capacidades. O protocolo
+padroniza tr\^es primitivas: \emph{ferramentas} (\emph{tools}), controladas pelo modelo;
+\emph{recursos} (\emph{resources}), controlados pela aplica\c{c}\~ao; e
+\emph{prompts}, controlados pelo usu\'ario.
+
+O ciclo de vida come\c{c}a com uma negocia\c{c}\~ao (\texttt{initialize}), em que cliente e
+servidor trocam vers\~ao de protocolo e capacidades. Em seguida, o cliente pode descobrir
+ferramentas (\texttt{tools/list}) e invoc\'a-las (\texttt{tools/call}). Os transportes
+padronizados incluem entrada/sa\'ida padr\~ao para processos locais e HTTP com
+\emph{Server-Sent Events} para servidores remotos.
+
+Do ponto de vista da engenharia, a propriedade relevante \'e a \textbf{serializa\c{c}\~ao
+completa da intera\c{c}\~ao}: cada chamada de ferramenta \'e uma mensagem JSON com nome e
+argumentos, e cada resposta \'e uma mensagem JSON com conte\'udo ou erro. Isso cria um registro
+do processo independente do modelo de linguagem utilizado --- exatamente o que falta em uma
+sess\~ao manual de modelagem.
+
+\subsection{Implica\c{c}\~oes para pipelines de conte\'udo tridimensional}
+
+Um servidor MCP para o Blender exp\~oe ferramentas como executar c\'odigo Python, obter
+informa{\c{c}}\~oes da cena e capturar a \emph{viewport}. A combina\c{c}\~ao dessas tr\^es
+capacidades \'e suficiente para o ciclo completo de trabalho deste projeto: construir
+(execu\c{c}\~ao), verificar por medi\c{c}\~ao (informa\c{c}\~oes da cena) e verificar por
+inspe\c{c}\~ao visual (captura). A an\'alise dessa arquitetura est\'a no
+Cap\'itulo~\ref{ch:desenvolvimento}, e a figura~\ref{fig:arquitetura} a resume.
+
+A limita\c{c}\~ao que decorre do modelo \'e igualmente clara: o agente n\~ao \emph{v\^e} a cena
+como um artista a v\^e; ele v\^e uma imagem capturada, que \'e uma proje\c{c}\~ao de duas
+dimens\~oes. A infer\^encia sobre profundidade e continuidade a partir dessa imagem \'e
+intrinsecamente amb\'igua \cite{hartley2004}. Por isso, a estrat\'egia adotada neste trabalho
+foi reduzir a depend\^encia da infer\^encia visual: as propriedades de malha s\~ao verificadas por
+medi\c{c}\~ao num\'erica no relat\'orio, e a inspe\c{c}\~ao visual fica reservada ao que ela faz
+melhor --- julgar forma, silhueta e continuidade de reflexos.
+
+\section{Engenharia reversa visual de dimens\~oes}
+
+Sem blueprints ortogr\'aficos, as dimens\~oes precisam ser estimadas. Duas ferramentas
+conceituais s\~ao relevantes. A primeira \'e a geometria projetiva: uma fotografia \'e uma
+proje\c{c}\~ao perspectiva, e grandezas medidas na imagem n\~ao s\~ao proporcionais \`as
+grandezas no mundo, exceto sob condi\c{c}\~oes controladas \cite{hartley2004}. A segunda \'e o
+m\'etodo de engenharia reversa em projeto de produto, que sistematiza a extra\c{c}\~ao de
+especifica\c{c}\~oes a partir de um artefato existente \cite{otto2001}.
+
+A estrat\'egia adotada combina as duas: quando a literatura e as fontes p\'ublicas fornecem a
+dimens\~ao de envelope, essa dimens\~ao \'e adotada como restri\c{c}\~ao dura; as fotografias
+s\~ao usadas para \emph{propor\c{c}}\~oes relativas --- altura de cintura em fra\c{c}\~ao da
+altura total, posi\c{c}\~ao relativa das rodas, altura do deck --- e para valida\c{c}\~ao
+qualitativa da silhueta. Essa separa\c{c}\~ao \'e registrada explicitamente para que a origem de
+cada n\'umero seja audit\'avel.
+
+\section{S\'intese do cap\'itulo}
+
+A fundamenta\c{c}\~ao estabelece quatro asser\c{c}\~oes que orientam o restante do trabalho.
+Primeira: a continuidade $G^2$ exigida pela especifica\c{c}\~ao s\'o \'e alcan\'cada com topologia
+regular e sem n-gons, o que torna a restri\c{c}\~ao topol\'ogica uma condi\c{c}\~ao de
+qualidade, e n\~ao um preciosismo. Segunda: a apar\^encia da pintura automotiva decorre de
+m\'ultiplas camadas de sombreamento superpostas, o que exclui solu\c{c}\~oes de cor \'unica.
+Terceira: o mapeamento de tons altera a cor final e, portanto, condiciona a compara\c{c}\~ao de
+tom com a refer\^encia. Quarta: um protocolo de contexto para agentes transforma a intera\c{c}\~ao
+com a ferramenta em um registro serializado, o que \'e a base da auditabilidade pretendida. O
+cap\'itulo seguinte situa o trabalho em rela\c{c}\~ao \`a literatura existente.

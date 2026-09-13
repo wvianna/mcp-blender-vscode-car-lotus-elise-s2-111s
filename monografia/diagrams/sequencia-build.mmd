@@ -1,0 +1,16 @@
+sequenceDiagram
+    autonumber
+    participant E as Engenheiro
+    participant C as Cliente MCP no LLM
+    participant S as Servidor blender-mcp
+    participant B as Blender bpy
+    E->>C: solicita construir o modelo
+    C->>S: tools/call execute_blender_code
+    S->>B: execute do script de build
+    B-->>S: objetos criados e console
+    S-->>C: resultado JSON-RPC
+    C->>S: tools/call get_viewport_screenshot
+    S->>B: render da viewport
+    B-->>S: imagem PNG
+    S-->>C: conteudo da imagem
+    C->>E: render para inspecao visual

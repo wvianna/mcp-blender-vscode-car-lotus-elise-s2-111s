@@ -1,0 +1,9 @@
+flowchart LR
+    NOISE["Noise Texture<br/>escala fina"] --> BUMP["Bump<br/>micro-flakes"]
+    LW["Layer Weight<br/>saida Facing"] --> CR["ColorRamp"]
+    CR --> MIX["Mix Color<br/>profundidade do pigmento"]
+    BASE["Base Color<br/>azul profundo sRGB para linear"] --> MIX
+    MIX --> BSDF["Principled BSDF"]
+    BUMP --> BSDF
+    COAT["Coat Weight 0,6<br/>Coat Roughness 0,02<br/>Coat IOR 1,55"] --> BSDF
+    BSDF --> OUT["Material Output"]

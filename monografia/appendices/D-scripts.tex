@@ -1,0 +1,100 @@
+% ===========================================================================
+\chapter{M\'odulos, execu{\c{c}}\~ao e reprodutibilidade}\label{ap:scripts}
+% ===========================================================================
+
+\section{Estrutura de \emph{software}}
+
+\begin{table}[htbp]
+\centering
+\caption{M\'odulos do projeto}
+\label{tab:modulos-ap}
+\footnotesize
+\begin{tabular}{>{\raggedright\arraybackslash}p{4.4cm}r>{\raggedright\arraybackslash}p{7.6cm}}
+\toprule
+\textbf{Arquivo} & \textbf{Linhas} & \textbf{Responsabilidade} \\
+\midrule
+\texttt{scripts/lotus\_common.py} & $\approx$ 570 & helpers de geometria, materiais, cores e medi{\c{c}}\~ao; sem efeitos colaterais \\
+\texttt{scripts/}\allowbreak\texttt{build\_lotus\_}\allowbreak\texttt{elise\_111s.py} & $\approx$ 1.230 & constr\'oi a cena, salva o \texttt{.blend} e emite o relat\'orio \\
+\texttt{scripts/}\allowbreak\texttt{render\_views.py} & $\approx$ 130 & nove renders de verifica{\c{c}}\~ao, incluindo duas vistas em material neutro \\
+\texttt{scripts/}\allowbreak\texttt{render\_gallery.py} & $\approx$ 250 & cinco imagens de apresenta{\c{c}}\~ao, com rig dram\'atico tempor\'ario \\
+\texttt{scripts/mesh\_report.py} & $\approx$ 90 & relat\'orio de malha avulso \\
+\bottomrule
+\end{tabular}
+\fonte{elaborado pelo autor (2026). As contagens de linhas s\~ao aproximadas.}
+\end{table}
+
+\section{Comandos de reconstru{\c{c}}\~ao}
+
+A reconstru{\c{c}}\~ao integral do artefato requer apenas o Blender em vers\~ao compat\'ivel e o
+reposit\'orio. Os comandos, na ordem:
+
+\begin{lstlisting}[language=bash]
+# 1. construir o modelo (limpa a cena e reconstroi)
+blender --background car-lotus-elise-111s.blend \
+        --python scripts/build_lotus_elise_111s.py
+# 2. renders de verificacao
+blender --background car-lotus-elise-111s.blend \
+        --python scripts/render_views.py
+# 3. galeria de apresentacao
+blender --background car-lotus-elise-111s.blend \
+        --python scripts/render_gallery.py
+# 4. relatorio de malha avulso
+blender --background car-lotus-elise-111s.blend \
+        --python scripts/mesh_report.py
+\end{lstlisting}
+
+Alternativamente, na sess\~ao viva do Blender mediada por MCP:
+
+\begin{lstlisting}[language=Python]
+exec(compile(open("scripts/build_lotus_elise_111s.py").read(),
+             "build_lotus.py", "exec"))
+\end{lstlisting}
+
+\section{Condi{\c{c}}\~oes de reprodutibilidade}
+
+Para que os resultados do Cap\'itulo~\ref{ch:resultados} sejam reproduzidos, as seguintes
+condi{\c{c}}\~oes devem valer:
+
+\begin{enumerate}[label=\arabic*),leftmargin=1.4cm]
+  \item Blender em vers\~ao compat\'ivel com 5.2.1 LTS, com o motor EEVEE dispon\'ivel.
+  \item Presen{\c{c}}a das pastas \texttt{scripts/} e \texttt{images/} na raiz do projeto,
+        exigidas pela fun{\c{c}}\~ao de detec{\c{c}}\~ao de raiz.
+  \item Execu{\c{c}}\~ao dos scripts na ordem apresentada, partindo de um arquivo de cena
+        existente (o build limpa a cena de qualquer forma).
+  \item Aus\^encia de edi{\c{c}}\~oes manuais n\~ao registradas: o script \'e a fonte da
+        verdade.
+\end{enumerate}
+
+\section{Artefatos de especifica{\c{c}}\~ao}
+
+Os documentos que acompanham o c\'odigo est\~ao em \texttt{.specs/} e compreendem a
+constitui{\c{c}}\~ao do projeto, a especifica{\c{c}}\~ao com requisitos e crit\'erios de
+aceita{\c{c}}\~ao, o registro de decis\~oes de arquitetura e a lista de tarefas. Al\'em deles,
+o reposit\'orio mant\'em \texttt{README.md}, \texttt{STATUS.md} e \texttt{HANDOFF.md}, que
+registram, respectivamente, a apresenta{\c{c}}\~ao do projeto, o estado de desenvolvimento e a
+continuidade entre agentes.
+
+\section{Diverg\^enci{\c{c}}\~a identificada durante a reda{\c{c}}\~ao}
+
+Durante a reda{\c{c}}\~ao deste documento, a contagem de esta{\c{c}}\~oes do casco foi
+verificada diretamente no c\'odigo e confrontada com o relat\'orio de malha. A verifica{\c{c}}\~ao
+revelou que o casco possui \textbf{47} esta{\c{c}}\~oes, e n\~ao 45 como registrado na
+documenta{\c{c}}\~ao de acompanhamento do projeto. A evid\^encia decisiva \'e aritm\'etica:
+46 faixas de 16 faces mais duas tampas de 7 quads resultam em 750 faces, exatamente o valor
+medido no relat\'orio, o que s\'o \'e consistente com 47 esta{\c{c}}\~oes. A diverg\^encia foi
+registrada como pend\^encia de documenta{\c{c}}\~ao e n\~ao afeta o modelo, que \'e
+determinado pelo c\'odigo.
+
+Do mesmo modo, a descri{\c{c}}\~ao do perfil transversal na documenta{\c{c}}\~ao de projeto
+menciona dez pontos e dezoito segmentos, enquanto o c\'odigo define nove pontos de meio-lado,
+o que resulta em dezesseis pontos por anel fechado --- valor confirmado pela aritm\'etica das
+faces. Essas diverg\^encias n\~ao s\~ao defeitos do modelo; s\~ao desatualiza{\c{c}}\~oes entre
+a documenta{\c{c}}\~ao e o c\'odigo, e ilustram por que o relat\'orio de malha, e n\~ao a
+documenta{\c{c}}\~ao textual, \'e tratado como evid\^encia prim\'aria neste trabalho.
+
+A diverg\^encia foi comunicada e corrigida nos arquivos de acompanhamento do projeto
+(\texttt{STATUS.md}, \texttt{HANDOFF.md}) durante a reda{\c{c}}\~ao desta monografia; a
+descri{\c{c}}\~ao do perfil permanece a atualizar no registro de decis\~oes de projeto. O
+epis\'odio \'e, ele pr\'oprio, um resultado do m\'etodo: exigir que todo n\'umero afirmado
+tenha uma evid\^encia rastre\'avel exp\~oe inconsist\^encias de documenta{\c{c}}\~ao que, de
+outro modo, passariam despercebidas.

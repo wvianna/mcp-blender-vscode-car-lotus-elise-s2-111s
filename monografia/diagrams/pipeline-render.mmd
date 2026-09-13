@@ -1,0 +1,10 @@
+flowchart LR
+    S["Cena do .blend"] --> CAM["Camera ativa<br/>CAM_*"]
+    S --> RIG["Rig de iluminacao<br/>LGT_*"]
+    S --> GEO["Malhas GEO_*<br/>Subdivision Surface"]
+    CAM --> RAY["EEVEE com raytracing<br/>96 amostras"]
+    RIG --> RAY
+    GEO --> RAY
+    RAY --> COMP["Compositor<br/>node group"]
+    COMP --> COL["Color management AgX<br/>exposure -0.18"]
+    COL --> OUT["Render PNG"]
