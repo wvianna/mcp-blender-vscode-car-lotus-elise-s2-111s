@@ -1,0 +1,67 @@
+# --- Blender ---
+# Arquivos de backup criados pelo Blender
+*.blend1
+*.blend2
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+
+# --- Ambiente virtual / dependências ---
+.venv/
+venv/
+env/
+
+# --- Editores / SO ---
+.vscode/*
+!.vscode/mcp.json
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# --- Render temporário / sequências de imagem ---
+render/
+frames/
+*.png.tmp
+
+# --- Godot 4 ---
+# Cache do editor e artefatos importados
+.godot/
+# Builds exportados
+export/
+build/
+# Logs
+*.log
+
+# --- Execução local (start.sh / stop.sh) ---
+.run/
+
+
+# Auxiliares da monografia LaTeX (o PDF final não é ignorado)
+monografia/*.aux
+monografia/*.bbl
+monografia/*.blg
+monografia/*.lof
+monografia/*.lot
+monografia/*.loq
+monografia/*.out
+monografia/*.toc
+monografia/*.fls
+monografia/*.fdb_latexmk
+monografia/*.synctex.gz
+monografia/_minted*/s
+
+# Auxiliares do artigo
+artigo/*.aux
+artigo/*.bbl
+artigo/*.blg
+artigo/*.lof
+artigo/*.lot
+artigo/*.out
+artigo/*.toc
+artigo/*.fls
+artigo/*.fdb_latexmk
+artigo/*.synctex.gz
+artigo/_minted*/s

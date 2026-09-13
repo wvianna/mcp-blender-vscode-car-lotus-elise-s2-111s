@@ -1,0 +1,80 @@
+Especificação Técnica: Modelagem e Refino Estrutural do Lotus Elise 111S
+
+1. Escopo Técnico e Objetivos do Modelo
+
+A fidelidade estrutural do Lotus Elise 111S é o pilar fundamental para garantir o realismo fotométrico e a integridade da automação via protocolos MCP (Model Context Protocol). Como Lead 3D Artist, estabeleço que a precisão da malha não é negociável: ela dita como a luz se comporta na carroceria e como os scripts de automação interagem com os componentes. Este documento traduz a solicitação original em requisitos técnicos rigorosos, priorizando a documentação visual da pasta "images" em detrimento de quaisquer imprecisões textuais externas. O objetivo é um modelo "Production-Ready" com topologia otimizada para renderização de alto impacto.
+
+Parâmetro de Identificação	Especificação Detalhada
+Modelo do Veículo	Lotus Elise 111S (Variante Series 1)
+Cor Primária	Azul Metálico Profundo (Multi-layer)
+Fonte de Dados Primária	Referências visuais na pasta "images"
+Requisito de Fidelidade	Ground Truth baseado em Blueprints e Image Planes
+
+A execução deste escopo exige uma transição imediata para a análise morfológica agressiva, focando nas nuances que distinguem o 111S de modelos padrão.
+
+2. Análise Morfológica e Identidade do Veículo
+
+Para alcançar o "capricho estrutural" exigido, é imperativo replicar a aerodinâmica singular do chassi 111S. Não se trata de uma modelagem genérica do Elise; a identidade visual reside nos detalhes específicos desta variante.
+
+Diretrizes de Execução:
+
+* Análise de Entre-eixos: Utilize Image Planes para garantir que a proporção entre as rodas e a cabine respeite a engenharia original da Lotus.
+* Elementos Críticos do 111S: Implemente obrigatoriamente as rodas de 6 raios (6-spoke wheels), o emblema traseiro "111S" e o design interno específico das carcaças dos faróis (headlamp housings), conforme as imagens de referência.
+* Entradas de Ar: Modele as aberturas de ventilação atrás das portas com geometria real, evitando o uso de normal maps para furos estruturais.
+* Silhueta e Waistline: Capture a linha de cintura ascendente que define o perfil agressivo do veículo, garantindo que o fluxo de arestas siga a orientação aerodinâmica.
+
+A morfologia correta é a fundação para a construção de uma malha técnica que suporte validações ópticas avançadas.
+
+3. Especificações de Malha e Refino Estrutural
+
+A modelagem deve seguir o fluxo de trabalho Sub-D (Subdivision Surface) com foco absoluto em Continuidade G2 (Curvatura). Superfícies que apresentam apenas continuidade G1 (tangência) são inaceitáveis para renderização automotiva premium, pois geram quebras visíveis nos reflexos.
+
+Requisitos de Geometria e Topologia:
+
+* Fluxo Quad-Dominant: Proíba o uso de N-gons. Triângulos são permitidos apenas em superfícies planas ocultas.
+* Proximity Loops: Implemente loops de suporte rigorosos em torno de áreas de corte (entradas de ar, maçanetas e faróis) para prevenir distorções (pinching) após a subdivisão.
+* Validação de Superfície: Valide a malha utilizando Zebra Stripes e Isophotes. Qualquer quebra ou "ondulação" no mapa de zebras deve ser corrigida no nível de vértice.
+* Densidade Controlada: Mantenha uma distribuição uniforme de polígonos para que a curvatura do Lotus azul não apresente facetas sob iluminação direta.
+
+A estrutura refinada e validada via Zebra Maps é o que permitirá a manipulação precisa das propriedades ópticas do material azul.
+
+4. Definição Estética: Pigmentação e Materiais
+
+O material "Azul" solicitado deve ser tratado como uma pintura automotiva multicamadas complexa. O objetivo é profundidade visual e realismo físico (PBR).
+
+Especificação do Shader (Principled BSDF / Multi-layer):
+
+* Base Coat: Azul profundo com micro-flakes metálicos integrados (ajuste o Flake Scale e Density para visibilidade apenas em closes).
+* Clear Coat: Camada de verniz com Fresnel IOR entre 1.5 e 1.6. A rugosidade (Roughness) deve ser configurada em 0.02 para um brilho especular nítido.
+* Profundidade do Pigmento: Utilize um nó de Layer Weight ou Fresnel para escurecer levemente as bordas em ângulos agudos, simulando a profundidade da pintura real.
+* Componentes Secundários: Materiais de borracha, policarbonato para os faróis e alumínio escovado para o bocal do tanque devem possuir mapas de rugosidade distintos para garantir coesão.
+
+5. Configuração de Iluminação e Efeitos Visuais
+
+A iluminação deve ser projetada para esculpir o volume do Lotus, transformando a geometria em uma peça de impacto visual.
+
+Estratégia de Iluminação de Estúdio:
+
+* Softboxes e Light Cards: Não utilize luzes pontuais simples. Implemente Light Cards retangulares longos para criar reflexos contínuos ao longo da "waistline" do veículo.
+* Key Light: Posicionada a 45 graus para destacar a curvatura dos para-lamas dianteiros.
+* Rim Lighting: Luz de contorno de alta intensidade para separar a silhueta azul do fundo, enfatizando o design traseiro do 111S.
+* HDRI Integration: Utilize um mapa HDRI de estúdio neutro para fornecer reflexos ambientais realistas, complementados por luzes de área controladas.
+
+6. Diretrizes para Implementação Blender via MCP
+
+Para a execução via Model Context Protocol (MCP), as instruções devem ser lógicas, granulares e passíveis de automação via Python API do Blender (bpy).
+
+Protocolo de Modelagem e Automação:
+
+1. Contextualização: Vincular arquivos da pasta "images" como Background Images nos eixos X, Y, Z.
+2. Naming Convention: Todo objeto deve seguir o prefixo de categoria (ex: GEO_Body_111S, LGT_Softbox_Front, MAT_Blue_Metallic).
+3. Command Logic:
+  * bpy.ops.mesh.primitive_cylinder_add (6-spoke wheel base logic).
+  * Aplicação de Modifier_Subsurf com níveis de renderização configurados em 3.
+  * Scripting de tags de metadados nos objetos para facilitar o "material swap" automatizado via MCP.
+4. Validação de Output:
+  * Check de Normais (Face Orientation).
+  * Script de detecção de Non-manifold geometry.
+  * Renderização de teste em Matcap de reflexo metálico para inspeção final.
+
+O modelo final será considerado concluído apenas após a verificação de conformidade com as referências do Lotus Elise 111S e a ausência total de artefatos de sombreamento nas superfícies curvas.

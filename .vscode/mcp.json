@@ -1,0 +1,11 @@
+{
+    "servers": {
+        "blender": {
+            "type": "stdio",
+            "command": "/snap/bin/uvx",
+            "args": [
+                "blender-mcp"
+            ]
+        }
+    }
+}
