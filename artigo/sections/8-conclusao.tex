@@ -1,0 +1,129 @@
+% ===========================================================================
+\section{Conclus\~ao}
+\label{sec:conclusao}
+% ===========================================================================
+
+\subsection{Retomada do problema}
+
+O trabalho partiu da seguinte pergunta: \'e poss\'ivel produzir, de forma integralmente
+reproduz\'ivel e automatizada por um agente conectado via \emph{Model Context Protocol}, um
+modelo tridimensional de um autom\'ovel esportivo cuja geometria e materiais sejam fi\'eis a
+refer\^encias fotogr\'aficas, atendendo simultaneamente a restri\c{c}\~oes de topologia de
+malha e a um envelope dimensional verificado?
+
+A resposta que os resultados sustentam \'e \emph{sim, com ressalvas precisamente
+localizadas}. O modelo existe, \'e reconstru\'ivel por um \'unico comando, tem topologia
+integralmente quadrangular nos corpos principais, envelope dentro da toler\^ancia declarada
+e os elementos de identidade da variante presentes e verific\'aveis. A fidelidade de
+silhueta e de tom de cor, por\'em, \'e parcial, e as causas de cada desvio foram
+identificadas.
+
+\subsection{Respostas aos objetivos espec\'ificos}
+
+O Quadro~\ref{qua:objetivos} retoma os sete objetivos espec\'ificos e o resultado de cada
+um, com a evid\^encia correspondente.
+
+\begin{quadro}[htbp]
+\centering
+\caption{Objetivos espec\'ificos, resultado e evid\^encia}
+\label{qua:objetivos}
+\footnotesize
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.6cm}>{\raggedright\arraybackslash}p{6.4cm}>{\raggedright\arraybackslash}p{1.7cm}>{\raggedright\arraybackslash}p{4.9cm}}
+\toprule
+\textbf{\#} & \textbf{Objetivo} & \textbf{Status} & \textbf{Evid\^encia} \\
+\midrule
+1 & Extrair dimens\~oes e propor\c{c}\~oes das refer\^encias & Atendido & Tabela~\ref{tab:dimensoes}, com origem declarada \\
+2 & Gerar casco por \emph{loft} sem booleanas, sem n-gons & Atendido & 750 quads; 0 n-gons \\
+3 & Modelar os elementos de identidade do 111S & Atendido & Figuras~\ref{fig:detalhe-roda} e \ref{fig:cmp-traseira} \\
+4 & Construir biblioteca de materiais fisicamente plaus\'ivel & Atendido & 13 materiais; Figura~\ref{fig:cmp-3q} \\
+5 & Estabelecer a cadeia de automa\c{c}\~ao via MCP & Atendido & \emph{build} e renders executados por \emph{script} \\
+6 & Emitir relat\'orio de malha a cada \emph{build} & Atendido & Relat\'orio de malha do projeto \\
+7 & Comparar renders e refer\^encias e registrar aceite & Atendido & Quadro~\ref{qua:aceite} \\
+\bottomrule
+\end{tabular}
+\fonte{elaborado pelo autor (2026).}
+\end{quadro}
+
+Os sete objetivos foram atendidos quanto ao m\'etodo e \`a evid\^encia. Os crit\'erios
+parciais (CA-004 e CA-007) n\~ao decorrem de objetivos n\~ao cumpridos, e sim de que a
+\emph{qualidade} exigida em dois crit\'erios perceptuais n\~ao foi integralmente
+alcan\c{c}ada.
+
+\subsection{Conclus\~oes}
+
+Tr\^es conclus\~oes podem ser afirmadas com o suporte das evid\^encias apresentadas.
+
+\textbf{Primeira: as restri\c{c}\~oes topol\'ogicas devem ser impostas na
+constru\c{c}\~ao.} A aus\^encia total de n-gons e de arestas n\~ao variedade em uma cena de
+32.632 faces foi obtida sem qualquer etapa de reparo. O m\'etodo de tampa por leque
+dobrado e a estrutura de encadeamento por an\'eis s\~ao a raz\~ao disso. A
+implica\c{c}\~ao \'e direta: a qualidade estrutural de um modelo procedimental pode ser uma
+\emph{propriedade do gerador}, com garantia mais forte que a de qualquer
+inspe\c{c}\~ao posterior.
+
+\textbf{Segunda: a verifica\c{c}\~ao por medi\c{c}\~ao e a verifica\c{c}\~ao por
+inspe\c{c}\~ao s\~ao complementares.} O relat\'orio num\'erico confirmou o envelope, a
+topologia e a aus\^encia de artefatos estruturais, mas foi incapaz de detectar a
+aus\^encia da linha de car\'ater. A inspe\c{c}\~ao visual comparativa identificou esse
+desvio, mas n\~ao teria detectado um n-gon oculto ou um desvio de mil\'imetros no envelope.
+Concluir que qualquer uma das duas bastaria seria um erro metodol\'ogico.
+
+\textbf{Terceira: a media\c{c}\~ao por MCP agrega auditabilidade, com um limite
+expl\'icito.} Cada opera\c{c}\~ao fica serializada como mensagem do protocolo, o que
+transforma a sess\~ao de modelagem em um registro inspecion\'avel. O limite \'e que a
+inspe\c{c}\~ao visual mediada por captura bidimensional \'e inferior \`a
+inspe\c{c}\~ao interativa, e que o agente n\~ao substitui o julgamento de engenharia sobre
+o que medir, o que aceitar e o que perseguir.
+
+Do ponto de vista do crit\'erio final de um trabalho de engenharia --- a exist\^encia de um
+artefato defens\'avel, verific\'avel e rastre\'avel --- o resultado \'e satisfat\'orio
+dentro dos limites declarados. O modelo n\~ao \'e indistingu\'ivel de uma fotografia em
+\emph{close} de superf\'icie; \'e, por\'em, integralmente reconstru\'ivel, medido, e cada
+uma de suas fei\c{c}\~oes \'e rastre\'avel at\'e uma decis\~ao documentada.
+
+\subsection{Trabalhos futuros}
+
+As pend\^encias identificadas durante o trabalho definem uma agenda de seis itens, em ordem
+decrescente de rela\c{c}\~ao custo-benef\'icio.
+
+\begin{enumerate}[label=\arabic*),leftmargin=1.4cm,itemsep=2pt]
+  \item \textbf{An\'eis de proximidade na linha de car\'ater e nos \emph{lips} de
+        para-lama.} \'E a corre\c{c}\~ao de maior impacto, porque ataca diretamente o
+        crit\'erio CA-004 e utiliza uma t\'ecnica j\'a validada no pr\'oprio projeto
+        (os an\'eis de reten\c{c}\~ao do nariz e da cauda). Alternativamente, avaliar peso
+        de dobra por aresta.
+  \item \textbf{Cadeia colorim\'etrica controlada.} Capturar uma refer\^encia com alvo de
+        cor conhecido e aplicar o mesmo mapeamento de tons ao render e \`a refer\^encia,
+        permitindo que CA-007 deixe de ser um julgamento e passe a ser uma
+        medi\c{c}\~ao de diferen\c{c}a de cor.
+  \item \textbf{Glifos de contorno fechado nos emblemas.} Substituir o texto convertido por
+        geometria extrusada de contorno fechado, o que elimina as 1.776 arestas de borda e
+        os tri\^angulos de chanfro nos glifos.
+  \item \textbf{Valida\c{c}\~ao de continuidade por mapas de zebra e isofotas.} Produzir
+        renders com ambiente de faixas e analisar a continuidade das isofotas, convertendo
+        a alega\c{c}\~ao de continuidade em evid\^encia.
+  \item \textbf{\emph{Rig} de ilumina\c{c}\~ao de est\'udio completo.} Implementar os
+        \emph{softboxes}, os \emph{light cards} longos e o ambiente de alta faixa
+        din\^amica previstos na especifica\c{c}\~ao original.
+  \item \textbf{Valida\c{c}\~ao cruzada por reconstru\c{c}\~ao densa.} Empregar
+        \emph{Structure-from-Motion} ou fotogrametria sobre as mesmas fotografias para
+        obter um envelope independente e compar\'a-lo ao modelo procedimental, atacando a
+        principal amea\c{c}a de validade interna.
+\end{enumerate}
+
+Al\'em desses itens, dois desdobramentos de pesquisa parecem promissores. O primeiro \'e
+generalizar o gerador para uma fam\'ilia de ve\'iculos, avaliando se a
+parametriza\c{c}\~ao por esta\c{c}\~oes se sustenta quando a morfologia varia
+substancialmente. O segundo \'e estudar sistematicamente o efeito da media\c{c}\~ao por
+agentes sobre a qualidade do artefato, com avalia\c{c}\~ao por m\'ultiplos avaliadores e
+compara\c{c}\~ao controlada contra um fluxo manual --- precisamente o controle experimental
+que este trabalho, por limita\c{c}\~ao de escopo, n\~ao executou.
+
+\subsection{Considera\c{c}\~oes finais}
+
+Este trabalho come\c{c}ou com uma cena vazia e seis fotografias. Termina com um modelo de
+130 objetos, cuja geometria \'e descrita por cerca de 1.200 linhas de c\'odigo que qualquer
+pessoa pode ler, executar e contestar. Esse \'e, talvez, o resultado mais duradouro: n\~ao
+o modelo em si, que envelhecer\'a com a vers\~ao do \emph{software}, mas a
+demonstra\c{c}\~ao de que a modelagem tridimensional pode ser conduzida como
+engenharia --- com especifica\c{c}\~ao, medi\c{c}\~ao, evid\^encia e registro do desvio.

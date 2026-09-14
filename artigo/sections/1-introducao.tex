@@ -1,0 +1,125 @@
+% ===========================================================================
+\section{Introdu\c{c}\~ao}
+\label{sec:introducao}
+% ===========================================================================
+
+A modelagem tridimensional \'e, na engenharia contempor\^anea, uma atividade de projeto e n\~ao
+apenas de ilustra\c{c}\~ao. Um modelo de superf\'icie de ve\'iculo automotivo codifica decis\~oes
+geom\'etricas --- curvaturas, tangentes, dimens\~oes de envelope, folgas --- que podem ser
+medidas, verificadas e reproduzidas. Quando essa geometria nasce de um fluxo manual e
+interativo, por\'em, boa parte dessas decis\~oes permanece impl\'icita: vive na mem\'oria de
+quem operou o \emph{software}, e n\~ao em um artefato audit\'avel. Um ajuste de malha
+bem-sucedido pode n\~ao ser reconstru\'ido depois, porque foi feito com o mouse, em uma
+sequ\^encia de gestos que ningu\'em registrou \cite{bbotsch2010}.
+
+Em paralelo, os protocolos de integra\c{c}\~ao entre modelos de linguagem de grande porte e
+ferramentas externas amadureceram rapidamente. O \emph{Model Context Protocol} (MCP)
+\cite{mcpspec2024} prop\~oe uma interface padronizada, baseada em mensagens JSON-RPC~2.0
+\cite{jsonrpc2020}, para que um agente descubra e invoque ferramentas expostas por um
+servidor. Um servidor MCP para o Blender \cite{blendermcp2025} permite que um agente execute
+c\'odigo Python na sess\~ao viva do programa, inspecione a cena e capture imagens da
+\emph{viewport}. A unidade de trabalho deixa de ser o gesto e passa a ser o
+\emph{script}, que \'e version\'avel, revis\'avel e reproduz\'ivel.
+
+A conflu\^encia desses dois movimentos --- formaliza\c{c}\~ao da geometria e automa\c{c}\~ao por
+agentes --- permite tratar a modelagem de um ve\'iculo como um problema de engenharia de
+\emph{software}: com requisitos identificados, decis\~oes de arquitetura registradas,
+crit\'erios de aceita\c{c}\~ao observ\'aveis e evid\^encia de verifica\c{c}\~ao rastre\'avel
+\cite{shah1995, piegl1997, pahl2007}.
+
+\subsection{Problema e lacuna}
+
+O problema que orienta este trabalho pode ser enunciado assim:
+
+\begin{quote}
+\emph{\'E poss\'ivel produzir, de forma integralmente reproduz\'ivel e automatizada por um
+agente de intelig\^encia artificial por meio do Model Context Protocol, um modelo
+tridimensional de um autom\'ovel esportivo cuja geometria e materiais sejam fi\'eis a
+refer\^encias fotogr\'aficas dispon\'iveis, atendendo simultaneamente a restri\c{c}\~oes de
+topologia de malha adequada \`a subdivis\~ao e a um envelope dimensional verificado?}
+\end{quote}
+
+Do enunciado derivam tr\^es tens\~oes t\'ecnicas que precisam ser resolvidas conjuntamente. A
+primeira \'e a \textbf{tens\~ao entre fidelidade e automa\c{c}\~ao}: refer\^encias
+fotogr\'aficas s\~ao perspectivas, com distor\c{c}\~ao e oclus\~ao, e n\~ao \emph{blueprints}
+ortogr\'aficos; converter fotografias em par\^ametros geom\'etricos exige um m\'etodo
+expl\'icito de estimativa \cite{hartley2004}. A segunda \'e a \textbf{tens\~ao entre
+expressividade e restri\c{c}\~ao topol\'ogica}: reproduzir recortes, arcos de roda e
+entradas de ar costuma ser feito com opera\c{c}\~oes booleanas, que produzem n-gons e
+tri\^angulos exatamente sobre arestas vis\'iveis, incompat\'iveis com subdivis\~ao de
+qualidade \cite{catmull1978, bbotsch2010}. A terceira \'e a \textbf{tens\~ao entre realismo
+f\'isico e custo computacional}: pintura automotiva convincente requer
+\emph{clear coat}, micro-flocos met\'alicos e transmiss\~ao em vidros, o que demanda um
+modelo de sombreamento fisicamente plaus\'ivel \cite{burley2012, karis2013, walter2007}.
+
+A lacuna que este artigo pretende ocupar \'e de natureza metodol\'ogica. A literatura
+descreve, de um lado, gera\c{c}\~ao de forma por regras e, de outro, agentes capazes de
+invocar ferramentas; o que ainda \'e escasso s\~ao \emph{relatos de caso com
+verifica\c{c}\~ao externa, nos quais se registre o que a media\c{c}\~ao por agente
+efetivamente agrega --- e, igualmente importante, o que ela n\~ao agrega}.
+
+\subsection{Hip\'otese e justificativa}
+
+A hip\'otese de trabalho \'e que a combina\c{c}\~ao de tr\^es elementos --- (i) uma
+especifica\c{c}\~ao formal com requisitos e crit\'erios de aceita\c{c}\~ao observ\'aveis,
+(ii) gera\c{c}\~ao de geometria exclusivamente por c\'odigo determin\'istico, com as
+restri\c{c}\~oes topol\'ogicas impostas no n\'ivel do algoritmo, e (iii) media\c{c}\~ao de
+todas as opera\c{c}\~oes destrutivas por um agente conectado via MCP --- permite obter um
+modelo cuja ader\^encia \`a refer\^encia \'e compar\'avel \`a de um fluxo manual equivalente,
+mas cuja reprodutibilidade e auditabilidade s\~ao substancialmente superiores.
+
+A justificativa apoia-se em tr\^es argumentos. \textbf{Reprodutibilidade}: um modelo gerado
+por \emph{script} \'e reconstru\'ido a partir do reposit\'orio com um \'unico comando,
+eliminando a depend\^encia de sess\~oes manuais \cite{shah1995}. \textbf{Auditabilidade do
+processo de IA}: quando um agente opera uma ferramenta, o protocolo define exatamente o que
+foi pedido e o que foi executado, criando um registro independente do fornecedor do modelo
+de linguagem \cite{schick2023, patil2023, yao2023}. \textbf{Forma\c{c}\~ao} de engenharia:
+derivar requisitos de um documento informal, convert\^e-los em crit\'erios observ\'aveis e
+comprovar o atendimento por evid\^encia reproduz\'ivel \'e a compet\^encia central do projeto
+de engenharia \cite{pahl2007, otto2001}.
+
+\subsection{Objetivo e contribui\c{c}\~oes}
+
+O objetivo geral \'e produzir, com verifica\c{c}\~ao visual comparativa, um modelo
+tridimensional do Lotus Elise 111S (Series~1) em escala real, constru\'ido inteiramente por
+c\'odigo executado em Blender por meio de um agente operando pelo MCP, atendendo a
+requisitos de fidelidade morfol\'ogica, integridade topol\'ogica e plausibilidade
+f\'isica dos materiais. Os objetivos espec\'ificos s\~ao: (1)~extrair das refer\^encias
+fotogr\'aficas um conjunto declarado de dimens\~oes e propor\c{c}\~oes, registrando as
+incertezas; (2)~implementar um gerador de casco por \emph{loft} que produza arcos de roda
+reais sem opera\c{c}\~oes booleanas e sem n-gons; (3)~modelar os elementos de identidade da
+variante como geometria real; (4)~construir uma biblioteca de materiais fisicamente
+plaus\'ivel; (5)~estabelecer a cadeia de automa\c{c}\~ao via MCP; (6)~emitir, a cada
+\emph{build}, um relat\'orio de malha com n-gons, arestas n\~ao variedade, arestas de borda
+e envelope; e (7)~comparar os renders com as refer\^encias e registrar o resultado por
+crit\'erio.
+
+As contribui\c{c}\~oes reivindicadas s\~ao quatro: um gerador procedimental completo e
+reproduz\'ivel de um ve\'iculo esportivo, com topologia controlada por
+constru\c{c}\~ao; uma t\'ecnica de tampa de \emph{loft} que emite apenas quads, aplic\'avel a
+qualquer superf\'icie fechada por an\'eis; uma demonstra\c{c}\~ao de arquitetura de agentes
+mediada por MCP para conte\'udo tridimensional, com registro expl\'icito do que ela agrega e
+do que n\~ao agrega; e um conjunto de evid\^encia visual comparativa com resultado
+registrado por crit\'erio, \emph{incluindo os desvios}.
+
+\subsection{Delimita\c{c}\~ao e organiza\c{c}\~ao}
+
+A pesquisa delimita-se a um \'unico ve\'iculo, uma \'unica variante e um \'unico acabamento de
+cor. Est\~ao fora de escopo, por decis\~ao expl\'icita: su\'ite de testes automatizados de
+unidade; valida\c{c}\~ao de continuidade por mapas de zebra e isofotas; o \emph{rig} de
+ilumina\c{c}\~ao de est\'udio completo previsto na especifica\c{c}\~ao original; modelagem
+detalhada do interior; decais e anima\c{c}\~ao; e exporta\c{c}\~ao para formatos de
+interc\^ambio como FBX ou glTF. A verifica\c{c}\~ao \'e visual e comparativa, com registro de
+aceite por crit\'erio --- escolha coerente com a natureza do artefato, j\'a que a qualidade
+de uma superf\'icie automotiva \'e julgada pela continuidade dos reflexos sob
+ilumina\c{c}\~ao direcional \cite{halstead1993}.
+
+Al\'em desta introdu\c{c}\~ao, o artigo est\'a organizado em sete se\c{c}\~oes. A
+Se\c{c}\~ao~\ref{sec:fundamentacao} apresenta a fundamenta\c{c}\~ao te\'orica. A
+Se\c{c}\~ao~\ref{sec:relacionados} discute trabalhos relacionados. A
+Se\c{c}\~ao~\ref{sec:metodos} descreve materiais e m\'etodos, incluindo ambiente,
+arquitetura, procedimento e amea\c{c}as \`a validade. A Se\c{c}\~ao~\ref{sec:desenvolvimento}
+detalha a implementa\c{c}\~ao. A Se\c{c}\~ao~\ref{sec:resultados} apresenta os resultados
+quantitativos e a an\'alise visual comparativa. A Se\c{c}\~ao~\ref{sec:discussao} interpreta
+os resultados e as limita\c{c}\~oes. A Se\c{c}\~ao~\ref{sec:conclusao} conclui e indica
+trabalhos futuros.

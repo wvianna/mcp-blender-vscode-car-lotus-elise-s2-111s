@@ -1,0 +1,195 @@
+% ===========================================================================
+%  Artigo -- Modelagem 3D Procedimental do Lotus Elise 111S em Blender
+%            mediada por Model Context Protocol (MCP)
+%
+%  Autor: William da Silva Vianna -- Instituto Federal Fluminense (IFF)
+%  Classe: article (11pt, A4, margens 2,5 cm)
+%  Compilacao: pdflatex -> bibtex -> pdflatex -> pdflatex  (ver build.sh)
+%  Toolchain verificada: pdflatex + bibtex + plainnat (sem latexmk/biber)
+% ===========================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ------------------------- Codificacao e fontes ----------------------------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[brazilian]{babel}
+\shorthandoff{"}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{indentfirst}
+
+% ------------------------- Layout -------------------------------------------
+% ATENCAO: article[a4paper,11pt] sem geometry tem \textwidth ~ 360 pt (127 mm);
+% com margin=2,5cm o texto passa a 160 mm -- necessario para as tabelas.
+\usepackage[margin=2.5cm]{geometry}
+\setlength{\parindent}{1.25cm}
+\setlength{\parskip}{0pt}
+\emergencystretch=2em
+
+% ------------------------- Pacotes ------------------------------------------
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{caption}
+\usepackage[numbers,sort&compress]{natbib}
+
+% ------------------------- Legendas -----------------------------------------
+\captionsetup{font=small,labelfont=bf,skip=6pt}
+\renewcommand{\figurename}{Figura}
+\renewcommand{\tablename}{Tabela}
+
+% Quadro: float textual (apenas o pacote float, sem memoir)
+\newfloat{quadro}{htbp}{loq}
+\floatname{quadro}{Quadro}
+
+% ------------------------- Listagens de codigo ------------------------------
+\definecolor{codebg}{RGB}{247,247,247}
+\definecolor{codecomment}{RGB}{92,104,92}
+\definecolor{coderule}{RGB}{200,200,200}
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  commentstyle=\itshape\color{codecomment},
+  backgroundcolor=\color{codebg},
+  frame=single,
+  framesep=4pt,
+  rulecolor=\color{coderule},
+  breaklines=true,
+  breakatwhitespace=false,
+  columns=fullflexible,
+  keepspaces=true,
+  showstringspaces=false,
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  numbersep=6pt,
+  xleftmargin=1.6em,
+  extendedchars=false,
+  inputencoding=utf8,
+  aboveskip=8pt,
+  belowskip=8pt
+}
+\renewcommand{\lstlistingname}{C\'odigo}
+
+% ------------------------- Comando de fonte --------------------------------
+\newcommand{\fonte}[1]{\par\vspace{2pt}{\footnotesize\itshape Fonte: #1\par}}
+
+% ------------------------- Ambientes de resumo -----------------------------
+\newenvironment{resumo}
+  {\par\vspace{4pt}\begin{center}\begin{minipage}{0.92\textwidth}\small\noindent\textbf{Resumo.}\ \ignorespaces}
+  {\end{minipage}\end{center}\par}
+\newenvironment{abstracten}
+  {\par\vspace{2pt}\begin{center}\begin{minipage}{0.92\textwidth}\small\noindent\textbf{Abstract.}\ \ignorespaces}
+  {\end{minipage}\end{center}\par}
+\newcommand{\palavraschave}[1]{\par\vspace{2pt}\begin{center}\begin{minipage}{0.92\textwidth}\small\noindent\textbf{Palavras-chave:} #1\end{minipage}\end{center}\par\vspace{8pt}}
+\newcommand{\keywords}[1]{\par\vspace{2pt}\begin{center}\begin{minipage}{0.92\textwidth}\small\noindent\textbf{Keywords:} #1\end{minipage}\end{center}\par\vspace{8pt}}
+
+% ------------------------- Hiperlinks --------------------------------------
+\usepackage[hidelinks,bookmarksnumbered]{hyperref}
+\hypersetup{
+  pdftitle={Modelagem 3D procedimental do Lotus Elise 111S em Blender mediada por Model Context Protocol},
+  pdfauthor={William da Silva Vianna},
+  pdfsubject={Artigo tecnologico -- modelagem 3D, automacao e verificacao},
+  pdfkeywords={Model Context Protocol; modelagem procedimental; subdivisao; PBR; Blender}
+}
+\urlstyle{same}
+
+% ------------------------- Titulo e autoria --------------------------------
+\title{\bfseries Modelagem 3D procedimental do Lotus Elise 111S em Blender
+mediada por \emph{Model Context Protocol}:\\ topologia controlada por
+constru\c{c}\~ao e verifica\c{c}\~ao visual comparativa}
+
+\author{William da Silva Vianna\\
+\normalsize Instituto Federal Fluminense (IFF)\\
+\normalsize \texttt{[E-MAIL A INSERIR]}}
+
+\date{2026}
+
+% ===========================================================================
+\begin{document}
+\frenchspacing
+\maketitle
+\thispagestyle{empty}
+
+\begin{resumo}
+A modelagem tridimensional de ve\'iculos automotivos \'e normalmente conduzida por
+opera\c{c}\~oes interativas, cujo registro se perde ao final da sess\~ao de trabalho. Este
+artigo investiga se \'e poss\'ivel obter o modelo de um autom\'ovel esportivo de forma
+integralmente reproduz\'ivel, com a geometria gerada exclusivamente por c\'odigo
+determin\'istico e as opera\c{c}\~oes destrutivas mediadas por um agente de
+intelig\^encia artificial conectado pelo \emph{Model Context Protocol} (MCP). O objeto de
+estudo \'e um Lotus Elise 111S (Series 1) em escala real, referenciado por seis fotografias.
+O m\'etodo combina uma especifica\c{c}\~ao com 21 requisitos funcionais, quatro requisitos
+n\~ao funcionais e nove crit\'erios de aceita\c{c}\~ao observ\'aveis; um gerador
+procedimental que imp\~oe as restri\c{c}\~oes topol\'ogicas no n\'ivel do algoritmo ---
+\emph{loft} de 47 esta\c{c}\~oes transversais, arcos de roda obtidos por modula\c{c}\~ao do
+perfil em vez de opera\c{c}\~ao booleana e tampas de extremidade que emitem apenas quads ---
+e um relat\'orio de malha emitido a cada reconstru\c{c}\~ao. Os resultados medidos
+s\~ao: 130 objetos de malha, 13 materiais e 32.632 faces, das quais 29.272 quads e
+\textbf{zero n-gons}; zero arestas n\~ao variedade em toda a cena; os dois corpos
+principais integralmente quadrangulares (750 e 148 quads); e envelope de
+$3{,}736 \times 1{,}718 \times 1{,}117$\,m, com desvio m\'aximo de $+1{,}0$\,cm em
+rela\c{c}\~ao ao alvo e toler\^ancia declarada de $\pm2$\,cm. Sete dos nove crit\'erios
+de aceita\c{c}\~ao foram plenamente atendidos; dois ficaram parciais --- a aus\^encia da
+linha de car\'ater lateral, que a subdivis\~ao suaviza por falta de an\'eis de
+proximidade, e o tom de pintura, mais escuro que a refer\^encia por uma cadeia de imagem
+n\~ao controlada. Conclui-se que a qualidade estrutural pode ser uma propriedade do
+gerador, e n\~ao resultado de uma etapa de reparo; que verifica\c{c}\~ao por medi\c{c}\~ao e
+verifica\c{c}\~ao por inspe\c{c}\~ao s\~ao complementares e n\~ao substitu\'iveis; e que a
+media\c{c}\~ao por agente agrega auditabilidade, mas n\~ao substitui o julgamento de
+engenharia.
+\end{resumo}
+\palavraschave{Model Context Protocol; modelagem procedimental; subdivis\~ao de
+superf\'icies; topologia quadrilateral; renderiza\c{c}\~ao fisicamente baseada.}
+\begin{abstracten}
+Three-dimensional modeling of automotive vehicles is usually carried out through
+interactive operations whose record is lost at the end of the working session. This paper
+investigates whether a sports car model can be obtained in a fully reproducible way, with
+geometry generated exclusively by deterministic code and destructive operations mediated by
+an artificial-intelligence agent connected through the Model Context Protocol (MCP). The
+object of study is a full-scale Lotus Elise 111S (Series 1), referenced by six photographs.
+The method combines a specification with 21 functional requirements, four non-functional
+requirements and nine observable acceptance criteria; a procedural generator that enforces
+topological constraints at the algorithm level --- a loft of 47 cross-sections, wheel arches
+obtained by profile modulation instead of boolean operations, and end caps that emit quads
+only --- and a mesh report emitted at every rebuild. Measured results are: 130 mesh objects,
+13 materials and 32,632 faces, of which 29,272 quads and \textbf{zero n-gons}; zero
+non-manifold edges in the whole scene; both main bodies fully quad-based (750 and 148
+quads); and an envelope of $3.736 \times 1.718 \times 1.117$\,m, with a maximum deviation of
+$+1.0$\,cm against a declared tolerance of $\pm2$\,cm. Seven of the nine acceptance criteria
+were fully met; two were partial --- the missing side character line, which subdivision
+smooths away for lack of proximity loops, and the paint tone, darker than the reference due
+to an uncontrolled image chain. It is concluded that structural quality can be a property of
+the generator rather than the outcome of a repair stage; that measurement-based and
+inspection-based verification are complementary and not interchangeable; and that agent
+mediation adds auditability but does not replace engineering judgement.
+\end{abstracten}
+\keywords{Model Context Protocol; procedural modeling; surface subdivision; quad
+topology; physically based rendering.}
+
+% ===========================================================================
+\input{sections/1-introducao}
+\input{sections/2-fundamentacao}
+\input{sections/3-trabalhos-relacionados}
+\input{sections/4-materiais-metodos}
+\input{sections/5-desenvolvimento}
+\input{sections/6-resultados}
+\input{sections/7-discussao}
+\input{sections/8-conclusao}
+
+% ------------------------- Pos-textuais ------------------------------------
+\section*{Agradecimentos}
+\addcontentsline{toc}{section}{Agradecimentos}
+O autor agradece a si pr\'oprio, pelo esfor\c{c}o e pela disciplina de manter registro
+reproduz\'ivel de cada decis\~ao de modelagem, sem os quais este trabalho n\~ao existiria;
+e a Victor Vianna, pela sugest\~ao que deu origem a este artigo.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

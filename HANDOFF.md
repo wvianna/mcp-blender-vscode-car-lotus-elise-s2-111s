@@ -1,6 +1,6 @@
 # HANDOFF.md — Lotus Elise 111S
 
-Data: 2026-09-13 · Sessão: modelagem inicial completa (corpo, cabine, rodas, óptica, ventilações, materiais, renders).
+Data: 2026-09-14 · Sessão: artigo científico em LaTeX derivado do modelo e da monografia.
 
 ## Contexto
 
@@ -23,12 +23,21 @@ Lotus Elise 111S Series 1 em azul metálico profundo, com verificação visual c
   compilada por `monografia/build.sh` (pdflatex → bibtex → pdflatex ×2) em `monografia/main.pdf` (94 páginas).
   Arquivos de controle: `MONOGRAFIA_STATUS.md`, `MONOGRAFIA_PLANO.md`, `MONOGRAFIA_EVIDENCIAS.md`,
   `MONOGRAFIA_RASTREABILIDADE.md`, `MONOGRAFIA_PENDENCIAS.md`.
+- `artigo/` — artigo científico em LaTeX (`main.tex` + `sections/` 1–8 + `figures/` + `references.bib`),
+  compilado por `artigo/build.sh` (pdflatex → bibtex → pdflatex ×2) em `artigo/main.pdf` (32 páginas).
+  Autoria: William da Silva Vianna (IFF). Ver `artigo/README.md` para título/alternativas, rastreabilidade
+  numérica e pendências. Compilação isolada em 0 erros, 0 overfull, 0 citações indefinidas.
 
 ## Alterações realizadas
 
 1. `.specs/` criado com constituição, `spec.md` (21 FR, 4 NFR, 9 CA), `design.md` (4 ADRs) e `tasks.md`.
 2. `AGENTS.md`, `README.md`, `LICENSE` (Apache 2.0) e este handoff.
-3. Pipeline de modelagem procedimental:
+3. `artigo/` — artigo científico em LaTeX (`main.tex` + `sections/` 1–8 + `figures/` + `references.bib`
+   + `build.sh` + `README.md`), compilado por `./build.sh` (pdflatex → bibtex → pdflatex ×2) em
+   `artigo/main.pdf`, 32 páginas, 0 erros, 0 overfull, 0 citações indefinidas, 49 referências todas citadas.
+   Autoria: William da Silva Vianna (IFF). Reutiliza os diagramas e renders já existentes;
+   nenhum dado ou referência nova foi inventada.
+4. Pipeline de modelagem procedimental:
    - corpo por loft de 47 seções transversais (16 pontos cada) com arcos de roda obtidos por modulação do fundo
      (`arch_bottom`) — sem boolean;
    - tampas de loft e de cilindros em quads via *folded fan* (`_folded_fan_cap`), eliminando n-gons;

@@ -1,0 +1,14 @@
+# temporarios de LaTeX
+*.aux
+*.bbl
+*.blg
+*.log
+*.lof
+*.lot
+*.loq
+*.out
+*.toc
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+main.pdf
