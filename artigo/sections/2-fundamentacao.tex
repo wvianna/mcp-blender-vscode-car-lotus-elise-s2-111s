@@ -8,52 +8,38 @@ representa\c{c}\~ao e subdivis\~ao de superf\'icies, sombreamento fisicamente ba
 gest\~ao de cor na cadeia de imagem, e agentes de intelig\^encia artificial que operam
 ferramentas externas.
 
-\subsection{Representa\c{c}\~ao de superf\'icies e malhas poligonais}
+\subsection{Representa\c{c}\~ao de superf\'icies e subdivis\~ao}
 
-Uma superf\'icie de forma livre admite duas fam\'ilias principais de representa\c{c}\~ao. A
-primeira \'e a param\'etrica cont\'inua, cujo caso mais geral \'e a NURBS, em que a superf\'icie
-\'e definida por pontos de controle, pesos e vetores de n\'os \cite{piegl1997, farin2002}. A
-segunda \'e a discreta: a superf\'icie \'e aproximada por uma malha poligonal de
-conectividade expl\'icita \cite{mortenson1997, bbotsch2010}.
-
-A escolha entre as duas fam\'ilias tem consequ\^encias pr\'aticas. A representa\c{c}\~ao
-param\'etrica oferece continuidade anal\'itica controlada e \'e a base dos sistemas de
-CAD/CAM \cite{shah1995}. A representa\c{c}\~ao discreta, por outro lado, \'e a que os
-motores de render de tempo real e a maioria dos \emph{pipelines} de conte\'udo
-tridimensional consomem, e sua qualidade passa a depender da \emph{topologia}: da
-distribui\c{c}\~ao de faces, da val\^encia dos v\'ertices e da dire\c{c}\~ao das cadeias de
-arestas \cite{bbotsch2010}.
-
-Na pr\'atica automotiva, a malha de controle \'e constru\'ida com densidade baixa e
-posteriormente suavizada por subdivis\~ao. \'E essa combina\c{c}\~ao que permite ao
-modelador concentrar-se na \emph{inten\c{c}\~ao} de forma --- o perfil de uma se\c{c}\~ao
+Uma superf\'icie de forma livre admite representa\c{c}\~ao param\'etrica cont\'inua --- cujo
+caso mais geral \'e a NURBS \cite{piegl1997} --- ou discreta, por malha poligonal de
+conectividade expl\'icita \cite{bbotsch2010}. A segunda \'e a que os motores de render de
+tempo real e a maioria dos \emph{pipelines} de conte\'udo tridimensional consomem, e sua
+qualidade passa a depender da \emph{topologia}: distribui\c{c}\~ao de faces, val\^encia dos
+v\'ertices e dire\c{c}\~ao das cadeias de arestas. Na pr\'atica automotiva, a malha de
+controle \'e constru\'ida com densidade baixa e suavizada por subdivis\~ao, o que permite
+concentrar-se na \emph{inten\c{c}\~ao} de forma --- o perfil de uma se\c{c}\~ao
 transversal, a posi\c{c}\~ao de uma aresta viva --- e delegar o refinamento ao algoritmo.
-
-\subsection{Subdivis\~ao de superf\'icies e o papel da topologia}
 
 O esquema de Catmull--Clark \cite{catmull1978} generaliza as B-splines c\'ubicas para
 malhas de topologia arbitr\'aria: cada face \'e dividida por pontos de face e aresta, e cada
-v\'ertice \'e reposicionado por uma m\'edia ponderada de seus vizinhos. O esquema de Loop
+v\'ertice \'e reposicionado por uma m\'edia ponderada de seus vizinhos; o esquema de Loop
 \cite{loop1987} faz o an\'alogo para malhas triangulares. Ambos convergem para uma
-superf\'icie limite cuja continuidade depende da val\^encia dos v\'ertices; Stam
-\cite{stam1998} demonstrou como avali\'a-la exatamente em par\^ametros arbitr\'arios, e
-Halstead \emph{et al.} \cite{halstead1993} mostraram como interpolar atributos de forma
-justa sobre a superf\'icie limite --- resultado central para a leitura de reflexos.
+superf\'icie limite cuja continuidade depende da val\^encia dos v\'ertices --- Stam
+\cite{stam1998} demonstrou como avali\'a-la exatamente, e Halstead \emph{et al.}
+\cite{halstead1993} como interpolar atributos de forma justa sobre ela, resultado central
+para a leitura de reflexos.
 
-Tr\^es propriedades da topologia determinam o comportamento sob subdivis\~ao. A primeira \'e a
-\emph{predomin\^ancia de quads}. Faces de quatro lados produzem, a cada n\'ivel, uma
-subdivis\~ao regular; tri\^angulos e n-gons geram v\'ertices extraordin\'arios que puxam a
-superf\'icie e criam ondula\c{c}\~oes nos reflexos \cite{bbotsch2010}. A segunda \'e a
-\emph{densidade local}. Uma varia\c{c}\~ao de curvatura de raio pequeno --- uma aresta viva,
-um vinco --- s\'o sobrevive \`a suaviza\c{c}\~ao se estiver sustentada por an\'eis de
-arestas pr\'oximos, inseridos deliberadamente para ``segurar'' a superf\'icie limite. A
-terceira \'e o \emph{fluxo de arestas}: cadeias alinhadas \`a dire\c{c}\~ao dominante da
-forma distribuem a curvatura de modo previs\'ivel e facilitam a deforma\c{c}\~ao posterior.
-
-Essas tr\^es propriedades t\^em uma consequ\^encia de projeto que este trabalho explora
-diretamente. Aceitar uma opera\c{c}\~ao booleana para recortar um arco de roda introduz,
-sobre a aresta vis\'ivel do para-lama, exatamente os elementos que degradam o reflexo:
-n-gons, tri\^angulos e v\'ertices extraordin\'arios. Impor a restri\c{c}\~ao
+Tr\^es propriedades da topologia determinam o comportamento sob subdivis\~ao: a
+\emph{predomin\^ancia de quads}, pois faces de quatro lados produzem subdivis\~ao regular
+enquanto tri\^angulos e n-gons geram v\'ertices extraordin\'arios que puxam a
+superf\'icie e criam ondula\c{c}\~oes nos reflexos \cite{bbotsch2010}; a \emph{densidade
+local}, pois uma varia\c{c}\~ao de curvatura de raio pequeno --- uma aresta viva, um
+vinco --- s\'o sobrevive \`a suaviza\c{c}\~ao se estiver sustentada por an\'eis de
+arestas pr\'oximos; e o \emph{fluxo de arestas}, pois cadeias alinhadas \`a
+\emph{inten\c{c}\~ao} dominante da forma distribuem a curvatura de modo previs\'ivel. A
+consequ\^encia de projeto que este trabalho explora \'e direta: aceitar uma
+opera\c{c}\~ao booleana para recortar um arco de roda introduz, sobre a aresta vis\'ivel
+do para-lama, exatamente os elementos que degradam o reflexo. Impor a restri\c{c}\~ao
 \emph{no algoritmo} --- isto \'e, construir apenas estruturas que n\~ao os produzam ---
 \'e uma postura diferente de corrigir a malha depois.
 
@@ -61,13 +47,10 @@ n-gons, tri\^angulos e v\'ertices extraordin\'arios. Impor a restri\c{c}\~ao
 
 A equa\c{c}\~ao de render de Kajiya \cite{kajiya1986} formaliza a forma\c{c}\~ao de imagem
 como uma integral de transporte de radi\^ancia. Modelos de reflex\^ao que conservam energia
---- de Phong \cite{phong1975} e Blinn \cite{blinn1977}, passando por Cook--Torrance
-\cite{cook1982}, Schlick \cite{schlick1994}, modelos anisotr\'opicos \cite{ward1992,
-ashikhmin2000} e microfacetas para refra\c{c}\~ao \cite{walter2007} --- s\~ao
-aproxima\c{c}\~oes dessa integral, e sua escolha determina a plausibilidade f\'isica do
-resultado \cite{pharr2016}.
-
-A pr\'atica moderna convergiu para um modelo \'unico parametrizado, no qual cor base,
+--- de Cook--Torrance \cite{cook1982} \`as microfacetas para refra\c{c}\~ao
+\cite{walter2007}, passando por variantes anisotr\'opicas --- s\~ao
+aproxima\c{c}\~oes dessa integral.
+A pr\'atica moderna \cite{pharr2016} convergiu para um modelo \'unico parametrizado, no qual cor base,
 metalicidade, rugosidade, refletividade, transmiss\~ao e camadas adicionais de verniz s\~ao
 par\^ametros independentes \cite{burley2012, karis2013}. Para pintura automotiva, a
 camada relevante \'e o \emph{clear coat}: uma superf\'icie diel\'etrica de rugosidade muito
@@ -80,30 +63,26 @@ pr\'oprio modelo f\'isico, e n\~ao de um ajuste arbitr\'ario.
 
 O transporte de radi\^ancia \'e linear na energia transportada, enquanto a percep\c{c}\~ao
 de cor e a codifica\c{c}\~ao de imagens n\~ao s\~ao \cite{fairchild2013}. Duas
-consequ\^encias pr\'aticas decorrem disso. A primeira \'e que cores definidas em
-especifica\c{c}\~oes visuais (sRGB) precisam ser convertidas para o espa\c{c}\~o linear
-antes de alimentarem o sombreamento; a omiss\~ao dessa convers\~ao produz um erro sutil, em
-que a imagem \emph{parece} plaus\'ivel mas tem satura\c{c}\~ao sistematicamente
-deslocada. A segunda \'e que o resultado precisa ser mapeado de volta para um espa\c{c}\~o
-de exibi\c{c}\~ao por uma curva de mapeamento de tons \cite{reinhard2002}; a escolha dessa
-curva comp\~oe a imagem final tanto quanto o material. Comparar o tom de um render com o
-tom de uma fotografia sem controlar as duas cadeias \'e, em rigor, uma
+consequ\^encias decorrem disso: cores definidas em especifica\c{c}\~oes visuais (sRGB)
+precisam ser convertidas para o espa\c{c}\~o linear antes de alimentarem o sombreamento
+--- a omiss\~ao produz um erro sutil, em que a imagem \emph{parece} plaus\'ivel mas tem
+satura\c{c}\~ao deslocada; e o resultado precisa ser mapeado de volta para um
+espa\c{c}\~o de exibi\c{c}\~ao por uma curva de mapeamento de tons \cite{reinhard2002},
+cuja escolha comp\~oe a imagem tanto quanto o material. Comparar o tom de um render com o
+de uma fotografia sem controlar as duas cadeias \'e, em rigor, uma
 compara\c{c}\~ao inv\'alida.
 
 \subsection{Agentes e protocolos de contexto}
 
-Modelos de linguagem de grande porte, baseados em mecanismos de aten\c{c}\~ao
-\cite{vaswani2017} e treinados em escala \cite{brown2020}, demonstraram capacidade de
-racioc\'inio em etapas \cite{wei2022} e de uso de ferramentas externas
-\cite{schick2023, patil2023, qin2023}. A integra\c{c}\~ao entre racioc\'inio e
-a\c{c}\~ao \cite{yao2023}, a recupera\c{c}\~ao de contexto \cite{lewis2020} e a
-coordena\c{c}\~ao entre agentes \cite{wu2023} completam o quadro. Essas contribui\c{c}\~oes
-resolviam, por\'em, a integra\c{c}\~ao no n\'ivel da \emph{aplica\c{c}\~ao}.
-
-O MCP \cite{mcpspec2024} acrescenta uma camada de protocolo: um servidor exp\~oe
-ferramentas de forma descobr\'ivel e o cliente --- um agente --- as invoca por mensagens
+Modelos de linguagem de grande porte demonstraram capacidade de racioc\'inio em etapas e de
+uso de ferramentas externas \cite{schick2023, patil2023, qin2023}, inclusive com
+encadeamento entre racioc\'inio e a\c{c}\~ao \cite{yao2023}. Essas contribui\c{c}\~oes
+resolviam, por\'em, a integra\c{c}\~ao no n\'ivel da \emph{aplica\c{c}\~ao}. O MCP
+\cite{mcpspec2024} acrescenta uma camada de protocolo: um servidor exp\~oe ferramentas de
+forma descobr\'ivel e o cliente --- um agente --- as invoca por mensagens
 JSON-RPC~2.0 \cite{jsonrpc2020}, sem depend\^encia do fornecedor do modelo. Do ponto de
-vista da engenharia, a propriedade relevante n\~ao \'e a capacidade de escrever c\'odigo,
-que existe em qualquer fluxo por \emph{script}, e sim a \emph{serializa\c{c}\~ao da
-inten\c{c}\~ao}: cada chamada fica registrada como uma mensagem com nome de ferramenta e
-argumentos, o que converte a sess\~ao de modelagem em um registro inspecion\'avel.
+vista da engenharia, a propriedade relevante n\~ao \'e a capacidade de escrever
+c\'odigo, que existe em qualquer fluxo por \emph{script}, e sim a
+\emph{serializa\c{c}\~ao da inten\c{c}\~ao}: cada chamada fica registrada como uma
+mensagem com nome de ferramenta e argumentos, o que converte a sess\~ao de modelagem em um
+registro inspecion\'avel.

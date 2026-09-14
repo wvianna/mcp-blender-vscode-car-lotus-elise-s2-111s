@@ -4,10 +4,28 @@ Artigo científico/tecnológico em LaTeX derivado do modelo e da monografia dest
 
 - **Autor:** William da Silva Vianna — Instituto Federal Fluminense (IFF)
 - **Ano:** 2026
-- **Saída:** `main.pdf` — **32 páginas**, A4, `article` 11 pt, margens de 2,5 cm
+- **Saída:** `main.pdf` — **16 páginas**, A4, `article` 10 pt, margens de 2,0 cm
 - **Compilação:** `./build.sh` → `pdflatex → bibtex → pdflatex → pdflatex`
   (ambiente **sem** `latexmk`, `biber`/`biblatex` ou `abntex2`; citações numéricas
   com `natbib [numbers,sort&compress]` + `plainnat`)
+
+## Histórico de compactação
+
+A primeira versão compilada tinha 32 páginas. Como o objetivo era um artigo de
+congresso/periódico, o documento foi compactado até **16 páginas**, sem remover
+evidentes nem inventar dados, por meio de:
+
+- layout mais denso (10 pt, margens de 2,0 cm, `\linespread{0.97}`, espaçamento de
+  floats reduzido) — 32 → 26 páginas;
+- fusão das sete figuras de comparação visual em três figuras de múltiplas linhas
+  (pares referência × render alinhados pela altura), com as vistas em material neutro
+  e o detalhe de roda na mesma figura — 26 → 22 páginas;
+- fusão dos sete quadros em prosa ou em tabelas únicas (o quadro de critérios e o de
+  resultado por critério viraram a `Tabela 4`), eliminação do quadro de ambiente e
+  das tabelas de tempos por vista e de grupos funcionais — 22 → 18 páginas;
+- corte de prosa redundante (derivação de dimensões, estratégia de materiais,
+  reprodutibilidade, comparação com a literatura, limitações) e de 12 referências que
+  ficaram sem citação — 18 → 16 páginas.
 
 ## Título escolhido e alternativas avaliadas
 
@@ -32,7 +50,7 @@ Alternativas consideradas e descartadas:
 ```
 artigo/
 ├── main.tex            preâmbulo, título/autoria, resumo, abstract, agradecimentos
-├── references.bib      49 referências, todas citadas (nenhuma órfã)
+├── references.bib      37 referências, todas citadas (nenhuma órfã)
 ├── build.sh            pdflatex → bibtex → pdflatex ×2 + relatório de erros/overfull
 ├── .gitignore          temporários de LaTeX
 ├── sections/
@@ -51,14 +69,17 @@ artigo/
 
 | Tipo | Qtd. | Observação |
 |---|---|---|
-| Figuras | 11 | 5 comparações referência × render, close de roda, vistas em *clay*, arquitetura, sequência MCP, galeria |
-| Tabelas | 5 | tempos, resumo do build, dimensões, envelope, grupos de objetos |
-| Quadros | 7 | ambiente, critérios, origem de artefatos, malhas, aceite, posicionamento, objetivos |
-| Códigos | 3 | comandos de reprodução, `arch_bottom`, `_folded_fan_cap` |
+| Figuras | 4 | arquitetura MCP; 3 linhas de comparação referência × render (frontal/lateral/traseira); 2 linhas (superior/três-quartos); detalhe de roda + vista lateral em material neutro |
+| Tabelas | 4 | dimensões de referência; resumo do build; envelope dimensional; critérios de aceitação com método, status e evidência |
+| Códigos | 1 | `_folded_fan_cap` (tampa de loft que emite apenas quads) |
 
 Todos os diagramas são exportações PNG dos Mermaid de `monografia/diagrams/`
 (`mermaid-cli` + navegador do sistema); as fotografias de referência e os renders
-vêm de `images/` e `docs/renders/`, copiados para `figures/`.
+vêm de `images/` e `docs/renders/`, copiados para `figures/`. A pasta contém
+**apenas as figuras efetivamente citadas** — as seis que ficaram sem referência após a
+compactação (diagrama de sequência, pipeline metodológico, galeria com rig dramático,
+traseira em três-quartos, vistas em material neutro adicionais) foram removidas, e os
+originais permanecem em `monografia/figures/` e `monografia/diagrams/`.
 
 ## Verificação executada
 
@@ -67,8 +88,8 @@ vêm de `images/` e `docs/renders/`, copiados para `figures/`.
 | Erros de compilação | 0 |
 | Referências/citações indefinidas | 0 |
 | `Overfull \hbox` | 0 |
-| Páginas | 32 |
-| Referências citadas / presentes no `.bib` | 49 / 49 |
+| Páginas | 16 |
+| Referências citadas / presentes no `.bib` | 37 / 37 |
 | Inspeção visual do PDF | páginas renderizadas com `pdftoppm -r 50` e conferidas |
 
 ## Rastreabilidade numérica (afirmação → fonte)
@@ -101,4 +122,6 @@ vêm de `images/` e `docs/renders/`, copiados para `figures/`.
 Nenhum dado, número, resultado ou referência foi inventado. Todos os valores
 numéricos vêm do relatório de malha, do `STATUS.md` ou da monografia deste
 repositório; todas as referências foram herdadas da bibliografia já verificada em
-`monografia/references.bib`.
+`monografia/references.bib`. As 12 referências removidas na compactação eram apenas
+as que ficaram sem citação no texto — nenhuma foi descartada por ser incômoda, e
+nenhuma afirmação do texto ficou sem suporte bibliográfico.

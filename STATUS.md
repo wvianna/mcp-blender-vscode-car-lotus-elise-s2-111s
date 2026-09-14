@@ -26,7 +26,7 @@
 | Galeria de apresentação (superior, traseira, lateral, isométrica, efeito de luz) | `images/modelo3d-*.png` via `scripts/render_gallery.py` |
 | Rig dramático do hero shot (rim lights + faróis acesos + bloom no compositor) | `render_gallery.py` (não persiste no `.blend`) |
 | Monografia em LaTeX (94 páginas) com verificação visual e rastreabilidade por critério | `monografia/main.pdf`, `monografia/MONOGRAFIA_*.md`, `monografia/build.sh` |
-| Artigo científico em LaTeX (32 páginas, 49 referências citadas, 0 erros/overfull) | `artigo/main.pdf`, `artigo/README.md`, `artigo/build.sh` |
+| Artigo científico em LaTeX (16 páginas, 37 referências citadas, 0 erros/overfull) | `artigo/main.pdf`, `artigo/README.md`, `artigo/build.sh` |
 
 ### Números do último build
 

@@ -18,36 +18,19 @@ e os elementos de identidade da variante presentes e verific\'aveis. A fidelidad
 silhueta e de tom de cor, por\'em, \'e parcial, e as causas de cada desvio foram
 identificadas.
 
-\subsection{Respostas aos objetivos espec\'ificos}
+\subsection{Respostas aos objetivos}
 
-O Quadro~\ref{qua:objetivos} retoma os sete objetivos espec\'ificos e o resultado de cada
-um, com a evid\^encia correspondente.
-
-\begin{quadro}[htbp]
-\centering
-\caption{Objetivos espec\'ificos, resultado e evid\^encia}
-\label{qua:objetivos}
-\footnotesize
-\begin{tabular}{>{\raggedright\arraybackslash}p{0.6cm}>{\raggedright\arraybackslash}p{6.4cm}>{\raggedright\arraybackslash}p{1.7cm}>{\raggedright\arraybackslash}p{4.9cm}}
-\toprule
-\textbf{\#} & \textbf{Objetivo} & \textbf{Status} & \textbf{Evid\^encia} \\
-\midrule
-1 & Extrair dimens\~oes e propor\c{c}\~oes das refer\^encias & Atendido & Tabela~\ref{tab:dimensoes}, com origem declarada \\
-2 & Gerar casco por \emph{loft} sem booleanas, sem n-gons & Atendido & 750 quads; 0 n-gons \\
-3 & Modelar os elementos de identidade do 111S & Atendido & Figuras~\ref{fig:detalhe-roda} e \ref{fig:cmp-traseira} \\
-4 & Construir biblioteca de materiais fisicamente plaus\'ivel & Atendido & 13 materiais; Figura~\ref{fig:cmp-3q} \\
-5 & Estabelecer a cadeia de automa\c{c}\~ao via MCP & Atendido & \emph{build} e renders executados por \emph{script} \\
-6 & Emitir relat\'orio de malha a cada \emph{build} & Atendido & Relat\'orio de malha do projeto \\
-7 & Comparar renders e refer\^encias e registrar aceite & Atendido & Quadro~\ref{qua:aceite} \\
-\bottomrule
-\end{tabular}
-\fonte{elaborado pelo autor (2026).}
-\end{quadro}
-
-Os sete objetivos foram atendidos quanto ao m\'etodo e \`a evid\^encia. Os crit\'erios
-parciais (CA-004 e CA-007) n\~ao decorrem de objetivos n\~ao cumpridos, e sim de que a
-\emph{qualidade} exigida em dois crit\'erios perceptuais n\~ao foi integralmente
-alcan\c{c}ada.
+Os sete objetivos espec\'ificos foram atendidos quanto ao m\'etodo e \`a evid\^encia: as
+dimens\~oes e propor\c{c}\~oes foram extra\'idas e registradas com origem declarada
+(Tabela~\ref{tab:dimensoes}); o casco \'e gerado por \emph{loft} sem opera\c{c}\~oes
+booleanas e sem n-gons (750 quads); os elementos de identidade da variante est\~ao
+modelados como geometria real (Figuras~\ref{fig:roda-clay} e~\ref{fig:cmp-a}); a
+biblioteca de materiais tem 13 materiais fisicamente plaus\'iveis; a cadeia de
+automa\c{c}\~ao via MCP executa \emph{build} e renders por \emph{script}; o relat\'orio de
+malha \'e emitido a cada \emph{build}; e a compara\c{c}\~ao com as refer\^encias est\'a
+registrada por crit\'erio (Tabela~\ref{tab:crit}). Os crit\'erios parciais (CA-004 e
+CA-007) n\~ao decorrem de objetivos n\~ao cumpridos, e sim de que a \emph{qualidade}
+exigida em dois crit\'erios perceptuais n\~ao foi integralmente alcan\c{c}ada.
 
 \subsection{Conclus\~oes}
 
@@ -83,41 +66,24 @@ uma de suas fei\c{c}\~oes \'e rastre\'avel at\'e uma decis\~ao documentada.
 
 \subsection{Trabalhos futuros}
 
-As pend\^encias identificadas durante o trabalho definem uma agenda de seis itens, em ordem
-decrescente de rela\c{c}\~ao custo-benef\'icio.
-
-\begin{enumerate}[label=\arabic*),leftmargin=1.4cm,itemsep=2pt]
-  \item \textbf{An\'eis de proximidade na linha de car\'ater e nos \emph{lips} de
-        para-lama.} \'E a corre\c{c}\~ao de maior impacto, porque ataca diretamente o
-        crit\'erio CA-004 e utiliza uma t\'ecnica j\'a validada no pr\'oprio projeto
-        (os an\'eis de reten\c{c}\~ao do nariz e da cauda). Alternativamente, avaliar peso
-        de dobra por aresta.
-  \item \textbf{Cadeia colorim\'etrica controlada.} Capturar uma refer\^encia com alvo de
-        cor conhecido e aplicar o mesmo mapeamento de tons ao render e \`a refer\^encia,
-        permitindo que CA-007 deixe de ser um julgamento e passe a ser uma
-        medi\c{c}\~ao de diferen\c{c}a de cor.
-  \item \textbf{Glifos de contorno fechado nos emblemas.} Substituir o texto convertido por
-        geometria extrusada de contorno fechado, o que elimina as 1.776 arestas de borda e
-        os tri\^angulos de chanfro nos glifos.
-  \item \textbf{Valida\c{c}\~ao de continuidade por mapas de zebra e isofotas.} Produzir
-        renders com ambiente de faixas e analisar a continuidade das isofotas, convertendo
-        a alega\c{c}\~ao de continuidade em evid\^encia.
-  \item \textbf{\emph{Rig} de ilumina\c{c}\~ao de est\'udio completo.} Implementar os
-        \emph{softboxes}, os \emph{light cards} longos e o ambiente de alta faixa
-        din\^amica previstos na especifica\c{c}\~ao original.
-  \item \textbf{Valida\c{c}\~ao cruzada por reconstru\c{c}\~ao densa.} Empregar
-        \emph{Structure-from-Motion} ou fotogrametria sobre as mesmas fotografias para
-        obter um envelope independente e compar\'a-lo ao modelo procedimental, atacando a
-        principal amea\c{c}a de validade interna.
-\end{enumerate}
-
-Al\'em desses itens, dois desdobramentos de pesquisa parecem promissores. O primeiro \'e
-generalizar o gerador para uma fam\'ilia de ve\'iculos, avaliando se a
-parametriza\c{c}\~ao por esta\c{c}\~oes se sustenta quando a morfologia varia
-substancialmente. O segundo \'e estudar sistematicamente o efeito da media\c{c}\~ao por
-agentes sobre a qualidade do artefato, com avalia\c{c}\~ao por m\'ultiplos avaliadores e
-compara\c{c}\~ao controlada contra um fluxo manual --- precisamente o controle experimental
-que este trabalho, por limita\c{c}\~ao de escopo, n\~ao executou.
+As pend\^encias identificadas definem uma agenda de quatro itens, em ordem decrescente de
+rela\c{c}\~ao custo-benef\'icio: (1)~\textbf{an\'eis de proximidade} na linha de
+car\'ater e nos \emph{lips} de para-lama, que ataca diretamente CA-004 com uma t\'ecnica
+j\'a validada no projeto (os an\'eis de reten\c{c}\~ao do nariz e da cauda), ou
+alternativamente peso de dobra por aresta; (2)~\textbf{cadeia colorim\'etrica
+controlada}, capturando uma refer\^encia com alvo de cor conhecido e aplicando o mesmo
+mapeamento de tons ao render e \`a refer\^encia, para que CA-007 deixe de ser julgamento e
+passe a ser medi\c{c}\~ao; (3)~\textbf{glifos de contorno fechado} nos emblemas, o que
+elimina as 1.776 arestas de borda e os tri\^angulos de chanfro; e (4)~\textbf{valida\c{c}\~ao
+cruzada por reconstru\c{c}\~ao densa}, empregando \emph{Structure-from-Motion} sobre as
+mesmas fotografias para obter um envelope independente e atacar a principal amea\c{c}a de
+validade interna. Dois desdobramentos de pesquisa completam a agenda: generalizar o gerador
+para uma fam\'ilia de ve\'iculos, avaliando se a parametriza\c{c}\~ao por
+esta\c{c}\~oes se sustenta quando a morfologia varia substancialmente; e estudar
+sistematicamente o efeito da media\c{c}\~ao por agentes sobre a qualidade do artefato, com
+avalia\c{c}\~ao por m\'ultiplos avaliadores e compara\c{c}\~ao controlada contra um fluxo
+manual --- o controle experimental que este trabalho, por limita\c{c}\~ao de escopo,
+n\~ao executou.
 
 \subsection{Considera\c{c}\~oes finais}
 

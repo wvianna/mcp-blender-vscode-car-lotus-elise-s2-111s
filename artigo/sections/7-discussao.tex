@@ -12,24 +12,22 @@ literatura e explicita as limita\c{c}\~oes que permanecem.
 O resultado mais s\'olido do trabalho n\~ao \'e visual, e sim estrutural: zero n-gons e
 zero arestas n\~ao variedade em uma cena de 32.632 faces, com os dois corpos principais
 integralmente quadrangulares. A relev\^ancia disso est\'a em que a propriedade foi obtida
-\emph{por constru\c{c}\~ao}, e n\~ao por limpeza posterior. Um modelo gerado por
-ferramentas interativas tipicamente requer uma etapa de retopologia --- trabalho manual,
-dif\'icil de reproduzir e de auditar. Aqui, a propriedade decorre do algoritmo de tampa e da
-estrutura de encadeamento, o que significa que ela se preserva automaticamente em qualquer
-reconstru\c{c}\~ao.
-
-O segundo resultado relevante \'e a coincid\^encia aritm\'etica entre o previsto pela
-estrutura do c\'odigo e o medido no relat\'orio: 46 faixas de 16 faces mais duas tampas de
-7 quads resultam em 750, exatamente o valor medido. Essa coincid\^encia tem valor
-metodol\'ogico: mostra que o relat\'orio mede o que o c\'odigo descreve, e n\~ao um artefato
-de avalia\c{c}\~ao inserido \emph{a posteriori} pela subdivis\~ao.
+\emph{por constru\c{c}\~ao}, e n\~ao por limpeza posterior: um modelo gerado por
+ferramentas interativas tipicamente requer uma etapa de retopologia, trabalho manual,
+dif\'icil de reproduzir e de auditar. Aqui, a propriedade decorre do algoritmo de tampa e
+da estrutura de encadeamento, e se preserva automaticamente em qualquer
+reconstru\c{c}\~ao. Contribui para a mesma conclus\~ao a coincid\^encia aritm\'etica entre
+o previsto pela estrutura do c\'odigo e o medido no relat\'orio --- 46 faixas de 16 faces
+mais duas tampas de 7 quads resultam em 750, exatamente o valor medido ---, que mostra que
+o relat\'orio mede o que o c\'odigo descreve, e n\~ao um artefato de avalia\c{c}\~ao
+inserido \emph{a posteriori} pela subdivis\~ao.
 
 O terceiro resultado \'e negativo e igualmente informativo: a inspe\c{c}\~ao visual
 \emph{comparativa} identificou com clareza um desvio que a medi\c{c}\~ao num\'erica
-n\~ao poderia detectar. Nenhum dos n\'umeros do relat\'orio --- faces, n-gons, n\~ao
-variedade, envelope --- distingue um modelo com linha de car\'ater de um sem ela. A
-conclus\~ao metodol\'ogica \'e que os dois tipos de verifica\c{c}\~ao s\~ao complementares e
-n\~ao substitu\'iveis.
+n\~ao poderia detectar, j\'a que nenhum dos n\'umeros do relat\'orio (faces, n-gons,
+n\~ao variedade, envelope) distingue um modelo com linha de car\'ater de um sem ela. A
+conclus\~ao metodol\'ogica \'e que os dois tipos de verifica\c{c}\~ao s\~ao complementares
+e n\~ao substitu\'iveis.
 
 \subsection{Sobre os crit\'erios parciais}
 
@@ -108,63 +106,49 @@ diferen\c{c}a de c\'odigo e verificado por medi\c{c}\~ao autom\'atica: \'e um ga
 Uma consequ\^encia pr\'atica dessa an\'alise \'e que o uso de agentes via MCP faz mais
 sentido em geometria \emph{param\'etrica e repet\'ivel} --- rodas, \emph{louvres}, grelhas,
 conjuntos de pe\c{c}as com varia\c{c}\~ao --- do que em superf\'icies nas quais o julgamento
-est\'etico cont\'inuo \'e dominante. A distribui\c{c}\~ao de objetos da
-Tabela~\ref{tab:grupos} \'e sugestiva: 52 objetos de roda foram gerados por uma \'unica
-fun\c{c}\~ao parametrizada, enquanto a superf\'icie do casco --- um \'unico objeto ---
-exigiu a maior parte do esfor\c{c}o de itera\c{c}\~ao.
+est\'etico cont\'inuo \'e dominante. A distribui\c{c}\~ao de objetos por grupo funcional
+(Se\c{c}\~ao~\ref{sec:resultados}) \'e sugestiva: 52 objetos de roda foram gerados por uma
+\'unica fun\c{c}\~ao parametrizada, enquanto a superf\'icie do casco --- um \'unico
+objeto --- exigiu a maior parte do esfor\c{c}o de itera\c{c}\~ao.
 
 \subsection{Compara\c{c}\~ao com a literatura}
 
 Frente \`a modelagem procedimental cl\'assica \cite{parish2001, muller2006, mccormack2004},
-este trabalho n\~ao prop\~oe gram\'atica de forma nova. Sua contribui\c{c}\~ao, nessa
-frente, \'e mostrar que a parametriza\c{c}\~ao por tabela de esta\c{c}\~oes --- um m\'etodo
-simples e pouco citado --- \'e suficiente para uma morfologia automotiva plaus\'ivel quando
-combinada com subdivis\~ao e controle de densidade.
+este trabalho n\~ao prop\~oe gram\'atica de forma nova: sua contribui\c{c}\~ao, nessa
+frente, \'e mostrar que a parametriza\c{c}\~ao por tabela de esta\c{c}\~oes --- um
+m\'etodo simples e pouco citado --- \'e suficiente para uma morfologia automotiva
+plaus\'ivel quando combinada com subdivis\~ao e controle de densidade. Frente \`a
+engenharia reversa geom\'etrica \cite{varady1997, otto2001}, a diferen\c{c}a \'e de
+entrada e de objetivo: a literatura parte de medi\c{c}\~oes densas e visa manufatura,
+enquanto aqui se parte de seis fotografias em perspectiva e se visa
+renderiza\c{c}\~ao.
 
-Frente \`a engenharia reversa geom\'etrica \cite{varady1997, otto2001}, a diferen\c{c}a
-\'e de entrada e de objetivo. A literatura parte de medi\c{c}\~oes densas e visa
-manufatura; aqui, parte-se de seis fotografias em perspectiva e visa
-renderiza\c{c}\~ao. Essa diferen\c{c}a desloca o problema de fidelidade microm\'etrica para
-fidelidade de morfologia e propor\c{c}\~ao.
-
-Frente \`a reconstru\c{c}\~ao por imagens \cite{snavely2006, mildenhall2020, kerbl2023}, a
-diferen\c{c}a \'e de natureza do artefato. Uma reconstru\c{c}\~ao por
-\emph{Structure-from-Motion} ou por campos de radi\^ancia produziria uma
-representa\c{c}\~ao visualmente mais fiel sob os pontos de vista observados, mas com malha
-irregular e sem fluxo de arestas --- inadequada ao requisito de topologia. \'E poss\'ivel
-que a combina\c{c}\~ao dos dois m\'etodos seja mais interessante que qualquer um
-isoladamente: usar reconstru\c{c}\~ao densa para \emph{validar} propor\c{c}\~oes e o modelo
-procedimental para produzir a malha edit\'avel. Essa combina\c{c}\~ao n\~ao foi explorada
-aqui.
-
-Frente aos agentes com ferramentas \cite{schick2023, qin2023, yao2023} e ao pr\'oprio MCP
-\cite{mcpspec2024}, a contribui\c{c}\~ao \'e um relat\'o de caso com verifica\c{c}\~ao. A
-literatura descreve a capacidade de invocar ferramentas; este artigo registra o que
-aconteceu quando essa capacidade foi aplicada a um problema com crit\'erio de
-aceita\c{c}\~ao externo --- e registra tamb\'em que o agente n\~ao substitui o julgamento
-est\'etico nem a decis\~ao de engenharia sobre o que verificar.
+Frente \`a reconstru\c{c}\~ao por imagens \cite{snavely2006, mildenhall2020, kerbl2023},
+a diferen\c{c}a \'e de natureza do artefato: uma reconstru\c{c}\~ao por
+\emph{Structure-from-Motion} ou por campos de radi\^ancia seria visualmente mais fiel
+sob as vistas observadas, mas teria malha irregular e sem fluxo de arestas --- inadequada
+ao requisito de topologia. A combina\c{c}\~ao dos dois m\'etodos, usando
+reconstru\c{c}\~ao densa para \emph{validar} propor\c{c}\~oes e o modelo procedimental
+para produzir a malha edit\'avel, parece promissora e n\~ao foi explorada aqui. Frente
+aos agentes com ferramentas \cite{schick2023, qin2023, yao2023} e ao pr\'oprio MCP
+\cite{mcpspec2024}, a contribui\c{c}\~ao \'e um relat\'o de caso com
+verifica\c{c}\~ao: a literatura descreve a capacidade de invocar ferramentas, e este
+artigo registra o que aconteceu quando ela foi aplicada a um problema com crit\'erio de
+aceita\c{c}\~ao externo --- incluindo o fato de que o agente n\~ao substitui o
+julgamento est\'etico nem a decis\~ao de engenharia sobre o que verificar.
 
 \subsection{Limita\c{c}\~oes}
 
 Al\'em das amea\c{c}as \`a validade discutidas na Se\c{c}\~ao~\ref{sec:ameacas}, quatro
-limita\c{c}\~oes s\~ao insepar\'aveis do resultado obtido.
-
-\textbf{Aus\^encia de avalia\c{c}\~ao independente.} A avalia\c{c}\~ao visual foi feita
-pelo autor do modelo; sem avalia\c{c}\~ao cega e sem m\'ultiplos avaliadores, n\~ao h\'a
-como estimar a concord\^ancia do julgamento.
-
-\textbf{Aus\^encia de refer\^encia colorim\'etrica.} Como discutido, o crit\'erio de cor
-n\~ao \'e verific\'avel sem um alvo f\'isico e uma cadeia comum de captura.
-
-\textbf{Continuidade verificada por inspe\c{c}\~ao dos reflexos.} A especifica\c{c}\~ao
-original pedia valida\c{c}\~ao por mapas de zebra e isofotas; essa valida\c{c}\~ao foi
-declarada fora de escopo por decis\~ao do usu\'ario. Isso significa que a continuidade
-$G^2$ alegada no material e na geometria n\~ao foi medida --- apenas observada. Uma
-afirmativa forte como ``continuidade $G^2$'' exigiria an\'alise dedicada.
-
-\textbf{Estudo de caso \'unico.} H\'a um \'unico ve\'iculo, um \'unico acabamento e uma
-\'unica configura\c{c}\~ao de \emph{software}. As conclus\~oes gerais s\~ao hip\'oteses, e
-n\~ao resultados.
+limita\c{c}\~oes s\~ao insepar\'aveis do resultado obtido: a avalia\c{c}\~ao visual foi
+feita pelo autor do modelo, sem avalia\c{c}\~ao cega nem m\'ultiplos avaliadores, o que
+impede estimar a concord\^ancia do julgamento; o crit\'erio de cor n\~ao \'e
+verific\'avel sem alvo f\'isico e cadeia de captura comum; a continuidade $G^2$ alegada
+no material e na geometria foi observada, mas n\~ao medida, j\'a que a
+valida\c{c}\~ao por mapas de zebra e isofotas foi declarada fora de escopo; e o estudo
+de caso \'unico --- um ve\'iculo, um acabamento, uma configura\c{c}\~ao de
+\emph{software} --- faz com que as conclus\~oes gerais sejam hip\'oteses, e n\~ao
+resultados.
 
 \subsection{Implica\c{c}\~oes}
 
@@ -174,18 +158,8 @@ processo e corrigi-los \'e uma batalha perdida, enquanto construir unicamente es
 que n\~ao os produzem \'e uma vit\'oria permanente. A segunda \'e \emph{separar a
 verifica\c{c}\~ao pela natureza da grandeza}: grandezas estruturais s\~ao medidas,
 grandezas perceptuais s\~ao inspecionadas. A terceira \'e \emph{tratar a
-automa\c{c}\~ao por agente como infraestrutura, e n\~ao como substituto do julgamento}: o
-agente executa, mede e reporta com fidelidade not\'avel, mas n\~ao decide o que \'e bonito,
-nem que toler\^ancia \'e aceit\'avel, nem que desvio merece ser perseguido. Neste trabalho,
-a an\'alise visual foi o instrumento decisivo para identificar o \'unico desvio que a
-medi\c{c}\~ao n\~ao alcan\c{c}ava.
-
-\subsection{Contribui\c{c}\~oes}
-
-Sintetizando, o trabalho contribui com: (i)~um gerador procedimental completo e
-reproduz\'ivel de um ve\'iculo esportivo, com topologia controlada por
-constru\c{c}\~ao; (ii)~uma t\'ecnica de tampa de \emph{loft} que produz apenas quads,
-aplic\'avel a qualquer superf\'icie fechada por an\'eis; (iii)~uma demonstra\c{c}\~ao de
-arquitetura de agentes mediada por MCP para conte\'udo tridimensional, com o registro do
-que ela agrega e do que n\~ao agrega; e (iv)~um conjunto de evid\^encia visual comparativa
-organizado, com resultado registrado por crit\'erio, \emph{incluindo os desvios}.
+automa\c{c}\~ao por agente como infraestrutura, e n\~ao como substituto do
+julgamento}: o agente executa, mede e reporta com fidelidade not\'avel, mas n\~ao decide o
+que \'e bonito, nem que toler\^ancia \'e aceit\'avel, nem que desvio merece ser
+perseguido --- neste trabalho, a an\'alise visual foi o instrumento decisivo para
+identificar o \'unico desvio que a medi\c{c}\~ao n\~ao alcan\c{c}ava.

@@ -78,48 +78,30 @@ derivar requisitos de um documento informal, convert\^e-los em crit\'erios obser
 comprovar o atendimento por evid\^encia reproduz\'ivel \'e a compet\^encia central do projeto
 de engenharia \cite{pahl2007, otto2001}.
 
-\subsection{Objetivo e contribui\c{c}\~oes}
+\subsection{Objetivo, contribui\c{c}\~oes e delimita\c{c}\~ao}
 
-O objetivo geral \'e produzir, com verifica\c{c}\~ao visual comparativa, um modelo
-tridimensional do Lotus Elise 111S (Series~1) em escala real, constru\'ido inteiramente por
-c\'odigo executado em Blender por meio de um agente operando pelo MCP, atendendo a
-requisitos de fidelidade morfol\'ogica, integridade topol\'ogica e plausibilidade
-f\'isica dos materiais. Os objetivos espec\'ificos s\~ao: (1)~extrair das refer\^encias
-fotogr\'aficas um conjunto declarado de dimens\~oes e propor\c{c}\~oes, registrando as
-incertezas; (2)~implementar um gerador de casco por \emph{loft} que produza arcos de roda
-reais sem opera\c{c}\~oes booleanas e sem n-gons; (3)~modelar os elementos de identidade da
-variante como geometria real; (4)~construir uma biblioteca de materiais fisicamente
-plaus\'ivel; (5)~estabelecer a cadeia de automa\c{c}\~ao via MCP; (6)~emitir, a cada
-\emph{build}, um relat\'orio de malha com n-gons, arestas n\~ao variedade, arestas de borda
-e envelope; e (7)~comparar os renders com as refer\^encias e registrar o resultado por
-crit\'erio.
+O objetivo \'e produzir um modelo tridimensional do Lotus Elise 111S (Series~1) em escala
+real, constru\'ido inteiramente por c\'odigo executado em Blender por meio de um agente
+operando pelo MCP, com fidelidade morfol\'ogica, integridade topol\'ogica e plausibilidade
+f\'isica dos materiais verificadas por evid\^encia. As contribui\c{c}\~oes reivindicadas
+s\~ao quatro: um gerador procedimental completo e reproduz\'ivel de um ve\'iculo
+esportivo, com topologia controlada por constru\c{c}\~ao; uma t\'ecnica de tampa de
+\emph{loft} que emite apenas quads; uma demonstra\c{c}\~ao de arquitetura de agentes mediada
+por MCP para conte\'udo tridimensional, com registro do que ela agrega e do que n\~ao
+agrega; e um conjunto de evid\^encia visual comparativa com resultado registrado por
+crit\'erio, \emph{incluindo os desvios}.
 
-As contribui\c{c}\~oes reivindicadas s\~ao quatro: um gerador procedimental completo e
-reproduz\'ivel de um ve\'iculo esportivo, com topologia controlada por
-constru\c{c}\~ao; uma t\'ecnica de tampa de \emph{loft} que emite apenas quads, aplic\'avel a
-qualquer superf\'icie fechada por an\'eis; uma demonstra\c{c}\~ao de arquitetura de agentes
-mediada por MCP para conte\'udo tridimensional, com registro expl\'icito do que ela agrega e
-do que n\~ao agrega; e um conjunto de evid\^encia visual comparativa com resultado
-registrado por crit\'erio, \emph{incluindo os desvios}.
-
-\subsection{Delimita\c{c}\~ao e organiza\c{c}\~ao}
-
-A pesquisa delimita-se a um \'unico ve\'iculo, uma \'unica variante e um \'unico acabamento de
-cor. Est\~ao fora de escopo, por decis\~ao expl\'icita: su\'ite de testes automatizados de
-unidade; valida\c{c}\~ao de continuidade por mapas de zebra e isofotas; o \emph{rig} de
-ilumina\c{c}\~ao de est\'udio completo previsto na especifica\c{c}\~ao original; modelagem
-detalhada do interior; decais e anima\c{c}\~ao; e exporta\c{c}\~ao para formatos de
-interc\^ambio como FBX ou glTF. A verifica\c{c}\~ao \'e visual e comparativa, com registro de
-aceite por crit\'erio --- escolha coerente com a natureza do artefato, j\'a que a qualidade
-de uma superf\'icie automotiva \'e julgada pela continuidade dos reflexos sob
-ilumina\c{c}\~ao direcional \cite{halstead1993}.
-
-Al\'em desta introdu\c{c}\~ao, o artigo est\'a organizado em sete se\c{c}\~oes. A
-Se\c{c}\~ao~\ref{sec:fundamentacao} apresenta a fundamenta\c{c}\~ao te\'orica. A
-Se\c{c}\~ao~\ref{sec:relacionados} discute trabalhos relacionados. A
-Se\c{c}\~ao~\ref{sec:metodos} descreve materiais e m\'etodos, incluindo ambiente,
-arquitetura, procedimento e amea\c{c}as \`a validade. A Se\c{c}\~ao~\ref{sec:desenvolvimento}
-detalha a implementa\c{c}\~ao. A Se\c{c}\~ao~\ref{sec:resultados} apresenta os resultados
-quantitativos e a an\'alise visual comparativa. A Se\c{c}\~ao~\ref{sec:discussao} interpreta
-os resultados e as limita\c{c}\~oes. A Se\c{c}\~ao~\ref{sec:conclusao} conclui e indica
-trabalhos futuros.
+A pesquisa delimita-se a um \'unico ve\'iculo, uma \'unica variante e um \'unico
+acabamento. Est\~ao fora de escopo, por decis\~ao expl\'icita: su\'ite de testes
+automatizados; valida\c{c}\~ao de continuidade por mapas de zebra e isofotas; o \emph{rig}
+de ilumina\c{c}\~ao de est\'udio completo; interior detalhado; decais e
+anima\c{c}\~ao; e exporta\c{c}\~ao para formatos de interc\^ambio. A
+verifica\c{c}\~ao \'e visual e comparativa, com registro de aceite por crit\'erio ---
+escolha coerente com a natureza do artefato, j\'a que a qualidade de uma superf\'icie
+automotiva \'e julgada pela continuidade dos reflexos \cite{halstead1993}. O artigo segue
+com fundamenta\c{c}\~ao (Se\c{c}\~ao~\ref{sec:fundamentacao}), trabalhos relacionados
+(Se\c{c}\~ao~\ref{sec:relacionados}), materiais e m\'etodos
+(Se\c{c}\~ao~\ref{sec:metodos}), desenvolvimento
+(Se\c{c}\~ao~\ref{sec:desenvolvimento}), resultados
+(Se\c{c}\~ao~\ref{sec:resultados}), discuss\~ao (Se\c{c}\~ao~\ref{sec:discussao}) e
+conclus\~ao (Se\c{c}\~ao~\ref{sec:conclusao}).

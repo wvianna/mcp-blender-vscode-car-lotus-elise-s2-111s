@@ -24,9 +24,10 @@ Lotus Elise 111S Series 1 em azul metálico profundo, com verificação visual c
   Arquivos de controle: `MONOGRAFIA_STATUS.md`, `MONOGRAFIA_PLANO.md`, `MONOGRAFIA_EVIDENCIAS.md`,
   `MONOGRAFIA_RASTREABILIDADE.md`, `MONOGRAFIA_PENDENCIAS.md`.
 - `artigo/` — artigo científico em LaTeX (`main.tex` + `sections/` 1–8 + `figures/` + `references.bib`),
-  compilado por `artigo/build.sh` (pdflatex → bibtex → pdflatex ×2) em `artigo/main.pdf` (32 páginas).
+  compilado por `artigo/build.sh` (pdflatex → bibtex → pdflatex ×2) em `artigo/main.pdf` (16 páginas).
   Autoria: William da Silva Vianna (IFF). Ver `artigo/README.md` para título/alternativas, rastreabilidade
-  numérica e pendências. Compilação isolada em 0 erros, 0 overfull, 0 citações indefinidas.
+  numérica, histórico de compactação (32 → 16 páginas) e pendências. Compilação isolada em 0 erros,
+  0 overfull, 0 citações indefinidas.
 
 ## Alterações realizadas
 
@@ -34,7 +35,7 @@ Lotus Elise 111S Series 1 em azul metálico profundo, com verificação visual c
 2. `AGENTS.md`, `README.md`, `LICENSE` (Apache 2.0) e este handoff.
 3. `artigo/` — artigo científico em LaTeX (`main.tex` + `sections/` 1–8 + `figures/` + `references.bib`
    + `build.sh` + `README.md`), compilado por `./build.sh` (pdflatex → bibtex → pdflatex ×2) em
-   `artigo/main.pdf`, 32 páginas, 0 erros, 0 overfull, 0 citações indefinidas, 49 referências todas citadas.
+   `artigo/main.pdf`, 16 páginas, 0 erros, 0 overfull, 0 citações indefinidas, 37 referências todas citadas.
    Autoria: William da Silva Vianna (IFF). Reutiliza os diagramas e renders já existentes;
    nenhum dado ou referência nova foi inventada.
 4. Pipeline de modelagem procedimental:
